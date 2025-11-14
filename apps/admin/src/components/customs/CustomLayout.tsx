@@ -277,19 +277,19 @@ const LogoutBtn = styled.button`
 
 const navItems = [
   {
-    group: 'Nội dung',
-    items: [{ label: 'Tất cả kho bãi', icon: <CubeIcon />, path: '/warehouse' }],
+    group: 'Content',
+    items: [{ label: 'All Warehouses', icon: <CubeIcon />, path: '/warehouse' }],
   },
   {
-    group: 'Báo cáo',
+    group: 'Reports',
     items: [
-      { label: 'Đơn chờ duyệt', icon: <ClockIcon />, path: '/request' },
-      { label: 'Thống kê doanh thu', icon: <BarChartIcon />, path: '/revenue' },
+      { label: 'Pending Requests', icon: <ClockIcon />, path: '/request' },
+      { label: 'Revenue Statistics', icon: <BarChartIcon />, path: '/revenue' },
     ],
   },
   {
-    group: 'Tài khoản',
-    items: [{ label: 'Quản lý người dùng', icon: <PersonIcon />, path: '/users' }],
+    group: 'Accounts',
+    items: [{ label: 'User Management', icon: <PersonIcon />, path: '/users' }],
   },
 ];
 
@@ -327,7 +327,7 @@ const CustomSidebar = () => {
       <Footer>
         <LogoutBtn onClick={() => logout()}>
           <ExitIcon />
-          Đăng xuất
+          Logout
         </LogoutBtn>
       </Footer>
     </Sidebar>

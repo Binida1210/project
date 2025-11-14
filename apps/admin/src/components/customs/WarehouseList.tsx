@@ -74,9 +74,9 @@ export const WarehouseList = () => {
     try {
       await dataProvider.delete('Warehouse', { id: recordPendingDelete.id });
       setData((prev) => prev.filter((item) => item.id !== recordPendingDelete.id));
-      notify('Xóa thành công', { type: 'info' });
+      notify('Delete successful', { type: 'info' });
     } catch (error) {
-      notify('Xóa thất bại', { type: 'warning' });
+      notify('Delete failed', { type: 'warning' });
     } finally {
       setRecordPendingDelete(null);
     }
@@ -85,12 +85,12 @@ export const WarehouseList = () => {
   return (
     <PageSection>
       <SectionHeader>
-        <h1>Tất cả kho bãi</h1>
+        <h1>All Warehouses</h1>
       </SectionHeader>
       <Confirm
-        content={`Bạn có chắc muốn xóa kho bãi ${recordPendingDelete?.name ?? ''} không?`}
+        content={`Are you sure you want to delete warehouse ${recordPendingDelete?.name ?? ''}?`}
         isOpen={Boolean(recordPendingDelete)}
-        title="Xác nhận"
+        title="Confirm"
         onClose={() => setRecordPendingDelete(null)}
         onConfirm={handleConfirmDelete}
       />
@@ -98,19 +98,19 @@ export const WarehouseList = () => {
         <ListContextProvider value={listContext}>
           <Datagrid bulkActionButtons={false} rowClick={false}>
             <TextField source="id" />
-            <TextField label="Tên" source="name" />
-            <TextField label="Địa chỉ" source="address" />
-            <TextField label="Giá" source="price" />
-            <TextField label="Tầng" source="floors" />
-            <TextField label="Cửa" source="doors" />
-            <TextField label="Diện tích" source="area" />
-            <BooleanField label="Đã thuê" source="rented" />
+            <TextField label="Name" source="name" />
+            <TextField label="Address" source="address" />
+            <TextField label="Price" source="price" />
+            <TextField label="Floors" source="floors" />
+            <TextField label="Doors" source="doors" />
+            <TextField label="Area" source="area" />
+            <BooleanField label="Rented" source="rented" />
             <FunctionField
-              label="Hành động"
+              label="Actions"
               render={(record: WarehouseRecord) => (
                 <ActionRow>
                   <Button
-                    label="Xem"
+                    label="View"
                     onClick={(event) => {
                       event.stopPropagation();
                       redirect(`/warehouse/${record.id}`);
@@ -118,7 +118,7 @@ export const WarehouseList = () => {
                   />
                   <Button
                     color="error"
-                    label="Xóa"
+                    label="Delete"
                     onClick={(event) => {
                       event.stopPropagation();
                       setRecordPendingDelete(record);

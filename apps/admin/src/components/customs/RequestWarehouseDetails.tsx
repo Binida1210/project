@@ -83,11 +83,11 @@ export const RequestWarehouseDetails = () => {
   };
 
   const infoItems = [
-    { label: 'Địa chỉ', value: getFormattedAddress(warehouse.address) },
-    { label: 'Giá', value: `${(warehouse.price * 1000).toLocaleString('vi-VN')} VND / tháng` },
-    { label: 'Diện tích', value: `${warehouse.area} mét vuông` },
-    { label: 'Số tầng', value: `${warehouse.floors} tầng` },
-    { label: 'Số cửa', value: `${warehouse.doors} cửa` },
+    { label: 'Address', value: getFormattedAddress(warehouse.address) },
+    { label: 'Price', value: `${(warehouse.price * 1000).toLocaleString('vi-VN')} VND / month` },
+    { label: 'Area', value: `${warehouse.area} m²` },
+    { label: 'Floors', value: `${warehouse.floors}` },
+    { label: 'Doors', value: `${warehouse.doors}` },
   ];
 
   return (
@@ -95,7 +95,7 @@ export const RequestWarehouseDetails = () => {
       <Wrapper>
         <Header>
           <h1>{warehouse.name || ''}</h1>
-          <Button label="Quay lại" onClick={() => redirect('/request')} />
+          <Button label="Back" onClick={() => redirect('/request')} />
         </Header>
         <InfoGrid>
           {infoItems.map(({ label, value }) => (
@@ -105,7 +105,7 @@ export const RequestWarehouseDetails = () => {
             </InfoItem>
           ))}
           <InfoItem>
-            <InfoLabel>Ảnh</InfoLabel>
+            <InfoLabel>Images</InfoLabel>
             <ImageContainer $hasSrc={Boolean(warehouse.images.length)}>
               {warehouse.images.length ? (
                 warehouse.images.map((image) => (
@@ -114,23 +114,23 @@ export const RequestWarehouseDetails = () => {
                   </ImageLink>
                 ))
               ) : (
-                <Placeholder>Chưa có hình ảnh</Placeholder>
+                <Placeholder>No images</Placeholder>
               )}
             </ImageContainer>
           </InfoItem>
         </InfoGrid>
 
         <DescriptionCard>
-          <SectionTitle>Chi tiết kho bãi</SectionTitle>
+          <SectionTitle>Warehouse Details</SectionTitle>
           {!isEmpty(warehouse.description) ? (
             <Description dangerouslySetInnerHTML={{ __html: warehouse.description ?? '' }} />
           ) : (
-            <Placeholder>Chưa có mô tả</Placeholder>
+            <Placeholder>No description</Placeholder>
           )}
         </DescriptionCard>
 
         <UpdateZone>
-          <UpdateTitle>Xác nhận duyệt kho</UpdateTitle>
+          <UpdateTitle>Review Approval</UpdateTitle>
           <RadioGroupRoot
             value={status}
             onValueChange={(nextValue) => {
@@ -141,20 +141,20 @@ export const RequestWarehouseDetails = () => {
               <RadioGroupItem id="approve" value="1">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="approve">Đồng ý</Label>
+              <Label htmlFor="approve">Approve</Label>
             </RadioOption>
 
             <RadioOption>
               <RadioGroupItem id="reject" value="2">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="reject">Từ chối</Label>
+              <Label htmlFor="reject">Reject</Label>
             </RadioOption>
           </RadioGroupRoot>
 
           <Textarea
             disabled={status !== '2'}
-            placeholder="Nhập lí do từ chối"
+            placeholder="Enter rejection reason"
             onChange={(event) => {
               setRejectedReason(event.target.value);
             }}
@@ -168,7 +168,7 @@ export const RequestWarehouseDetails = () => {
               handleUpdateWarehouseRequest();
             }}
           >
-            <span>Cập nhật</span>
+            <span>Update</span>
           </ConfirmButton>
         </UpdateZone>
       </Wrapper>
