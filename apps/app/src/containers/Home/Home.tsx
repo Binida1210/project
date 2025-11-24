@@ -426,13 +426,14 @@ const SectionHeader = styled.div`
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-    /* Explicit responsive columns for predictable layout
+  /* Explicit responsive columns for predictable layout
       < 640px: 1
       >=640px: 2
       >=768px: 3
       >=1024px: 4
     */
-    grid-template-columns: 1fr;
+  /* default: two columns on narrow screens to avoid single-column look */
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
   /* make rows equal height so cards within a row align nicely */
   grid-auto-rows: 1fr;
   column-gap: clamp(12px, 1.8vw, 20px);
@@ -442,7 +443,6 @@ const GridContainer = styled.div`
     /* Fallback tweak if dynamic viewport units unsupported */
     column-gap: 16px;
   }
-
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
