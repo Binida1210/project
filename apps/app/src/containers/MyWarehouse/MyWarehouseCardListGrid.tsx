@@ -43,14 +43,18 @@ const GridRoot = styled.div`
   width: 100%;
   max-width: 1260px;
   margin: 0 auto;
-  padding: 12px 18px 28px;
+  padding: 12px 0 28px;
 `;
 
 const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  p { margin: 0; font-weight: 600; color: #0f172a; }
+  p {
+    margin: 0;
+    font-weight: 600;
+    color: #0f172a;
+  }
 `;
 
 const Grid = styled.div`

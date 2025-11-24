@@ -54,7 +54,6 @@ const Wrapper = styled.div`
   max-width: 1260px;
   margin: 0 auto 32px;
   background-color: white;
-  padding: 16px;
   border-radius: 8px;
   box-sizing: border-box;
 
