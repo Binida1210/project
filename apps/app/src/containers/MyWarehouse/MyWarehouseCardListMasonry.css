@@ -4,7 +4,8 @@
 
 .my-warehouse-masonry-root {
   width: 100%;
-  max-width: 1236px;
+  /* slightly wider container to give cards more room on desktop */
+  max-width: 1260px;
   margin: 0 auto;
   padding: 12px 18px 28px;
   box-sizing: border-box;
@@ -31,13 +32,27 @@
 .my-warehouse-masonry-grid {
   margin-top: 16px;
   column-gap: 18px;
-  /* default: two columns for narrow viewports */
-  columns: 2 240px;
+  /*
+    Responsive masonry columns
+    - <=480px: 1 column (small phones)
+    - 481..767px: 2 columns
+    - 768..1023px: 3 columns
+    - >=1024px: 4 columns
+  */
+  columns: 2 240px; /* base: 2 columns on most narrow screens */
 }
 
-@media (min-width: 768px) {
+@media (max-width: 480px) {
   .my-warehouse-masonry-grid {
-    columns: 3 280px;
+    columns: 1 100%;
+    column-gap: 12px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .my-warehouse-masonry-grid {
+    columns: 3 260px;
+    column-gap: 18px;
   }
 }
 
@@ -59,6 +74,9 @@
 /* center small cards inside columns and control max width */
 .my-warehouse-masonry-item > * {
   width: 100%;
+  box-sizing: border-box;
+  /* ensure each card fits the column and has consistent inner padding */
+  display: block;
 }
 
 /* small helper: apply a subtle vertical rhythm */
