@@ -46,12 +46,12 @@ const GridContainer = styled.div`
   width: 100%;
   margin-top: 12px;
   display: grid;
-    /* explicit columns at breakpoints for stable responsive behavior
+  /* explicit columns at breakpoints for stable responsive behavior
       < 640px: 1 column
       >=640px: 2 columns
       >=768px: 3 columns
       >=1024px: 4 columns */
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
   /* make each row take equal height so cards align across each row */
   grid-auto-rows: 1fr;
   gap: 12px;
