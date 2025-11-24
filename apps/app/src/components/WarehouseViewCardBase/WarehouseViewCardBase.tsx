@@ -1,4 +1,4 @@
-import { blueA, violetDark } from '@radix-ui/colors';
+import { blueA, violetDark, red as radixRed } from '@radix-ui/colors';
 import { HomeIcon, SquareIcon, TimerIcon } from '@radix-ui/react-icons';
 import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -327,6 +327,8 @@ const RejectedReason = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: ${radixRed.red9};
+  font-weight: 700;
 `;
 
 const AcceptedNote = styled.div`
