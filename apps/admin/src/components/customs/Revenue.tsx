@@ -129,13 +129,13 @@ export const Revenue = () => {
   return (
     <Container>
       <PageHeader>
-        <h1>Thống kê doanh thu</h1>
-        <Subtitle>Biểu đồ phân tích doanh thu theo năm {CURRENT_YEAR}</Subtitle>
+        <h1>Revenue statistics</h1>
+        <Subtitle>Revenue analysis for {CURRENT_YEAR}</Subtitle>
       </PageHeader>
 
       {yearChartData ? (
         <ChartCard>
-          <ChartHeading>Doanh thu theo tháng</ChartHeading>
+          <ChartHeading>Revenue by month</ChartHeading>
           <ChartWrapper>
             <Bar
               data={toBarChartData(yearChartData)}
@@ -148,7 +148,7 @@ export const Revenue = () => {
       {selectedMonth ? (
         <ChartCard id="month-bar-chart">
           <ChartHeading>
-            Tháng {selectedMonth}/{CURRENT_YEAR}
+            Month {selectedMonth}/{CURRENT_YEAR}
           </ChartHeading>
           {monthChartData ? (
             <ChartWrapper small>

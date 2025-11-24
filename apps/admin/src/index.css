@@ -111,3 +111,13 @@ select {
     font-size: 24px;
   }
 }
+
+/* Global responsive switch: simple-list for small screens, datagrid for desktop */
+@media (min-width: 800px) {
+  .ra-simple-list { display: none !important; }
+  .desktop-datagrid { display: block !important; }
+}
+
+@media (max-width: 799px) {
+  .desktop-datagrid { display: none !important; }
+}
