@@ -51,14 +51,12 @@ const GridContainer = styled.div`
       >=640px: 2 columns
       >=768px: 3 columns
       >=1024px: 4 columns */
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
   /* make each row take equal height so cards align across each row */
   grid-auto-rows: 1fr;
   gap: 12px;
 
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
+  /* small and narrow screens will use 2 columns by default (requested) */
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
