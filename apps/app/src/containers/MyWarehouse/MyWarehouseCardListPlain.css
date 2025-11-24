@@ -34,19 +34,14 @@
   display: grid;
   gap: 18px;
   grid-auto-rows: 1fr;
-  /* explicit responsive columns: 1 / 2 / 3 / 4 / 5 at 640 / 768 / 1024 / 1400px */
-  grid-template-columns: 1fr;
+  /* explicit responsive columns: 2 / 3 / 4 / 5 at <768 / >=768 / >=1024 / >=1400px */
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
   justify-items: center; /* center each card into its grid cell */
   align-items: start;
 }
 
 /* breakpoints keep visual rhythm but auto-fit prevents overflow */
-@media (min-width: 640px) {
-  .my-warehouse-grid {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-    gap: 18px;
-  }
-}
+/* below 768 we keep 2 columns (no additional media rule needed) */
 
 @media (min-width: 768px) {
   .my-warehouse-grid {
