@@ -34,29 +34,37 @@
   display: grid;
   gap: 18px;
   grid-auto-rows: 1fr;
-  /* allow the grid to auto-fit columns while keeping a comfortable minimum
-      width so cards don't become too narrow on large screens */
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /* explicit responsive columns: 1 / 2 / 3 / 4 / 5 at 640 / 768 / 1024 / 1400px */
+  grid-template-columns: 1fr;
   justify-items: center; /* center each card into its grid cell */
   align-items: start;
 }
 
 /* breakpoints keep visual rhythm but auto-fit prevents overflow */
-@media (min-width: 480px) {
+@media (min-width: 640px) {
   .my-warehouse-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
     gap: 18px;
   }
 }
 
 @media (min-width: 768px) {
   .my-warehouse-grid {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
     gap: 20px;
   }
 }
 
 @media (min-width: 1024px) {
   .my-warehouse-grid {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
     gap: 22px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .my-warehouse-grid {
+    grid-template-columns: repeat(5, minmax(220px, 1fr));
   }
 }
 
