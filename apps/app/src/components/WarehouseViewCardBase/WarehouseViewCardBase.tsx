@@ -92,6 +92,12 @@ export const WarehouseViewCardBase = ({
                   <AcceptedNote> Tạo kho bãi thành công</AcceptedNote>
                 </>
               )}
+              {warehouse.status === WarehouseStatus.Pending && (
+                <>
+                  <Separator end={5} start={5} />
+                  <PendingNote>Đang cập nhật</PendingNote>
+                </>
+              )}
               {warehouse.status === WarehouseStatus.Rejected && (
                 <>
                   <Separator end={5} start={5} />
@@ -158,14 +164,16 @@ const CardContainer = styled.div`
   transition: transform 0.14s ease;
   isolation: isolate;
   font-family: ${FONT_FAMILY};
-  min-height: 360px;
+  /* reduce default card height so cards are less bulky on lists */
+  min-height: 300px;
 
   &:hover {
     transform: translateY(-2px);
   }
 
   @media (max-width: ${breakpoints.md}) {
-    min-height: auto;
+    /* on small screens let card grow/shrink naturally but remain compact */
+    min-height: 260px;
   }
 `;
 
@@ -177,11 +185,11 @@ const ContentArea = styled.div`
 `;
 
 const TextContainer = styled.div`
-  --container-padding-top: 1.5625rem;
-  padding: var(--container-padding-top) 1.25rem 1.25rem;
+  --container-padding-top: 1.25rem;
+  padding: var(--container-padding-top) 0.875rem 0.875rem;
   @media (max-width: ${breakpoints.md}) {
-    padding: 1rem 0.875rem 0.875rem;
-    --container-padding-top: 1.125rem;
+    padding: 0.75rem 0.75rem 0.75rem;
+    --container-padding-top: 0.875rem;
   }
   position: relative;
   display: flex;
@@ -269,7 +277,8 @@ const CardAddressIcon = styled.div`
 const CardImage = styled.img`
   width: 100%;
 
-  aspect-ratio: 16 / 9;
+  /* slightly taller image to keep visual balance while reducing overall card height */
+  aspect-ratio: 3 / 2;
   width: 100%;
   height: auto;
   padding: 0.25rem;
@@ -282,8 +291,11 @@ const CardImage = styled.img`
   }
   @media (max-width: ${breakpoints.md}) {
     aspect-ratio: 4 / 3;
-    padding: 0.15rem;
+    padding: 0.125rem;
   }
+
+  /* keep image height bounded so tall images don't blow out card height */
+  max-height: 180px;
 `;
 
 const CardDate = styled.span`
@@ -334,6 +346,15 @@ const RejectedReason = styled.div`
 const AcceptedNote = styled.div`
   font-size: 14px;
   color: #0f9d58; /* green-ish to match accepted label */
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const PendingNote = styled.div`
+  font-size: 14px;
+  color: ${blueA.blueA9};
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
