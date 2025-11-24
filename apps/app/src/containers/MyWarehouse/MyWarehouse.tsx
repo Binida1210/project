@@ -13,7 +13,7 @@ import { useMyWarehouseStore } from '@/store/my-warehouse.store';
 
 // Using plain-CSS list temporarily so responsive style is easier to tweak
 // experiment: different layout - masonry variant (plain CSS) for visual comparison
-import { MyWarehouseCardListMasonry as MyWarehouseCardList } from './MyWarehouseCardListMasonry';
+import { MyWarehouseCardListGrid as MyWarehouseCardList } from './MyWarehouseCardListGrid';
 
 const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
   [RentedWarehouseStatus.Waiting]: 1,
