@@ -232,8 +232,8 @@ const MobileGreetingItem = styled(MobileItem)`
 /* small global rule to allow explicitly targeting header auth buttons */
 const HeaderAuthStyles = createGlobalStyle`
   .irent-auth-btn-zero{
-    padding: 0 1rem;
-    min-width: unset !important;
+    padding: inherit;
+    min-width: 6rem !important;
   }
 `;
 
@@ -351,7 +351,7 @@ export const Header = () => {
                 </>
               ) : (
                 <>
-                  <li>
+                  <li className="irent-w80-btn">
                     {/* explicitly zero padding here to override inherited padding for tight navbar */}
                     <Link to={'/sign-up'}>
                       <Button className="irent-auth-btn-zero" size="sm">
@@ -359,7 +359,7 @@ export const Header = () => {
                       </Button>
                     </Link>
                   </li>
-                  <li>
+                  <li className="irent-w80-btn">
                     {/* explicit padding reset so the two auth buttons do not overflow */}
                     <Link to={'/login'}>
                       <Button className="irent-auth-btn-zero" color="secondary" size="sm">
