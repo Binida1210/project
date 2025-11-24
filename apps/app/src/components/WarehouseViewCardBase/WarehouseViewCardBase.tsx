@@ -215,7 +215,8 @@ const CardName = styled.span`
   max-width: 100%;
   margin: 8px 0 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  /* Title should stay compact — single line with ellipsis to keep layout tidy */
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 1.2;
 
@@ -245,7 +246,8 @@ const AddressText = styled.p`
 
   @media (max-width: ${breakpoints.md}) {
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    /* Allow the address to break into up to 2 lines on smaller screens to match design */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
