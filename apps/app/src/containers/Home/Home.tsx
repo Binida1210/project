@@ -426,8 +426,13 @@ const SectionHeader = styled.div`
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-  /* Use auto-fit so the grid adapts to available width: 4 -> 3 -> 2 -> 1 depending on viewport */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* Explicit responsive columns for predictable layout
+      < 640px: 1
+      >=640px: 2
+      >=768px: 3
+      >=1024px: 4
+    */
+    grid-template-columns: 1fr;
   /* make rows equal height so cards within a row align nicely */
   grid-auto-rows: 1fr;
   column-gap: clamp(12px, 1.8vw, 20px);
@@ -438,19 +443,24 @@ const GridContainer = styled.div`
     column-gap: 16px;
   }
 
-  @media (max-width: ${breakpoints.mdWide}) {
-    /* slightly smaller minimum card width on narrower viewports */
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    column-gap: clamp(10px, 2vw, 14px);
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
 
   @media (min-width: 1260px) {
-    /* allow slightly wider cards on large desktop */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* slightly wider cards on large desktop */
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
-
   @media (max-width: 520px) {
-    /* single column layout for phones */
+    /* single column layout for very small phones */
     grid-template-columns: 1fr;
     column-gap: 8px;
   }
