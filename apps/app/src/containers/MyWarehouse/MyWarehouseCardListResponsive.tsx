@@ -73,13 +73,8 @@ const Grid = styled.div`
   gap: 18px;
   grid-auto-rows: 1fr;
 
-  /* default: single column */
-  grid-template-columns: 1fr;
-
-  /* small screens -> two columns (>= 640px) */
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
+  /* default: two columns for narrower viewports to avoid a single-column look */
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
 
   /* medium screens -> three columns */
   @media (min-width: 768px) {
