@@ -189,6 +189,9 @@ const CardArea = styled.span`
   margin-top: 0px;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const RentedInfoArea = styled.div`
@@ -203,7 +206,12 @@ const RentedInfoSide = styled.div`
   gap: 4px;
 `;
 
-const RentedInfoSection = styled.div``;
+const RentedInfoSection = styled.div`
+  /* ensure rented info labels & values are single-line truncated */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
 
 const CardName = styled.span`
   font-size: 1.125rem;
@@ -214,6 +222,8 @@ const CardName = styled.span`
   text-overflow: ellipsis;
   max-width: 100%;
   margin: 8px 0 0;
+  /* make sure title is visually limited to a single line across browsers */
+  white-space: nowrap;
   display: -webkit-box;
   /* Title should stay compact — single line with ellipsis to keep layout tidy */
   -webkit-line-clamp: 1;
@@ -237,22 +247,12 @@ const CardAddress = styled.span`
 
 const AddressText = styled.p`
   max-width: 100%;
+  margin: 0;
+  line-height: 1.4;
+  /* single-line truncation for address to match request */
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0;
-  word-wrap: break-word;
-  hyphens: auto;
-  line-height: 1.4;
-
-  @media (max-width: ${breakpoints.md}) {
-    display: -webkit-box;
-    /* Allow the address to break into up to 2 lines on smaller screens to match design */
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-  }
+  white-space: nowrap;
 `;
 
 const CardAddressIcon = styled.div`
@@ -317,5 +317,8 @@ const PriceText = styled.span`
 
 const RejectedReason = styled.div`
   font-size: 14px;
-  word-wrap: break-word;
+  /* keep rejected reason concise in the card */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
