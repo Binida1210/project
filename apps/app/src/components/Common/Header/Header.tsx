@@ -235,6 +235,13 @@ const HeaderAuthStyles = createGlobalStyle`
     padding: 0 1rem;
     min-width: unset !important;
   }
+  /* helper class for header auth list items: make element occupy 80% width
+     (keeps buttons compact on narrow containers but allows wider hit areas when needed) */
+  .irent-w80-btn{
+    display: inline-block; /* ensures width is respected on inline elements */
+    width: 80%;
+    min-width: 0; /* prevents overflow in flex containers */
+  }
 `;
 
 // mobile-specific spacing is handled by the Button's 'fluid' size
