@@ -86,6 +86,12 @@ export const WarehouseViewCardBase = ({
           {showWarehouseStatus && (
             <>
               <WarehouseStatusLabel status={warehouse.status}></WarehouseStatusLabel>
+              {warehouse.status === WarehouseStatus.Accepted && (
+                <>
+                  <Separator end={5} start={5} />
+                  <AcceptedNote> Tạo kho bãi thành công</AcceptedNote>
+                </>
+              )}
               {warehouse.status === WarehouseStatus.Rejected && (
                 <>
                   <Separator end={5} start={5} />
@@ -318,6 +324,15 @@ const PriceText = styled.span`
 const RejectedReason = styled.div`
   font-size: 14px;
   /* keep rejected reason concise in the card */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+const AcceptedNote = styled.div`
+  font-size: 14px;
+  color: #0f9d58; /* green-ish to match accepted label */
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
