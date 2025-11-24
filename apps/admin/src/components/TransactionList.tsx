@@ -1,25 +1,18 @@
-import { BooleanField, Datagrid, DateField, List, NumberField, SimpleList, TextField } from 'react-admin';
+import { BooleanField, Datagrid, DateField, List, NumberField, TextField } from 'react-admin';
 
 export const TransactionList = () => (
   <List>
-    <SimpleList
-      primaryText={(record: any) => record.warehouse?.name ?? 'Transaction'}
-      secondaryText={(record: any) => `${record.price ?? ''} VND`}
-      tertiaryText={(record: any) => record.createdAt}
-    />
-    <div className="desktop-datagrid" aria-hidden>
-      <Datagrid rowClick="show">
-      <TextField source="id" label="" />
-      <TextField source="warehouse.name" label="Warehouse" />
-      <TextField source="owner.name" label="Owner" />
-      <TextField source="renter.name" label="Renter" />
-      <NumberField source="price" label="Price (VND)" />
-      <NumberField source="duration" label="Duration (months)" />
-      <DateField source="createdAt" label="Created" showTime={true} textAlign="right" />
-      {/* <BooleanField source="isConfirmed" label="Confirmed" /> */}
-      <NumberField className="color-success" source="fee" label="Fee (VND)" />
-      </Datagrid>
-    </div>
+    <Datagrid rowClick="show">
+      <TextField source="id" label=""/>
+      <TextField source="warehouse.name" label="Tên kho bãi" />
+      <TextField source="owner.name" label="Chủ sở hữu" />
+      <TextField source="renter.name" label="Người thuê" />
+      <NumberField source="price" label="Giá (VND)"/>
+      <NumberField source="duration" label="Thời hạn (tháng)"/>
+      <DateField source="createdAt" label="Thời gian tạo" showTime={true} textAlign='right'/>
+      {/* <BooleanField source="isConfirmed" label="Xác nhận" /> */}
+      <NumberField className='color-success' source="fee" label="Phí (VND)" />
+    </Datagrid>
   </List>
 );
 

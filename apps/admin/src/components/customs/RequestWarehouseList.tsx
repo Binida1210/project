@@ -29,8 +29,6 @@ type RawPendingWarehouseRecord = {
   createdDate: string;
 };
 
-import { SimpleList } from 'react-admin';
-
 export const RequestWarehouseList = () => {
   const [data, setData] = useState<PendingWarehouseRecord[]>([]);
   const redirect = useRedirect();
@@ -71,43 +69,34 @@ export const RequestWarehouseList = () => {
   return (
     <PageSection>
       <SectionHeader>
-        <h1>Pending Warehouses</h1>
+        <h1>Kho bãi đang chờ duyệt</h1>
       </SectionHeader>
       <TableContainer>
         <ListContextProvider value={listContext}>
-          {/* Responsive: show simple list on small screens, table on larger */}
-          <SimpleList
-            primaryText={(record: any) => record.name}
-            secondaryText={(record: any) => record.address}
-            tertiaryText={(record: any) => `Created: ${record.createdDate}`}
-            onClick={(id) => redirect(`/request/${id}`)}
-          />
-          <div className="desktop-datagrid" aria-hidden>
-            <Datagrid bulkActionButtons={false} rowClick={false}>
-              <TextField source="id" />
-              <TextField label="Name" source="name" />
-              <TextField label="Address" source="address" />
-              <TextField label="Price" source="price" />
-              <TextField label="Floors" source="floors" />
-              <TextField label="Doors" source="doors" />
-              <TextField label="Area" source="area" />
-              <TextField label="Created" source="createdDate" />
-              <FunctionField
-                label="Actions"
-                render={(record: PendingWarehouseRecord) => (
-                  <ActionRow>
-                    <Button
-                      label="View"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        redirect(`/request/${record.id}`);
-                      }}
-                    />
-                  </ActionRow>
-                )}
-              />
-            </Datagrid>
-          </div>
+          <Datagrid bulkActionButtons={false} rowClick={false}>
+            <TextField source="id" />
+            <TextField label="Tên" source="name" />
+            <TextField label="Địa chỉ" source="address" />
+            <TextField label="Giá" source="price" />
+            <TextField label="Tầng" source="floors" />
+            <TextField label="Cửa" source="doors" />
+            <TextField label="Diện tích" source="area" />
+            <TextField label="Ngày tạo" source="createdDate" />
+            <FunctionField
+              label="Hành động"
+              render={(record: PendingWarehouseRecord) => (
+                <ActionRow>
+                  <Button
+                    label="Xem"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      redirect(`/request/${record.id}`);
+                    }}
+                  />
+                </ActionRow>
+              )}
+            />
+          </Datagrid>
         </ListContextProvider>
       </TableContainer>
     </PageSection>
@@ -173,16 +162,6 @@ const TableContainer = styled.div`
       width: 140px; /* Hành động */
       text-align: center;
     }
-  }
-
-  /* responsive: show simple-list on mobile and datagrid on larger screens */
-  @media (min-width: 800px) {
-    .ra-simple-list { display: none; }
-    .desktop-datagrid { display: block; }
-  }
-
-  @media (max-width: 799px) {
-    .desktop-datagrid { display: none; }
   }
 `;
 

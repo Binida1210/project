@@ -58,9 +58,9 @@ export const TransactionDetails = () => {
     <>
       <Wrapper>
         <Header>
-            <h1>Warehouse details</h1>
-            <Button
-              label="Back"
+          <h1>Chi tiết kho bãi</h1>
+          <Button
+            label="Quay lại"
             onClick={() => {
               redirect('/warehouse');
             }}
@@ -68,45 +68,45 @@ export const TransactionDetails = () => {
         </Header>
         <InfoGrid>
           <InfoItem>
-            <InfoLabel>Warehouse</InfoLabel>
+            <InfoLabel>Tên kho bãi</InfoLabel>
             <InfoValue>{data.name}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Owner</InfoLabel>
+            <InfoLabel>Chủ sở hữu</InfoLabel>
             <InfoValue>{data.userId}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Renter</InfoLabel>
-            <InfoValue>{data.rentedInfo?.renterId ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Người thuê</InfoLabel>
+            <InfoValue>{data.rentedInfo?.renterId ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Price</InfoLabel>
-            <InfoValue>{(data.price * 1000).toLocaleString('en-US')} VND</InfoValue>
+            <InfoLabel>Giá</InfoLabel>
+            <InfoValue>{(data.price * 1000).toLocaleString('vi-VN')} VND</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Rent date</InfoLabel>
-            <InfoValue>{data.rentedInfo?.rentedDate ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Ngày thuê</InfoLabel>
+            <InfoValue>{data.rentedInfo?.rentedDate ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>End date</InfoLabel>
-            <InfoValue>{data.rentedInfo?.endDate ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Ngày kết thúc</InfoLabel>
+            <InfoValue>{data.rentedInfo?.endDate ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Created</InfoLabel>
+            <InfoLabel>Thời gian tạo</InfoLabel>
             <InfoValue>{data.createdDate}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Status</InfoLabel>
-            <InfoValue>{data.rented ? 'Rented' : 'Not rented'}</InfoValue>
+            <InfoLabel>Tình trạng</InfoLabel>
+            <InfoValue>{data.rented ? 'Đã thuê' : 'Chưa thuê'}</InfoValue>
           </InfoItem>
         </InfoGrid>
 
         {data.rentedInfo ? (
           <ContractCard>
             <ContractHeader>
-              <SectionTitle>Rental contract</SectionTitle>
+              <SectionTitle>Hợp đồng thuê kho</SectionTitle>
               <ButtonRow>
-                <Button label="View contract" onClick={() => setContractOpen(true)} />
+                <Button label="Xem hợp đồng" onClick={() => setContractOpen(true)} />
               </ButtonRow>
             </ContractHeader>
           </ContractCard>
@@ -114,7 +114,7 @@ export const TransactionDetails = () => {
       </Wrapper>
       {data.rentedInfo ? (
         <Confirm
-          confirm="Close"
+          confirm="Đóng"
           content={
             <ContractContent>
               <ContractFrame
@@ -126,7 +126,7 @@ export const TransactionDetails = () => {
           isOpen={isContractOpen}
           maxWidth={false}
           scroll="body"
-                title="Contract"
+          title="Hợp đồng"
           onClose={() => {
             setContractOpen(false);
           }}

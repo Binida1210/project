@@ -318,19 +318,19 @@ const LogoutBtn = styled.button`
 
 const navItems = [
   {
-    group: 'Content',
-    items: [{ label: 'All Warehouses', icon: <CubeIcon />, path: '/warehouse' }],
+    group: 'Nội dung',
+    items: [{ label: 'Tất cả kho bãi', icon: <CubeIcon />, path: '/warehouse' }],
   },
   {
-    group: 'Reports',
+    group: 'Báo cáo',
     items: [
-      { label: 'Pending Requests', icon: <ClockIcon />, path: '/request' },
-      { label: 'Revenue', icon: <BarChartIcon />, path: '/revenue' },
+      { label: 'Đơn chờ duyệt', icon: <ClockIcon />, path: '/request' },
+      { label: 'Thống kê doanh thu', icon: <BarChartIcon />, path: '/revenue' },
     ],
   },
   {
-    group: 'Accounts',
-    items: [{ label: 'Manage Users', icon: <PersonIcon />, path: '/users' }],
+    group: 'Tài khoản',
+    items: [{ label: 'Quản lý người dùng', icon: <PersonIcon />, path: '/users' }],
   },
 ];
 
@@ -341,10 +341,10 @@ const CustomSidebar = () => {
     <Sidebar>
       <Header>
         <Logo>IR</Logo>
-      <Brand>
-        <h1>iRent Admin</h1>
-        <span>Dashboard</span>
-      </Brand>
+        <Brand>
+          <h1>iRent Admin</h1>
+          <span>Dashboard</span>
+        </Brand>
       </Header>
 
       <Nav>
@@ -368,7 +368,7 @@ const CustomSidebar = () => {
       <Footer>
         <LogoutBtn onClick={() => logout()}>
           <ExitIcon />
-          Log out
+          Đăng xuất
         </LogoutBtn>
       </Footer>
     </Sidebar>

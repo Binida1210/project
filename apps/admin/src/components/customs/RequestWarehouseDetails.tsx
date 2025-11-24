@@ -83,11 +83,11 @@ export const RequestWarehouseDetails = () => {
   };
 
   const infoItems = [
-    { label: 'Address', value: getFormattedAddress(warehouse.address) },
-    { label: 'Price', value: `${(warehouse.price * 1000).toLocaleString('en-US')} VND / month` },
-    { label: 'Area', value: `${warehouse.area} m²` },
-    { label: 'Floors', value: `${warehouse.floors}` },
-    { label: 'Doors', value: `${warehouse.doors}` },
+    { label: 'Địa chỉ', value: getFormattedAddress(warehouse.address) },
+    { label: 'Giá', value: `${(warehouse.price * 1000).toLocaleString('vi-VN')} VND / tháng` },
+    { label: 'Diện tích', value: `${warehouse.area} mét vuông` },
+    { label: 'Số tầng', value: `${warehouse.floors} tầng` },
+    { label: 'Số cửa', value: `${warehouse.doors} cửa` },
   ];
 
   return (
@@ -95,7 +95,7 @@ export const RequestWarehouseDetails = () => {
       <Wrapper>
         <Header>
           <h1>{warehouse.name || ''}</h1>
-          <Button label="Back" onClick={() => redirect('/request')} />
+          <Button label="Quay lại" onClick={() => redirect('/request')} />
         </Header>
         <InfoGrid>
           {infoItems.map(({ label, value }) => (
@@ -114,23 +114,23 @@ export const RequestWarehouseDetails = () => {
                   </ImageLink>
                 ))
               ) : (
-                <Placeholder>No images</Placeholder>
+                <Placeholder>Chưa có hình ảnh</Placeholder>
               )}
             </ImageContainer>
           </InfoItem>
         </InfoGrid>
 
         <DescriptionCard>
-          <SectionTitle>Warehouse details</SectionTitle>
+          <SectionTitle>Chi tiết kho bãi</SectionTitle>
           {!isEmpty(warehouse.description) ? (
             <Description dangerouslySetInnerHTML={{ __html: warehouse.description ?? '' }} />
           ) : (
-            <Placeholder>No description</Placeholder>
+            <Placeholder>Chưa có mô tả</Placeholder>
           )}
         </DescriptionCard>
 
         <UpdateZone>
-          <UpdateTitle>Approval</UpdateTitle>
+          <UpdateTitle>Xác nhận duyệt kho</UpdateTitle>
           <RadioGroupRoot
             value={status}
             onValueChange={(nextValue) => {
@@ -141,20 +141,20 @@ export const RequestWarehouseDetails = () => {
               <RadioGroupItem id="approve" value="1">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="approve">Approve</Label>
+              <Label htmlFor="approve">Đồng ý</Label>
             </RadioOption>
 
             <RadioOption>
               <RadioGroupItem id="reject" value="2">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="reject">Reject</Label>
+              <Label htmlFor="reject">Từ chối</Label>
             </RadioOption>
           </RadioGroupRoot>
 
           <Textarea
             disabled={status !== '2'}
-            placeholder="Enter rejection reason"
+            placeholder="Nhập lí do từ chối"
             onChange={(event) => {
               setRejectedReason(event.target.value);
             }}
@@ -168,7 +168,7 @@ export const RequestWarehouseDetails = () => {
               handleUpdateWarehouseRequest();
             }}
           >
-            <span>Update</span>
+            <span>Cập nhật</span>
           </ConfirmButton>
         </UpdateZone>
       </Wrapper>

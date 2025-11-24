@@ -36,7 +36,7 @@ export const UserDetails = () => {
 
       setUser({
         ...data,
-        roleName: data.role === 2 ? 'Warehouse owner' : 'Renter',
+        roleName: data.role === 2 ? 'Chủ kho' : 'Người thuê',
       });
     });
   }, [id]);
@@ -48,9 +48,9 @@ export const UserDetails = () => {
   return (
     <Wrapper>
       <Header>
-        <h1>User details</h1>
+        <h1>Chi tiết người dùng</h1>
         <Button
-          label="Back"
+          label="Quay lại"
           onClick={() => {
             redirect('/users');
           }}
@@ -58,11 +58,11 @@ export const UserDetails = () => {
       </Header>
       <DetailsGrid>
         <DetailRow>
-          <DetailLabel>User ID</DetailLabel>
+          <DetailLabel>Mã người dùng</DetailLabel>
           <DetailValue>{user.id}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Full name</DetailLabel>
+          <DetailLabel>Họ và tên</DetailLabel>
           <DetailValue>{user.name}</DetailValue>
         </DetailRow>
         <DetailRow>
@@ -70,15 +70,15 @@ export const UserDetails = () => {
           <DetailValue>{user.email}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Phone</DetailLabel>
+          <DetailLabel>Số điện thoại</DetailLabel>
           <DetailValue>{user.phoneNumber}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>ID</DetailLabel>
+          <DetailLabel>CMND/CCCD</DetailLabel>
           <DetailValue>{user.ioc || '—'}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Role</DetailLabel>
+          <DetailLabel>Vai trò</DetailLabel>
           <DetailValue>{user.roleName}</DetailValue>
         </DetailRow>
       </DetailsGrid>

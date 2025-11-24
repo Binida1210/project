@@ -47,7 +47,7 @@ export const Users = () => {
           name: it.name,
           phone: it.phoneNumber,
           ioc: it.ioc,
-            roleName: it.role === 2 ? 'Warehouse owner' : 'Renter',
+          roleName: it.role === 2 ? 'Chủ kho' : 'Người thuê',
         })),
       )
       .then((v) => setUsers(v));
@@ -69,10 +69,10 @@ export const Users = () => {
 
   useEffect(() => {
     setChartData({
-        labels: ['Warehouse owners', 'Renters'],
-          datasets: [
+      labels: ['Chủ kho bãi', 'Người thuê'],
+      datasets: [
         {
-          label: 'Count',
+          label: 'Số lượng',
           data: [ownerCount, renterCount],
           backgroundColor: ['#06b6d4', '#bae6fd'],
           borderColor: ['#0891b2', '#7dd3fc'],
@@ -95,7 +95,7 @@ export const Users = () => {
           callbacks: {
             label: (tooltipItem) => {
               const value = tooltipItem.parsed;
-                return `${tooltipItem.label}: ${value.toLocaleString('en-US')} users`;
+              return `${tooltipItem.label}: ${value.toLocaleString('vi-VN')} người`;
             },
           },
         },
@@ -107,17 +107,17 @@ export const Users = () => {
   const summaryCards = useMemo(
     () => [
       {
-          label: 'Total users',
+        label: 'Tổng người dùng',
         value: users.length,
         accent: '#0284c7',
       },
       {
-          label: 'Warehouse owners',
+        label: 'Chủ kho bãi',
         value: ownerCount,
         accent: '#06b6d4',
       },
       {
-          label: 'Renters',
+        label: 'Người thuê',
         value: renterCount,
         accent: '#bae6fd',
       },
@@ -128,14 +128,14 @@ export const Users = () => {
   return (
     <PageSection>
       <SectionHeader>
-          <h1>User statistics</h1>
-          <ChartSubtitle>Analysis of users by role</ChartSubtitle>
+        <h1>Thống kê người dùng</h1>
+        <ChartSubtitle>Phân tích người dùng theo vai trò</ChartSubtitle>
       </SectionHeader>
       <AnalyticsSection>
         <AnalyticsCard>
           <AnalyticsHeader>
-            <ChartTitle>Distribution by role</ChartTitle>
-            <ChartSubtitle>Total {users.length.toLocaleString('en-US')} users</ChartSubtitle>
+            <ChartTitle>Phân bổ theo vai trò</ChartTitle>
+            <ChartSubtitle>Tổng cộng {users.length.toLocaleString('vi-VN')} người dùng</ChartSubtitle>
           </AnalyticsHeader>
           <AnalyticsContent>
             <ChartArea>
@@ -143,18 +143,18 @@ export const Users = () => {
               <LegendRow>
                 <LegendItem $color="#06b6d4">
                   <LegendDot $color="#06b6d4" />
-                    <LegendLabel>Warehouse owners</LegendLabel>
+                  <LegendLabel>Chủ kho bãi</LegendLabel>
                 </LegendItem>
                 <LegendItem $color="#bae6fd">
                   <LegendDot $color="#bae6fd" />
-                    <LegendLabel>Renters</LegendLabel>
+                  <LegendLabel>Người thuê</LegendLabel>
                 </LegendItem>
               </LegendRow>
             </ChartArea>
             <MetricsColumn>
               {summaryCards.map(({ label, value, accent }) => (
                 <MetricItem key={label} $accent={accent}>
-                  <MetricValue>{value.toLocaleString('en-US')}</MetricValue>
+                  <MetricValue>{value.toLocaleString('vi-VN')}</MetricValue>
                   <MetricLabel>{label}</MetricLabel>
                 </MetricItem>
               ))}
@@ -166,17 +166,17 @@ export const Users = () => {
         <ListContextProvider value={listContext}>
           <Datagrid bulkActionButtons={false} rowClick={false}>
             <TextField source="id" />
-              <TextField label="Name" source="name" />
+            <TextField label="Tên" source="name" />
             <TextField label="Email" source="email" />
-              <TextField label="Phone" source="phone" />
-            <TextField label="ID" source="ioc" />
-              <TextField label="Role" source="roleName" />
+            <TextField label="SĐT" source="phone" />
+            <TextField label="CMND/CCCD" source="ioc" />
+            <TextField label="Vai trò" source="roleName" />
             <FunctionField
-              label="Actions"
+              label="Hành động"
               render={(record: UserPieData) => (
                 <ButtonRow>
                   <Button
-                      label="View"
+                    label="Xem"
                     onClick={(event) => {
                       event.stopPropagation();
                       redirect(`/users/${record.id}`);
