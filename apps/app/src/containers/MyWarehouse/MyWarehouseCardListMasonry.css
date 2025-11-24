@@ -23,27 +23,27 @@
 }
 
 /* Masonry using columns
-   - On small screens: single column (stack)
-   - On medium screens: 2 columns
-   - On large screens: 3 columns
+   - default/narrow screens: 2 columns (to avoid single-column cramped look)
+   - >=768px: 3 columns
+   - >=1024px: 4 columns
    The column-gap controls the gutter between columns.
 */
 .my-warehouse-masonry-grid {
   margin-top: 16px;
   column-gap: 18px;
-  /* base: single column */
-  columns: 1 240px;
+  /* default: two columns for narrow viewports */
+  columns: 2 240px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .my-warehouse-masonry-grid {
-    columns: 2 280px;
+    columns: 3 280px;
   }
 }
 
 @media (min-width: 1024px) {
   .my-warehouse-masonry-grid {
-    columns: 3 300px;
+    columns: 4 300px;
     column-gap: 22px;
   }
 }
