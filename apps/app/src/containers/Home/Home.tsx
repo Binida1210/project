@@ -255,7 +255,7 @@ const SearchBar = styled.div`
 
   @media (max-width: ${breakpoints.mdWide}) {
     /* stack filters & actions on small screens */
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
     gap: 10px;
     align-items: stretch;
   }
@@ -443,9 +443,6 @@ const GridContainer = styled.div`
     column-gap: 16px;
   }
 
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
-  }
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -459,9 +456,6 @@ const GridContainer = styled.div`
     /* slightly wider cards on large desktop */
     grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
-  @media (max-width: 520px) {
-    /* single column layout for very small phones */
-    grid-template-columns: 1fr;
-    column-gap: 8px;
-  }
+  /* keep 2 columns even on small phones (requested). If you want 1 column at very small screens,
+     we can add a small breakpoint here (e.g. max-width: 360px) */
 `;
