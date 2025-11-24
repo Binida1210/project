@@ -46,15 +46,25 @@ const GridContainer = styled.div`
   width: 100%;
   margin-top: 12px;
   display: grid;
-  /* use a responsive auto-fit grid so columns shrink and reflow smoothly */
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* explicit columns at breakpoints for stable responsive behavior
+      < 640px: 1 column
+      >=640px: 2 columns
+      >=768px: 3 columns
+      >=1024px: 4 columns */
+    grid-template-columns: 1fr;
   /* make each row take equal height so cards align across each row */
   grid-auto-rows: 1fr;
   gap: 12px;
 
-  /* ensure the grid keeps reasonable spacing on very small screens */
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
 `;
