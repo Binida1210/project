@@ -11,7 +11,9 @@ import { RentedWarehouseStatus } from '@/models/rented-warehouse.model';
 import { WareHouseModel, WarehouseStatus } from '@/models/warehouse.model';
 import { useMyWarehouseStore } from '@/store/my-warehouse.store';
 
-import { MyWarehouseCardList } from './MyWarehouseCardList';
+// Using plain-CSS list temporarily so responsive style is easier to tweak
+// experiment: different layout - masonry variant (plain CSS) for visual comparison
+import { MyWarehouseCardListMasonry as MyWarehouseCardList } from './MyWarehouseCardListMasonry';
 
 const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
   [RentedWarehouseStatus.Waiting]: 1,
@@ -124,15 +126,24 @@ export const MyWarehouse = () => {
 };
 
 const MyWarehouseRoot = styled.div`
+  /* keep the tabs area bounded and responsive so it never forces horizontal scroll */
   --tabs-width: 1280px;
+  max-width: 100%;
 `;
 
 const MyWarehouseTabs = styled(Tabs)`
-  width: var(--tabs-width);
+  /* use a responsive width: cap to the fixed design width but allow shrinking */
+  width: min(var(--tabs-width), 96%);
+  margin: 0 auto;
 `;
 
 const CreateWareHouse = styled.div`
-  text-align: right;
+  /* place button inside the same bounded content width as tabs and align to the right
+     so it doesn't visually overlap the tabs area or cause horizontal scroll */
+  width: min(var(--tabs-width), 96%);
+  margin: 0 auto 12px; /* keep gap between button and tabs */
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const NothingContainer = styled.div`

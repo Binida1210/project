@@ -19,11 +19,11 @@ export function SuffixInput({ suffix, className, ...props }: SuffixInputProps) {
 
 const SuffixInputRoot = styled.div`
   width: 100%;
-  height: 50px;
+  height: 3.125rem; /* ~50px */
   display: flex;
-  border-radius: 4px;
+  border-radius: 0.375rem; /* 6px */
   outline: 1px solid gray;
-  padding: 15px 0 15px 15px;
+  padding: 0.85rem 0 0.85rem 0.75rem;
   box-sizing: border-box;
 
   &:focus-within {
@@ -32,9 +32,10 @@ const SuffixInputRoot = styled.div`
 `;
 const Input = styled.input`
   border: 0;
-  width: inherit;
+  width: 100%;
   box-sizing: border-box;
-  flex-shrink: 5;
+  flex: 1 1 auto; /* allow input to grow/shrink within the container */
+  min-width: 0; /* allow it to shrink under flex */
   padding: 0;
 
   &:focus-visible,
@@ -44,7 +45,7 @@ const Input = styled.input`
 `;
 
 const Suffix = styled.div`
-  min-width: 50px;
+  flex: 0 0 auto; /* keep suffix at its natural size, prevent it from wrapping */
   text-align: center;
   color: rgb(128, 128, 128, 0.65);
   padding: 0 5px;
@@ -56,5 +57,6 @@ const Suffix = styled.div`
   p {
     white-space: nowrap;
     margin: 0;
+    font-size: 0.95rem;
   }
 `;

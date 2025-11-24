@@ -36,7 +36,7 @@ export const UserDetails = () => {
 
       setUser({
         ...data,
-        roleName: data.role === 2 ? 'Owner' : 'Renter',
+        roleName: data.role === 2 ? 'Chủ kho' : 'Người thuê',
       });
     });
   }, [id]);
@@ -48,9 +48,9 @@ export const UserDetails = () => {
   return (
     <Wrapper>
       <Header>
-        <h1>User Details</h1>
+        <h1>Chi tiết người dùng</h1>
         <Button
-          label="Back"
+          label="Quay lại"
           onClick={() => {
             redirect('/users');
           }}
@@ -58,11 +58,11 @@ export const UserDetails = () => {
       </Header>
       <DetailsGrid>
         <DetailRow>
-          <DetailLabel>User ID</DetailLabel>
+          <DetailLabel>Mã người dùng</DetailLabel>
           <DetailValue>{user.id}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Full name</DetailLabel>
+          <DetailLabel>Họ và tên</DetailLabel>
           <DetailValue>{user.name}</DetailValue>
         </DetailRow>
         <DetailRow>
@@ -70,15 +70,15 @@ export const UserDetails = () => {
           <DetailValue>{user.email}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Phone</DetailLabel>
+          <DetailLabel>Số điện thoại</DetailLabel>
           <DetailValue>{user.phoneNumber}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>ID Number</DetailLabel>
+          <DetailLabel>CMND/CCCD</DetailLabel>
           <DetailValue>{user.ioc || '—'}</DetailValue>
         </DetailRow>
         <DetailRow>
-          <DetailLabel>Role</DetailLabel>
+          <DetailLabel>Vai trò</DetailLabel>
           <DetailValue>{user.roleName}</DetailValue>
         </DetailRow>
       </DetailsGrid>
@@ -89,27 +89,27 @@ export const UserDetails = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  margin-top: 16px;
+  gap: 1.75rem;
+  margin-top: 1rem;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--admin-space-2);
   flex-wrap: wrap;
 
   button {
-    padding: 8px 16px !important;
+    padding: 0.5rem 1rem !important;
   }
 `;
 
 const DetailsGrid = styled.div`
   display: grid;
-  gap: 18px;
+  gap: 1.125rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  padding: clamp(20px, 3vw, 28px);
+  padding: clamp(1rem, 3vw, 1.75rem);
   border-radius: var(--admin-radius-lg);
   background: var(--admin-surface);
   border: 1px solid var(--admin-border-color);
@@ -119,9 +119,9 @@ const DetailsGrid = styled.div`
 const DetailRow = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 18px;
-  border-radius: 16px;
+  gap: var(--admin-space-2);
+  padding: 1.125rem;
+  border-radius: var(--admin-radius-lg);
   border: 1px solid rgba(226, 232, 240, 0.8);
   background: linear-gradient(165deg, rgba(248, 250, 252, 0.85), rgba(255, 255, 255, 0.98));
 `;

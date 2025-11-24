@@ -26,12 +26,17 @@ const DatePickerRoot = styled.div`
   }
 
   .date-picker-input {
-    width: 500px;
-    height: 50px;
+    /* make the date input itself equal the requested centered width */
+    width: 60dvw;
+    margin: 0 auto; /* center inside container */
+    height: 3.125rem; /* ~50px */
     display: flex;
-    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 0.5rem; /* 8px */
     border-width: 1px;
-    padding: 15px 0 15px 15px;
+    padding: 0.85rem 0.75rem; /* relative padding */
     box-sizing: border-box;
 
     &:focus-within {

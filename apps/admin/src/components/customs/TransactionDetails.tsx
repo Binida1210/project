@@ -58,9 +58,9 @@ export const TransactionDetails = () => {
     <>
       <Wrapper>
         <Header>
-          <h1>Warehouse Details</h1>
+          <h1>Chi tiết kho bãi</h1>
           <Button
-            label="Back"
+            label="Quay lại"
             onClick={() => {
               redirect('/warehouse');
             }}
@@ -68,45 +68,45 @@ export const TransactionDetails = () => {
         </Header>
         <InfoGrid>
           <InfoItem>
-            <InfoLabel>Warehouse Name</InfoLabel>
+            <InfoLabel>Tên kho bãi</InfoLabel>
             <InfoValue>{data.name}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Owner</InfoLabel>
+            <InfoLabel>Chủ sở hữu</InfoLabel>
             <InfoValue>{data.userId}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Renter</InfoLabel>
-            <InfoValue>{data.rentedInfo?.renterId ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Người thuê</InfoLabel>
+            <InfoValue>{data.rentedInfo?.renterId ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Price</InfoLabel>
+            <InfoLabel>Giá</InfoLabel>
             <InfoValue>{(data.price * 1000).toLocaleString('vi-VN')} VND</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Rented Date</InfoLabel>
-            <InfoValue>{data.rentedInfo?.rentedDate ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Ngày thuê</InfoLabel>
+            <InfoValue>{data.rentedInfo?.rentedDate ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>End Date</InfoLabel>
-            <InfoValue>{data.rentedInfo?.endDate ?? 'Not rented'}</InfoValue>
+            <InfoLabel>Ngày kết thúc</InfoLabel>
+            <InfoValue>{data.rentedInfo?.endDate ?? 'Chưa thuê'}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Created Date</InfoLabel>
+            <InfoLabel>Thời gian tạo</InfoLabel>
             <InfoValue>{data.createdDate}</InfoValue>
           </InfoItem>
           <InfoItem>
-            <InfoLabel>Status</InfoLabel>
-            <InfoValue>{data.rented ? 'Rented' : 'Not rented'}</InfoValue>
+            <InfoLabel>Tình trạng</InfoLabel>
+            <InfoValue>{data.rented ? 'Đã thuê' : 'Chưa thuê'}</InfoValue>
           </InfoItem>
         </InfoGrid>
 
         {data.rentedInfo ? (
           <ContractCard>
             <ContractHeader>
-              <SectionTitle>Rental Contract</SectionTitle>
+              <SectionTitle>Hợp đồng thuê kho</SectionTitle>
               <ButtonRow>
-                <Button label="View Contract" onClick={() => setContractOpen(true)} />
+                <Button label="Xem hợp đồng" onClick={() => setContractOpen(true)} />
               </ButtonRow>
             </ContractHeader>
           </ContractCard>
@@ -114,19 +114,19 @@ export const TransactionDetails = () => {
       </Wrapper>
       {data.rentedInfo ? (
         <Confirm
-          confirm="Close"
+          confirm="Đóng"
           content={
             <ContractContent>
               <ContractFrame
                 src={`data:application/pdf;base64,${data.rentedInfo?.contractBase64 ?? ''}`}
-                title="Rental Contract"
+                title="Hợp đồng thuê"
               />
             </ContractContent>
           }
           isOpen={isContractOpen}
           maxWidth={false}
           scroll="body"
-          title="Contract"
+          title="Hợp đồng"
           onClose={() => {
             setContractOpen(false);
           }}
@@ -140,31 +140,32 @@ export const TransactionDetails = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  margin-top: 16px;
+  gap: 1.75rem;
+  margin-top: 1rem;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--admin-space-2);
   flex-wrap: wrap;
 
   h1 {
     margin: 0;
+    font-size: 1.125rem;
   }
 
   button {
-    padding: 8px 16px !important;
+    padding: 0.5rem 1rem !important;
   }
 `;
 
 const InfoGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: clamp(12px, 1.5vw, 18px);
-  padding: clamp(15px, 2.3vw, 24px);
+  gap: clamp(0.75rem, 1.5vw, 1.125rem);
+  padding: clamp(0.75rem, 2.3vw, 1.5rem);
   border-radius: var(--admin-radius-lg);
   background: var(--admin-surface);
   border: 1px solid var(--admin-border-color);
@@ -207,7 +208,7 @@ const ContractHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 9px;
+  gap: var(--admin-space-2);
   flex-wrap: wrap;
 `;
 
@@ -220,10 +221,10 @@ const SectionTitle = styled.h4`
 
 const ButtonRow = styled.div`
   display: flex;
-  gap: 9px;
+  gap: var(--admin-space-2);
 
   button {
-    padding: 8px 16px !important;
+    padding: 0.5rem 1rem !important;
   }
 `;
 

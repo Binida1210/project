@@ -91,7 +91,7 @@ export const Revenue = () => {
       labels: monthLabels,
       datasets: [
         {
-          label: 'Revenue',
+          label: 'Doanh thu',
           data: calculateRevenuePerMonthByStatus(rentedWarehouseRevenue),
           backgroundColor: '#0ea5e9',
           borderColor: '#0284c7',
@@ -108,7 +108,7 @@ export const Revenue = () => {
         labels: dayLabelsInMonth,
         datasets: [
           {
-            label: 'Monthly Revenue',
+            label: 'Doanh thu trong tháng',
             data: calculateRevenuePerDayByStatus(rentedWarehouseRevenue, selectedMonth, CURRENT_YEAR),
             backgroundColor: '#38bdf8',
             borderColor: '#0ea5e9',
@@ -129,13 +129,13 @@ export const Revenue = () => {
   return (
     <Container>
       <PageHeader>
-        <h1>Revenue Statistics</h1>
-        <Subtitle>Revenue analysis for the year {CURRENT_YEAR}</Subtitle>
+        <h1>Thống kê doanh thu</h1>
+        <Subtitle>Biểu đồ phân tích doanh thu theo năm {CURRENT_YEAR}</Subtitle>
       </PageHeader>
 
       {yearChartData ? (
         <ChartCard>
-          <ChartHeading>Monthly Revenue</ChartHeading>
+          <ChartHeading>Doanh thu theo tháng</ChartHeading>
           <ChartWrapper>
             <Bar
               data={toBarChartData(yearChartData)}
@@ -148,7 +148,7 @@ export const Revenue = () => {
       {selectedMonth ? (
         <ChartCard id="month-bar-chart">
           <ChartHeading>
-            Month {selectedMonth}/{CURRENT_YEAR}
+            Tháng {selectedMonth}/{CURRENT_YEAR}
           </ChartHeading>
           {monthChartData ? (
             <ChartWrapper small>

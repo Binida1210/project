@@ -39,6 +39,13 @@ const FooterSection = styled.div`
   gap: 15px;
 `;
 
+// Special footer boxes (Service / Support) that should be hidden on small screens
+const FooterBox = styled(FooterSection)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const SectionTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
@@ -69,6 +76,13 @@ const ContactInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  /* On narrow screens show contact info in two columns (two items per row) */
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
 `;
 
 const ContactItem = styled.div`
@@ -152,23 +166,23 @@ export const Footer: React.FC = () => {
           </SocialLinks>
         </FooterSection>
 
-        <FooterSection>
+        <FooterBox>
           <SectionTitle>Dịch vụ</SectionTitle>
           <FooterLink to="/home">Tìm kiếm kho bãi</FooterLink>
           <FooterLink to="/create">Đăng kho cho thuê</FooterLink>
           <FooterLink to="/list">Quản lý kho của tôi</FooterLink>
           <FooterText>Đánh giá & bình luận</FooterText>
           <FooterText>Hỗ trợ hợp đồng thuê</FooterText>
-        </FooterSection>
+        </FooterBox>
 
-        <FooterSection>
+        <FooterBox>
           <SectionTitle>Hỗ trợ</SectionTitle>
           <FooterLink to="/help">Câu hỏi thường gặp</FooterLink>
           <FooterLink to="/contact">Liên hệ hỗ trợ</FooterLink>
           <FooterText>Hướng dẫn cho thuê kho</FooterText>
           <FooterText>Quy định an toàn</FooterText>
           <FooterText>Chính sách thanh toán</FooterText>
-        </FooterSection>
+        </FooterBox>
 
         <FooterSection>
           <SectionTitle>Thông tin liên hệ</SectionTitle>

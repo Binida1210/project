@@ -35,7 +35,7 @@ export const PriceRangeSlider = (props: PriceRangeSliderProps) => {
           <span className="value">{formatPrice(appliedValue[0])}</span>
           <span className="dash">—</span>
           <span className="value">{formatPrice(appliedValue[1])}</span>
-          <span className="suffix">VND / THÁNG</span>
+          <span className="suffix">VND</span>
         </Label>
       </DropdownMenu.Trigger>
 

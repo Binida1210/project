@@ -22,22 +22,20 @@ export const RentingInformationForm = (props: RenterInformationFormProps) => {
     useFormikContext<RenterInformationFormValuesType>();
 
   return (
-    <Container>
-      <Title>Thông tin thuê</Title>
+    <Container className="irent-renter-info">
       <Form onSubmit={handleSubmit}>
         <Body>
-          <LeftSide>
+          <div className="irent-renter-info__price">
             <PriceContainer>Giá thuê: {formatPrice(price)} VND</PriceContainer>
-          </LeftSide>
+          </div>
 
-          <RightSide>
+          <div className="irent-renter-info__controls">
             <FormField>
               <Label>Thời hạn thuê</Label>
               <SuffixInput
                 defaultValue={values.duration}
                 min="1"
                 name="duration"
-                suffix="tháng"
                 type="number"
                 onBlur={handleBlur}
                 onChange={(v) => {
@@ -59,11 +57,11 @@ export const RentingInformationForm = (props: RenterInformationFormProps) => {
                 selected={values.startDate}
                 onBlur={handleBlur}
                 onChange={(date) => setFieldValue('startDate', date)}
-              ></DatePicker>
+              />
             </FormField>
             <FieldError errorFor="date" />
-            <Text>Thành tiền: {formatPrice(price * duration)} VND</Text>
-          </RightSide>
+            <Text className="irent-renter-info__total">Thành tiền: {formatPrice(price * duration)} VND</Text>
+          </div>
         </Body>
       </Form>
     </Container>
@@ -73,21 +71,38 @@ export const RentingInformationForm = (props: RenterInformationFormProps) => {
 const Container = styled.div``;
 
 const Body = styled.div`
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* mobile-first spacing */
+
+  .irent-renter-info__price {
+    padding-top: 3rem;
+    width: 60dvw;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .irent-renter-info__controls {
+    width: 60dvw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .irent-renter-info__total {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+  }
 `;
 
 const LeftSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: block;
 `;
 
 const RightSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: block;
 `;
 
 const Title = styled.h1``;
@@ -97,18 +112,25 @@ const FormField = styled.div`
   flex-direction: column;
 
   label {
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
   }
 `;
 
 const Label = styled.label``;
 
 const Input = styled.input`
-  padding: 16px;
-  border-radius: 8px;
+  padding: 0.9rem;
+  border-radius: 0.5rem;
   border: 1px solid gray;
 `;
 
-const Text = styled.span``;
+const Text = styled.span`
+  font-size: 0.95rem;
+`;
 
-const PriceContainer = styled.h3``;
+const PriceContainer = styled.h3`
+  font-size: 1.125rem;
+  margin: 0;
+  padding: 0.25rem 0;
+`;

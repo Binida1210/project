@@ -1,9 +1,9 @@
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { Appearance, PaymentIntent, StripeElementsOptions } from '@stripe/stripe-js';
 import { useFormikContext } from 'formik';
 import { isEmpty, mapValues } from 'lodash';
 import moment from 'moment';
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -25,12 +25,11 @@ import { stripePromise } from '@/libs';
 import { CreateRentedWarehouseModel } from '@/models/rented-warehouse.model';
 import { useRentingWarehouseResolver } from '@/resolver';
 import { calculateRentingWarehousePrices } from '@/utils/calculate-renting-warehouse-prices';
-import { convertDateToLocaleDateFormat } from '@/utils/datetime-format.util';
 import { generateContractHash } from '@/utils/encrypt';
-import { formatPrice } from '@/utils/format-price.util';
 import { getAllRentingInfoDates } from '@/utils/rented-warehouse.util';
 
 import { CustomerCheckoutForm } from './CustomerCheckoutForm';
+import { PaymentConfirmationContent } from '@/components/Payment/PaymentConfirmationContent';
 
 export type RentingState = {
   price: number;
@@ -161,9 +160,9 @@ export function RentingFormContent() {
         hash,
       };
 
-      console.log(rentedWarehouse);
+      // send rented warehouse payload to server
 
-      api.post(`rentedWarehouse`, rentedWarehouse).then(() => {
+      api.post('rentedWarehouse', rentedWarehouse).then(() => {
         navigate('/home');
       });
     }
@@ -183,24 +182,9 @@ export function RentingFormContent() {
 
         dialogContentRef.current = (
           <Elements options={options} stripe={stripePromise}>
-            <WarningWrapper>
-              <Title>Xác nhận thanh toán</Title>
-              <span>
-                <p>
-                  Sau khi xác nhận thanh toán, bạn sẽ trả phần tiền cọc là <strong>{formatPrice(deposit)} VND</strong>.
-                </p>
-                <p>
-                  Sau đó bạn cần phải thanh toán phần còn lại sau tiền cọc là <strong>{formatPrice(remain)} VND</strong>{' '}
-                  trước <strong>{convertDateToLocaleDateFormat(startDate)}</strong> để hoàn thành việc thuê kho bãi.
-                </p>
-                <p>
-                  <strong>Lưu ý:</strong> Nếu như không thanh toán đúng hạn, yêu cầu thuê kho của bạn sẽ bị hủy và sẽ
-                  không được hoàn lại số tiền đã cọc.
-                </p>
-              </span>
-            </WarningWrapper>
-
-            <CustomerCheckoutForm clientSecret={clientSecret} total={deposit} onSucceed={handleSaveRentedWarehouse} />
+            <PaymentConfirmationContent deposit={deposit} remain={remain} startDate={startDate}>
+              <CustomerCheckoutForm clientSecret={clientSecret} total={deposit} onSucceed={handleSaveRentedWarehouse} />
+            </PaymentConfirmationContent>
           </Elements>
         );
 
@@ -210,7 +194,7 @@ export function RentingFormContent() {
   };
 
   return (
-    <>
+    <div className="irent-renting-form">
       <Stepper
         defaultCanNextOnNewStep={false}
         isCanNext={isStepperCanNext}
@@ -227,46 +211,82 @@ export function RentingFormContent() {
           }
         }}
       >
-        <Header>
-          <TextContainer>
-            <Title>Thuê {warehouse.name}</Title>
-            <StepperProgression />
+        <Header className="irent-renting-header">
+          <TextContainer className="irent-renting-header__text">
+            <Title className="irent-renting-title">Thuê {warehouse.name}</Title>
+            <div className="irent-renting-progression-wrapper">
+              <StepperProgression />
+            </div>
           </TextContainer>
-          <ButtonContainer>
-            <StepperBackButton color="secondary" />
-            <StepperNextButton />
-          </ButtonContainer>
+
+          {/* actions moved below the content so 'btn ở cuối cùng' (button at the end) */}
         </Header>
         <StepperContentRenderer />
+        <ActionsWrap>
+          <ButtonContainer className="irent-renting-actions">
+            <StepperBackButton className="irent-renting-btn irent-renting-btn--back" color="secondary" />
+            <StepperNextButton className="irent-renting-btn irent-renting-btn--next" />
+          </ButtonContainer>
+        </ActionsWrap>
       </Stepper>
       <PaymentDialog open={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}>
         {dialogContentRef.current}
       </PaymentDialog>
-    </>
+    </div>
   );
 }
 
+/* Mobile-first header wrapper for renting form.
+   Use class names so the old styles are ignored and there's no accidental inheritance.
+*/
 const Header = styled.div`
+  /* Mobile-first: always stacked layout and full-width elements */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+
+  /* keep small vertical padding for the header wrapper */
+  &.irent-renting-header {
+    padding: 8px 0;
+  }
+
+  /* let content grow naturally inside its container */
+  width: 100%;
 `;
 
-const TextContainer = styled.div``;
+const TextContainer = styled.div`
+  /* container for title + progression - mobile-first stacked */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  align-items: center; /* center title and progression */
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 10px;
+  flex-direction: column; /* STACK ALWAYS - mobile-first applied globally */
+
+  /* allow the action area to shrink and be flexible inside larger containers */
+  align-self: stretch;
 `;
 
-const Title = styled.h2`
-  margin-bottom: 20px;
-`;
-
-const WarningWrapper = styled.div`
-  width: 500px;
+const Title = styled.h1`
+  margin: 0;
+  font-size: clamp(1.25rem, 2.6vw, 2rem); /* responsive H1 sizing */
+  line-height: 1.08;
+  font-weight: 800;
+  text-align: center; /* center h1 */
 `;
 
 const PaymentDialog = styled(Dialog)`
   background-color: white;
+`;
+
+const ActionsWrap = styled.div`
+  width: 60dvw; /* user's requested width */
+  max-width: 96%;
+  margin: 1rem auto 0 auto; /* center and add small top spacing */
 `;

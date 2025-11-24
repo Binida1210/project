@@ -6,7 +6,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import CustomAppBar from './CustomAppBar';
 
-const SIDEBAR_WIDTH = '20dvw';
+const SIDEBAR_WIDTH = 'min(320px, 20dvw)';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -21,7 +21,11 @@ const GlobalStyle = createGlobalStyle`
     --admin-text-primary: #0f172a;
     --admin-text-secondary: #64748b;
     --admin-text-tertiary: #94a3b8;
-    --admin-radius-lg: 16px;
+    --admin-radius-lg: 1rem; /* 16px */
+    --admin-space-1: 0.5rem; /* 8px */
+    --admin-space-2: 0.75rem; /* 12px */
+    --admin-space-3: 1rem; /* 16px */
+    --admin-space-4: 1.5rem; /* 24px */
     --admin-shadow-soft: 0 2px 12px rgba(15, 23, 42, 0.08);
   }
 
@@ -39,11 +43,11 @@ const GlobalStyle = createGlobalStyle`
 
   .RaLayout-contentWithSidebar {
     margin-left: ${SIDEBAR_WIDTH};
-    padding: clamp(24px, 3vw, 40px);
+    padding: clamp(1rem, 3vw, 2.5rem);
   }
 
   .RaLayout-content {
-    max-width: 1200px;
+    max-width: calc(var(--admin-page-width, 1200px));
     margin: 0 auto;
 
     /* Style all h1 in content area */
@@ -104,7 +108,7 @@ const GlobalStyle = createGlobalStyle`
   @media (max-width: 768px) {
     .RaLayout-contentWithSidebar {
       margin-left: 0;
-      padding: 20px 16px;
+      padding: 1.25rem 1rem;
     }
   }
 `;
@@ -128,25 +132,38 @@ const Sidebar = styled.aside`
 `;
 
 const Header = styled.div`
-  padding: 24px 20px;
+  padding: var(--admin-space-4) var(--admin-space-2);
   border-bottom: 1px solid rgba(203, 213, 225, 0.4);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--admin-space-2);
+
+  @media (max-width: 1100px) {
+    /* tighten header spacing to avoid overflow on mid-width screens */
+    padding: 0.875rem 0.75rem;
+    gap: 0.5rem;
+  }
 `;
 
 const Logo = styled.div`
-  width: 42px;
-  height: 42px;
-  border-radius: 11px;
+  /* fluid logo size for admin: scales from mobile -> desktop */
+  width: clamp(36px, 4.5vw, 48px);
+  height: clamp(36px, 4.5vw, 48px);
+  border-radius: clamp(8px, 1vw, 12px);
   background: var(--admin-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: clamp(13px, 1.2vw, 18px);
   letter-spacing: 0.02em;
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
 `;
 
 const Brand = styled.div`
@@ -156,14 +173,14 @@ const Brand = styled.div`
 
   h1 {
     margin: 0;
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15px */
     font-weight: 700;
     color: #0f172a;
     letter-spacing: -0.01em;
   }
 
   span {
-    font-size: 10px;
+    font-size: 0.625rem; /* 10px */
     font-weight: 600;
     color: #64748b;
     text-transform: uppercase;
@@ -173,11 +190,12 @@ const Brand = styled.div`
 
 const Nav = styled.nav`
   flex: 1;
-  padding: 24px 16px;
+  padding: var(--admin-space-3) var(--admin-space-2);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 28px;
+  gap: 1.75rem;
 `;
 
 const NavGroup = styled.div`
@@ -202,20 +220,20 @@ const NavList = styled.ul`
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.5rem;
 `;
 
 const NavItem = styled(NavLink)<{ $primary?: boolean }>`
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 12px;
-  border-radius: 10px;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem;
+  border-radius: 0.625rem; /* 10px */
   text-decoration: none !important;
   color: ${(props) => (props.$primary ? '#ffffff' : '#1f2937')};
   background: ${(props) => (props.$primary ? 'var(--admin-primary)' : 'transparent')};
   border: 1px solid ${(props) => (props.$primary ? 'var(--admin-primary)' : 'transparent')};
-  font-size: 13px;
+  font-size: 0.8125rem; /* 13px */
   font-weight: 500;
   transition:
     background 220ms ease,
@@ -235,14 +253,37 @@ const NavItem = styled(NavLink)<{ $primary?: boolean }>`
   }
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 1.125rem; /* 18px */
+    height: 1.125rem;
     flex-shrink: 0;
+  }
+
+  /* reduce nav sizes on mid width screens to avoid overflow/wrapping */
+  @media (max-width: 1100px) {
+    padding: 0.625rem 0.6rem;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    /* additional mid-range reduction (~1.5x smaller feel) for 769-1100 */
+    @media (min-width: 769px) and (max-width: 1100px) {
+      padding: calc(0.625rem / 1.5) calc(0.6rem / 1.5);
+      gap: calc(0.625rem / 1.5);
+      font-size: clamp(0.75rem, calc(0.875rem / 1.5), 0.875rem);
+
+      svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
   }
 `;
 
 const Footer = styled.div`
-  padding: 16px;
+  padding: var(--admin-space-2);
   border-top: 1px solid rgba(203, 213, 225, 0.4);
 `;
 
@@ -251,13 +292,13 @@ const LogoutBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 11px 12px;
-  border-radius: 10px;
+  gap: 0.625rem;
+  padding: 0.75rem 0.75rem;
+  border-radius: 0.625rem;
   border: 1px solid rgba(248, 113, 113, 0.4);
   background: rgba(248, 113, 113, 0.08);
   color: #b91c1c;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition:
@@ -270,26 +311,26 @@ const LogoutBtn = styled.button`
   }
 
   svg {
-    width: 17px;
-    height: 17px;
+    width: 1.0625rem; /* 17px */
+    height: 1.0625rem;
   }
 `;
 
 const navItems = [
   {
-    group: 'Content',
-    items: [{ label: 'All Warehouses', icon: <CubeIcon />, path: '/warehouse' }],
+    group: 'Nội dung',
+    items: [{ label: 'Tất cả kho bãi', icon: <CubeIcon />, path: '/warehouse' }],
   },
   {
-    group: 'Reports',
+    group: 'Báo cáo',
     items: [
-      { label: 'Pending Requests', icon: <ClockIcon />, path: '/request' },
-      { label: 'Revenue Statistics', icon: <BarChartIcon />, path: '/revenue' },
+      { label: 'Đơn chờ duyệt', icon: <ClockIcon />, path: '/request' },
+      { label: 'Thống kê doanh thu', icon: <BarChartIcon />, path: '/revenue' },
     ],
   },
   {
-    group: 'Accounts',
-    items: [{ label: 'User Management', icon: <PersonIcon />, path: '/users' }],
+    group: 'Tài khoản',
+    items: [{ label: 'Quản lý người dùng', icon: <PersonIcon />, path: '/users' }],
   },
 ];
 
@@ -327,7 +368,7 @@ const CustomSidebar = () => {
       <Footer>
         <LogoutBtn onClick={() => logout()}>
           <ExitIcon />
-          Logout
+          Đăng xuất
         </LogoutBtn>
       </Footer>
     </Sidebar>

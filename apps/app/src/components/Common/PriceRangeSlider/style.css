@@ -12,7 +12,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid #ffffff;
-  box-shadow: 0 2px 8px rgba(54, 40, 96, 0.18);
+  /* remove internal slider shadow for flat UI */
 }
 
 .range-slider .range-slider__range {
@@ -22,5 +22,5 @@
 .range-slider .range-slider__track {
   background: #ede9fe;
   border-radius: 6px;
-  box-shadow: inset 0 0 0 1px #e9e5ff;
+  /* keep inset outline but remove heavy glow */
 }

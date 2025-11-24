@@ -1,0 +1,74 @@
+/* Plain CSS responsive grid for MyWarehouseCardListPlain
+   Minimal selectors (no styled-components) so it's easy to override and tweak. */
+
+.my-warehouse-list-root {
+  width: 100%;
+  /* match original page content width and keep room for the site's gutters */
+  max-width: 1236px;
+  margin: 0 auto;
+  padding: 12px 18px 28px;
+  box-sizing: border-box;
+}
+
+.my-warehouse-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-warehouse-count {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* grid
+   - base: 1 column
+   - >=480: 2
+   - >=768: 3
+   - >=1024: 4
+   - >=1400: 5
+*/
+.my-warehouse-grid {
+  margin-top: 16px;
+  display: grid;
+  gap: 18px;
+  grid-auto-rows: 1fr;
+  /* allow the grid to auto-fit columns while keeping a comfortable minimum
+      width so cards don't become too narrow on large screens */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  justify-items: center; /* center each card into its grid cell */
+  align-items: start;
+}
+
+/* breakpoints keep visual rhythm but auto-fit prevents overflow */
+@media (min-width: 480px) {
+  .my-warehouse-grid {
+    gap: 18px;
+  }
+}
+
+@media (min-width: 768px) {
+  .my-warehouse-grid {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .my-warehouse-grid {
+    gap: 22px;
+  }
+}
+
+.my-warehouse-card-wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 380px;
+  justify-self: center;
+}
+
+/* helper classes to control overflow/scroll if needed during tweaks */
+.my-warehouse-overflow-x-auto {
+  overflow-x: auto;
+}

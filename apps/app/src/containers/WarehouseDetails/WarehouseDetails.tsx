@@ -102,18 +102,20 @@ export const WarehouseDetails = () => {
 
   return (
     <Container>
-      <ImageContainer>
-        <Carousel images={warehouse.images} />
-      </ImageContainer>
       <BodyContainer>
+        {/* Make the title the primary H1 and place it at the top of the detail view */}
         <Title>{warehouse?.name}</Title>
+        {/* Gallery follows the title so users see the heading first then media */}
+        <ImageContainer>
+          <Carousel images={warehouse.images} />
+        </ImageContainer>
         <Address>
           {address}
-          {province ? <ProvinceTag> · {province}</ProvinceTag> : null}
+          {province ? <ProvinceTag>{province}</ProvinceTag> : null}
         </Address>
         {(location || dynamicLocation) && (
           <MapViewContainer>
-            <MapView height="260px" location={location || dynamicLocation} />
+            <MapView height="320px" location={location || dynamicLocation} />
           </MapViewContainer>
         )}
         {!location && !dynamicLocation && (
@@ -156,8 +158,9 @@ export const WarehouseDetails = () => {
           {warehouse.rented && <ActionButton onClick={handleViewContract}>Xem hợp đồng</ActionButton>}
         </ButtonContainer>
         {/* Mục "Yêu thích" đã được lược bỏ theo yêu cầu */}
+        {/* Slightly more airy spacing for the metrics area */}
         <MetricsContainer>
-          <Price>{formatPrice(warehouse?.price)} VND/tháng</Price>
+          <Price title={`${formatPrice(warehouse?.price)} VND`}>{formatPrice(warehouse?.price)} VND</Price>
           <OtherMetrics>
             <OtherMetricItem>
               <RulerSquareIcon color="#999" height={32} width={32} />
@@ -195,26 +198,107 @@ export const WarehouseDetails = () => {
   );
 };
 
-const ImageContainer = styled.div``;
+const ImageContainer = styled.div`
+  width: 100%;
+  /* image gallery lives inside the page content now; remove large auto margins */
+  margin: 12px 0 20px; /* small gap after heading, larger gap after gallery */
+  padding: 8px 10px; /* slightly reduced padding so the inner gallery can use full width */
+  border-radius: 10px;
+  background: #f8fafc; /* soft neutral background for the gallery */
+
+  /* Ensure the carousel container adapts within this wrapper and keeps a responsive aspect ratio */
+  & > div {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Large screens: keep the gallery centered and give images a larger fixed height so
+     they present more prominently. Thumbnails align left and remain visible. */
+  @media (min-width: 769px) {
+    padding: 18px 22px;
+
+    & > div {
+      max-height: 420px; /* prevent overly tall galleries */
+    }
+
+    /* react-image-gallery / carousel inner image element */
+    .image-gallery-content:not(.fullscreen) .image-gallery-image {
+      height: 420px !important;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* move thumbnails into a horizontal strip aligned to start and allow horizontal scrolling */
+    .image-gallery-thumbnails {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .image-gallery-thumbnail img,
+    .image-gallery-thumbnail-image {
+      border-radius: 6px;
+      height: 66px;
+      width: auto;
+      object-fit: cover;
+    }
+  }
+
+  /* small thumbnail container alignment */
+  .image-gallery-thumbnails {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+  }
+`;
 
 const BodyContainer = styled.div`
   position: relative;
+  max-width: 1180px;
+  margin: 20px auto 48px; /* slightly larger top spacing to pull away from header */
+  padding: 8px 18px 36px; /* comfortable outer padding */
 `;
 
 const Title = styled.h1`
-  margin: 12px 0 8px; /* giãn cách phía trên và dưới tên kho */
+  margin: 8px 0 6px; /* slight top spacing, sits above the carousel */
+  font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+  line-height: 1.1;
+  color: #0f172a;
 `;
 
 const Address = styled.h4``;
 const ProvinceTag = styled.small`
   color: #64748b;
   font-weight: normal;
+  /* large screens: show a preceding separator dot inline */
+  &::before {
+    content: ' · ';
+    display: inline;
+    margin-left: 6px;
+  }
+
+  /* at small / tablet breakpoint (<= 768px) we place province on its own line and remove the dot */
+  @media (max-width: 768px) {
+    display: block;
+    margin-top: 6px;
+    &::before {
+      content: '';
+    }
+  }
 `;
 
 /* Removed unused MapViewContainer styled component */
 
 const Date = styled.span`
-  color: #999;
+  color: #6b7280;
+  font-size: 0.95rem;
+  display: inline-block;
+  margin-top: 6px;
 `;
 
 /* Removed unused DirectionText styled component */
@@ -223,12 +307,20 @@ const Date = styled.span`
 
 const MetricsContainer = styled.div`
   display: flex;
-  margin-top: 24px;
-  padding: 24px;
-  border-top: 1px solid #999;
-  border-bottom: 1px solid #999;
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-top: 1px solid #e6e6e9;
+  border-bottom: 1px solid #e6e6e9;
   justify-content: space-between;
   align-items: center;
+  gap: 14px;
+
+  @media (max-width: 860px) {
+    /* stack vertically on narrower screens */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
 `;
 
 const CommentsContainer = styled.div`
@@ -238,21 +330,42 @@ const CommentsContainer = styled.div`
 `;
 
 const Price = styled.span`
-  font-size: 32px;
-  font-weight: bold;
+  font-weight: 800;
+  /* single-line price, responsive sizing */
+  font-size: clamp(1rem, 3.2vw, 1.75rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 8px; /* extra spacing after price as requested */
 `;
 
 const OtherMetrics = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-end;
+
+  @media (max-width: 860px) {
+    justify-content: space-between;
+  }
 `;
 
 const OtherMetricItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+
+  svg {
+    width: 34px;
+    height: 34px;
+  }
+
   span {
     margin-top: 8px;
     display: block;
-    font-size: 24px;
+    font-size: 0.95rem;
   }
 `;
 
@@ -262,7 +375,7 @@ const Container = styled.div``;
 
 const MapViewContainer = styled.div`
   margin-top: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
   width: 100%;
   /* Ensure consistent radius wrapper */
   & > div {
@@ -290,21 +403,25 @@ const ActionButton = styled(Button)`
 /* Google-based directions/search UI removed */
 
 const DescriptionContainer = styled.div`
-  margin-top: 12px;
-  margin-bottom: 16px;
+  margin-top: 18px;
+  margin-bottom: 30px; /* larger breathing room before comments */
+  max-width: 100%;
 `;
 
 const Description = styled.div`
-  padding: 8px 16px;
-  border: 1px solid #c2c2c2;
-  border-radius: 4px;
-  text-align: justify; /* căn đều hai bên để dễ đọc */
-  line-height: 1.6; /* giãn dòng thoáng hơn */
+  padding: 18px 20px;
+  border: 1px solid #e6e6e9;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+  line-height: 1.6;
   word-break: break-word;
+  text-align: left;
+  min-height: 56px;
 
-  /* Chuẩn hoá khoảng cách giữa các đoạn văn trong nội dung HTML */
   p {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
   }
 `;
 
@@ -349,5 +466,8 @@ const HintText = styled.p`
 `;
 
 const SectionLabel = styled.h4`
-  margin: 16px 0 8px; /* thêm khoảng cách phía trên và dưới tiêu đề */
+  margin: 18px 0 12px;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: #0f172a;
+  letter-spacing: 0.1px;
 `;

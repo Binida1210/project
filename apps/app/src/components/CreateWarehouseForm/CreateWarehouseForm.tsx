@@ -17,6 +17,7 @@ import { SuffixInput } from '../Common/SuffixInput';
 // Removed Google Map search dependencies
 import { CreateWarehouseFormValuesType } from './CreateWarehouseProvider';
 
+// Component: form used by create-warehouse flow, contains fields and image uploader
 export const CreateWarehouseForm = () => {
   const { handleSubmit, handleChange, handleBlur, values, setFieldValue } =
     useFormikContext<CreateWarehouseFormValuesType>();
@@ -24,8 +25,7 @@ export const CreateWarehouseForm = () => {
 
   return (
     <Container>
-      <Title>Thông tin kho bãi</Title>
-      <Form onSubmit={handleSubmit}>
+      <Form className="create-warehouse-form" onSubmit={handleSubmit}>
         <Body>
           <ImageInfo>
             <Text>Ảnh</Text>
@@ -108,38 +108,58 @@ export const CreateWarehouseForm = () => {
   );
 };
 
-const Container = styled.div``;
-
 const Body = styled.div``;
 
 const TextInfo = styled.div`
   display: grid;
-  gap: 24px;
+  gap: 28px;
   grid-template-columns: repeat(2, 1fr);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const ImageInfo = styled.div`
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 `;
 
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 `;
 
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 `;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  display: none;
+`;
+
+const Container = styled.div`
+  padding: 12px 8px;
+
+  /* scoped form padding for the create page */
+  & .create-warehouse-form {
+    padding-top: 3rem;
+  }
+
+  @media (min-width: 769px) {
+    padding: 0;
+  }
+`;
 
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin-bottom: 8px;
 
   label {
     margin-bottom: 8px;

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CheckCircledIcon, MagnifyingGlassIcon, MobileIcon } from '@radix-ui/react-icons';
 import { isEmpty } from 'lodash';
 import styled from 'styled-components';
+import { breakpoints } from '@/constants/breakpoints';
 
 import { Button } from '@/components/Common/Button';
 import { PriceRangeSlider } from '@/components/Common/PriceRangeSlider';
@@ -41,7 +42,12 @@ export const Home = () => {
           const p = extractProvinceFromAddress(w.address);
           if (p) provinces.add(p);
         });
-        const opts: SelectOption[] = [{ label: 'Tất cả', value: '' }, ...Array.from(provinces).sort().map((p) => ({ label: p, value: p }))];
+        const opts: SelectOption[] = [
+          { label: 'Tất cả', value: '' },
+          ...Array.from(provinces)
+            .sort()
+            .map((p) => ({ label: p, value: p })),
+        ];
         setProvinceOptions(opts);
       }
     });
@@ -55,7 +61,9 @@ export const Home = () => {
           (warehouse) => warehouse.price >= priceFilter[0] && warehouse.price <= priceFilter[1],
         );
       if (provinceFilter) {
-        filterResult = filterResult.filter((warehouse) => extractProvinceFromAddress(warehouse.address) === provinceFilter);
+        filterResult = filterResult.filter(
+          (warehouse) => extractProvinceFromAddress(warehouse.address) === provinceFilter,
+        );
       }
 
       // sorting
@@ -112,7 +120,10 @@ export const Home = () => {
             Kết nối chủ kho với doanh nghiệp. Tối giản thao tác, minh bạch giá, hỗ trợ xuyên suốt.
           </HeroSubtitle>
           <SearchBar>
-            <ProvinceSelect options={provinceOptions} onSelect={(value: string) => setProvinceFilter(value || undefined)} />
+            <ProvinceSelect
+              options={provinceOptions}
+              onSelect={(value: string) => setProvinceFilter(value || undefined)}
+            />
             <ActionsRow>
               <PriceRangeSlider max={50000} min={100} onInput={(value: [number, number]) => setPriceFilter(value)} />
               <ActionButton onClick={handleExploreClick}>Khám phá</ActionButton>
@@ -202,18 +213,22 @@ const RADIUS = 12; // containers/cards
 const RADIUS_SM = 8; // small badges/icons
 
 const Main = styled.div`
-  /* Occupy ~85% of dynamic viewport width but never exceed old desktop max */
-  width: 85dvw; /* modern viewport unit (falls back to vw where unsupported) */
-  max-width: 1260px;
+  /* Fluid container with constrained max width */
+  width: 100%;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 24px 20px 80px;
+  padding: var(--space-3) var(--space-2) 5rem;
+
+  @media (max-width: ${breakpoints.lg}) {
+    padding: 1rem 0.75rem 3rem;
+  }
 `;
 
 const Hero = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 28px 24px;
+  gap: 1.125rem;
+  padding: 1.75rem 1.5rem;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: ${RADIUS}px;
@@ -235,26 +250,62 @@ const HeroSubtitle = styled.p`
 const SearchBar = styled.div`
   display: grid;
   grid-template-columns: 320px 1fr; /* merge middle input + action button */
-  gap: 16px;
+  gap: var(--space-1);
   align-items: center;
+
+  @media (max-width: ${breakpoints.mdWide}) {
+    /* stack filters & actions on small screens */
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
 `;
 
 const ActionsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px; /* unified horizontal spacing between input and button */
+  gap: var(--space-1); /* unified horizontal spacing between input and button */
+
+  /* under mdWide we want the price control + action to be on their own line
+     so allow wrapping and stack vertically for stable layout */
+  @media (max-width: ${breakpoints.mdWide}) {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+
+    /* keep the action button aligned to the right when there's room */
+    & > button {
+      align-self: flex-end;
+    }
+  }
 `;
 
 const MetaActionsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px; /* same spacing */
+  gap: var(--space-1); /* same spacing */
   justify-content: flex-end; /* push sort + clear to the right */
+
+  /* hide sort + clear at <=930px to simplify mobile layout */
+  @media (max-width: 930px) {
+    display: none;
+  }
 `;
 
 const ActionButton = styled(Button)`
-  width: 140px;
+  /* Make 'Khám phá' wider to visually match the other prominent actions */
+  min-width: 12.5rem; /* 200px */
+  width: auto;
   flex-shrink: 0;
+
+  @media (max-width: ${breakpoints.mdWide}) {
+    /* when stacked on small screens allow it to be full width but keep padding */
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* override padding specifically for the 'Khám phá' visual treatment */
+  padding: 0 !important;
 `;
 
 // Meta information row under the filters: results count, sort and clear
@@ -264,6 +315,12 @@ const MetaBar = styled.div`
   gap: 16px;
   align-items: center;
   margin: 6px 0 8px 0;
+
+  @media (max-width: ${breakpoints.mdWide}) {
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 8px;
+  }
 `;
 
 const MetaLeft = styled.div`
@@ -280,6 +337,11 @@ const SortCol = styled.div`
   label {
     color: #334155;
     font-size: 13px;
+  }
+
+  /* hide SortCol under mdWide (900px) for more stable mid/mobile layouts */
+  @media (max-width: ${breakpoints.mdWide}) {
+    display: none;
   }
 `;
 
@@ -299,15 +361,20 @@ const ClearButton = styled(ActionButton)``;
 
 const Highlights = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.875rem;
+
+  /* hide highlight cards on small screens <= 930px per request */
+  @media (max-width: 930px) {
+    display: none;
+  }
 `;
 
 const HighlightItem = styled.div`
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: ${RADIUS}px;
-  padding: 16px 18px;
+  padding: var(--space-2) 1.125rem;
   display: flex;
   gap: 12px;
   align-items: flex-start;
@@ -327,8 +394,8 @@ const HighlightItem = styled.div`
 `;
 
 const IconBadge = styled.span`
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: ${RADIUS_SM}px;
   background: #e2e8f0; /* neutral gray */
   display: inline-flex;
@@ -341,7 +408,7 @@ const IconBadge = styled.span`
 `;
 
 const SectionHeader = styled.div`
-  margin: 24px 0 12px 0;
+  margin: 1.5rem 0 0.75rem 0;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -359,8 +426,10 @@ const SectionHeader = styled.div`
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-  /* Force 4 columns; cards shrink fluidly. Min 240px keeps content readable */
-  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  /* Use auto-fit so the grid adapts to available width: 4 -> 3 -> 2 -> 1 depending on viewport */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* make rows equal height so cards within a row align nicely */
+  grid-auto-rows: 1fr;
   column-gap: clamp(12px, 1.8vw, 20px);
   row-gap: 20px;
 
@@ -369,13 +438,20 @@ const GridContainer = styled.div`
     column-gap: 16px;
   }
 
-  @media (max-width: 1100px) {
-    grid-template-columns: repeat(4, minmax(220px, 1fr));
-    column-gap: clamp(10px, 1.2vw, 16px);
+  @media (max-width: ${breakpoints.mdWide}) {
+    /* slightly smaller minimum card width on narrower viewports */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    column-gap: clamp(10px, 2vw, 14px);
   }
 
-  @media (max-width: 950px) {
-    grid-template-columns: repeat(4, minmax(200px, 1fr));
-    column-gap: clamp(8px, 1vw, 14px);
+  @media (min-width: 1260px) {
+    /* allow slightly wider cards on large desktop */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  @media (max-width: 520px) {
+    /* single column layout for phones */
+    grid-template-columns: 1fr;
+    column-gap: 8px;
   }
 `;

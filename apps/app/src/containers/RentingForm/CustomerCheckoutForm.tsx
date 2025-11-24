@@ -7,12 +7,17 @@ import { Button } from '@/components/Common/Button';
 import { Spinner } from '@/components/Common/Spinner';
 
 const PayButton = styled(Button)`
-  margin-top: 12px;
-  width: calc(100% - 30px);
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.6rem;
 `;
 
 const Error = styled.div`
-  margin-top: 12px;
+  margin-top: 0.75rem;
+  color: #c53030;
+  font-size: 0.95rem;
 `;
 
 type CustomerCheckoutFormProp = {

@@ -69,25 +69,25 @@ export const RequestWarehouseList = () => {
   return (
     <PageSection>
       <SectionHeader>
-        <h1>Pending Warehouses</h1>
+        <h1>Kho bãi đang chờ duyệt</h1>
       </SectionHeader>
       <TableContainer>
         <ListContextProvider value={listContext}>
           <Datagrid bulkActionButtons={false} rowClick={false}>
             <TextField source="id" />
-            <TextField label="Name" source="name" />
-            <TextField label="Address" source="address" />
-            <TextField label="Price" source="price" />
-            <TextField label="Floors" source="floors" />
-            <TextField label="Doors" source="doors" />
-            <TextField label="Area" source="area" />
-            <TextField label="Created Date" source="createdDate" />
+            <TextField label="Tên" source="name" />
+            <TextField label="Địa chỉ" source="address" />
+            <TextField label="Giá" source="price" />
+            <TextField label="Tầng" source="floors" />
+            <TextField label="Cửa" source="doors" />
+            <TextField label="Diện tích" source="area" />
+            <TextField label="Ngày tạo" source="createdDate" />
             <FunctionField
-              label="Actions"
+              label="Hành động"
               render={(record: PendingWarehouseRecord) => (
                 <ActionRow>
                   <Button
-                    label="View"
+                    label="Xem"
                     onClick={(event) => {
                       event.stopPropagation();
                       redirect(`/request/${record.id}`);

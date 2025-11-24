@@ -44,13 +44,18 @@ export const CommentSection = ({ data = [], resolveComment }: CommentSectionProp
 
 const CommentRoot = styled.div`
   width: 100%;
+  background: #ffffff;
+  border: 1px solid #e6e6e9;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
 `;
 
 const List = styled.div`
-  padding: 0 10px;
-  margin-bottom: 24px;
+  padding: 8px 6px 0 6px;
+  margin-bottom: 6px;
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 `;

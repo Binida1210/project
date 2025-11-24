@@ -36,13 +36,25 @@ export function MyWarehouseCardList({ type, warehouses, fallback, loading }: MyW
 }
 
 const MyWarehouseCardListRoot = styled.div`
-  width: 1236px;
+  /* make the list container fluid while keeping the previous max width for larger screens */
+  width: 100%;
+  max-width: 1236px;
+  margin: 0 auto;
 `;
 
 const GridContainer = styled.div`
   width: 100%;
   margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(4, 300px);
+  /* use a responsive auto-fit grid so columns shrink and reflow smoothly */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* make each row take equal height so cards align across each row */
+  grid-auto-rows: 1fr;
   gap: 12px;
+
+  /* ensure the grid keeps reasonable spacing on very small screens */
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 `;

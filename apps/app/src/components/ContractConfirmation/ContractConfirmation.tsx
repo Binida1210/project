@@ -30,8 +30,7 @@ export const ContractConfirmation = ({
 
   return (
     <Container>
-      <Title>Xem trước hợp đồng</Title>
-      <Body>
+      <Body className="irent-contract-confirmation__body">
         <ContractContainer />
       </Body>
       <CheckboxGroup>
@@ -48,25 +47,44 @@ export const ContractConfirmation = ({
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center everything horizontally */
+  width: 100%;
+`;
 const Title = styled.h2``;
 const Body = styled.div`
   padding: 16px 24px;
   border-radius: 16px;
-  max-width: 1024px;
+  width: 80dvw; /* increased to 80dvw per request */
+  margin-top: 3rem; /* add requested top margin */
+  max-width: 1200px;
   overflow-x: hidden;
   overflow-y: auto;
 `;
 
 const ContractContainer = styled.div.attrs({ id: 'contract' })`
+  width: 100%;
   height: 1200px;
+
+  /* ensure any embedded pdf/frame fills the container */
+  iframe,
+  embed,
+  object,
+  div {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const CheckboxGroup = styled.div`
   margin-top: 24px;
-  align-items: center;
   display: flex;
   gap: 16px;
+  align-items: center;
+  justify-content: center; /* center checkbox + label horizontally */
+  width: 80dvw; /* same width as Body */
 `;
 
 const Label = styled.label``;

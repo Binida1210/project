@@ -9,7 +9,8 @@ export const Button = ({ color = 'primary', ...rest }: ButtonProps) => {
 
 const StyledButton = stitches.styled('button', {
   all: 'unset',
-  minWidth: 140,
+  /* make default button a little less wide so it fits better in tight header spaces */
+  minWidth: 120,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -60,7 +61,9 @@ const StyledButton = stitches.styled('button', {
       },
     },
     size: {
-      sm: { height: 32, minWidth: 100, fontSize: 13, padding: '0 14px', borderRadius: 10 },
+      /* compact small variant — reduced minWidth and horizontal padding to avoid overflow when
+         two small buttons are shown side-by-side (eg. Đăng ký + Đăng nhập in header menus) */
+      sm: { height: 32, minWidth: 84, fontSize: 13, padding: '0 10px', borderRadius: 10 },
       md: {},
       lg: { height: 44, minWidth: 170, fontSize: 15, padding: '0 22px' },
       fluid: { width: '100%', minWidth: 'unset' },

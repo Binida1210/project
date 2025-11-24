@@ -3,6 +3,7 @@ import { HomeIcon, SquareIcon, TimerIcon } from '@radix-ui/react-icons';
 import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { breakpoints } from '@/constants/breakpoints';
 
 import { WareHouseModel, WarehouseStatus } from '@/models/warehouse.model';
 import { convertTimestampToDate } from '@/utils/convert-timestamp-to-date.util';
@@ -43,14 +44,17 @@ export const WarehouseViewCardBase = ({
   const { id, name, price, area, createdDate, images, rentedInfo } = warehouse;
   const address = resolveAddress(warehouse.address);
 
+  // Show options menu when available
   const renderCardOptions = () => {
     if (actions) return <MenuCardOptions actions={actions} />;
   };
 
+  // Forward single-click events
   const handleCardClick = () => {
     onClick?.(id);
   };
 
+  // Forward double-click events
   const handleCardDoubleClick = () => {
     onDoubleClick?.(id);
   };
@@ -116,7 +120,11 @@ export const WarehouseViewCardBase = ({
           {showRentedProgression && (
             <RentedWarehouseProgress rentedInfo={warehouse.rentedInfo}></RentedWarehouseProgress>
           )}
-          {showPrice && <PriceText color="#008cff">{formatPrice(price)} VND / tháng</PriceText>}
+          {showPrice && (
+            <PriceText color="#008cff" title={`${formatPrice(price)} VND`}>
+              {formatPrice(price)} VND
+            </PriceText>
+          )}
           <CardDate>
             <TimerIcon />
             {convertTimestampToDate(createdDate)}
@@ -131,36 +139,52 @@ const FONT_FAMILY = `Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
 
 const CardContainer = styled.div`
   width: 100%;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   border: 1px solid ${violetDark.violet10};
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   position: relative;
   margin: 0 auto;
-  transition: box-shadow 0.5s ease;
+  transition: transform 0.14s ease;
   isolation: isolate;
   font-family: ${FONT_FAMILY};
+  min-height: 360px;
 
   &:hover {
-    box-shadow: 0 2px 4px ${violetDark.violet6};
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: ${breakpoints.md}) {
+    min-height: auto;
   }
 `;
 
 const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
+
+  flex: 1 1 auto;
 `;
 
 const TextContainer = styled.div`
-  --container-padding-top: 25px;
-  padding: var(--container-padding-top) 20px 20px;
+  --container-padding-top: 1.5625rem;
+  padding: var(--container-padding-top) 1.25rem 1.25rem;
+  @media (max-width: ${breakpoints.md}) {
+    padding: 1rem 0.875rem 0.875rem;
+    --container-padding-top: 1.125rem;
+  }
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 6px;
 `;
 
 const CardArea = styled.span`
-  font-size: 13.5px;
+  font-size: 0.85rem;
   font-weight: normal;
   margin-top: 0px;
   display: flex;
@@ -182,13 +206,18 @@ const RentedInfoSide = styled.div`
 const RentedInfoSection = styled.div``;
 
 const CardName = styled.span`
-  height: 25px;
-  font-size: 18px;
+  font-size: 1.125rem;
+  @media (min-width: 769px) and (max-width: ${breakpoints.lg}) {
+    font-size: 1rem;
+  }
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 100%;
   margin: 8px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.2;
 
   & a:hover {
     color: ${blueA.blueA9};
@@ -196,20 +225,32 @@ const CardName = styled.span`
 `;
 
 const CardAddress = styled.span`
-  height: 28px;
   display: flex;
-  align-items: center;
-  font-size: 13.5px;
-  font-weight: normal;
+  align-items: flex-start;
   color: #505050;
+
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+  font-weight: 500;
+  margin-top: 4px;
 `;
 
 const AddressText = styled.p`
   max-width: 100%;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
   margin: 0;
+  word-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.4;
+
+  @media (max-width: ${breakpoints.md}) {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
 `;
 
 const CardAddressIcon = styled.div`
@@ -219,32 +260,56 @@ const CardAddressIcon = styled.div`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 180px;
-  padding: 4px;
+
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  padding: 0.25rem;
   border-radius: 12px 12px 0 0px;
   object-fit: cover;
   object-position: center;
   box-sizing: border-box;
+  @media (min-width: 769px) and (max-width: ${breakpoints.lg}) {
+    aspect-ratio: 16 / 9;
+  }
+  @media (max-width: ${breakpoints.md}) {
+    aspect-ratio: 4 / 3;
+    padding: 0.15rem;
+  }
 `;
 
 const CardDate = styled.span`
   position: absolute;
-  top: var(--container-padding-top);
-  left: 20px;
+
+  top: calc(var(--container-padding-top) - 2px);
+  left: 16px;
   transform: translateY(-100%);
-
-  color: #999;
-  font-size: 12px;
-
+  color: #9aa0a6;
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
   display: flex;
-  gap: 4px;
+  gap: 6px;
+  align-items: center;
+
+  @media (max-width: ${breakpoints.md}) {
+    top: calc(var(--container-padding-top) + 2px);
+  }
 `;
 
 const PriceText = styled.span`
-  margin-top: 24px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1.2;
+  margin-top: 1.5rem;
+  font-weight: 800;
+
+  font-size: clamp(0.95rem, 2.6vw, 1.45rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  @media (min-width: 769px) and (max-width: ${breakpoints.lg}) {
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    margin-top: 1rem;
+  }
+  line-height: 1.05;
   text-align: right;
 `;
 

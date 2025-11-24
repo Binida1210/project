@@ -49,12 +49,21 @@ const BackgroundWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  min-width: 1024px;
-  width: fit-content;
+  /* allow the app to shrink on small screens while keeping a comfortable max width */
+  width: 100%;
+  max-width: 1260px;
   margin: 0 auto 32px;
   background-color: white;
   padding: 16px;
   border-radius: 8px;
+  box-sizing: border-box;
+
+  @media (max-width: 720px) {
+    /* reduce padding on small devices */
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+  }
 `;
 
 const RootWrapper = () => {

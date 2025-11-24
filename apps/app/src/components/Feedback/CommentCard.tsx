@@ -19,14 +19,20 @@ export const CommentCard = (props: CommentCardProps) => {
 
   return (
     <Container>
-      <AvatarContainer>
-        <Avatar name={name} size={30} />
-        <Sender>{name}</Sender>
-        <Action>đã bình luận vào</Action>
-        <Time>
-          <ReactTimeAgo date={timestamp} locale="vi" timeStyle="twitter-minute-now" />
-        </Time>
-      </AvatarContainer>
+      <HeaderRow>
+        <Left>
+          <Avatar name={name} size={40} />
+          <NameBlock>
+            <Sender>{name}</Sender>
+            <Action>đã bình luận</Action>
+          </NameBlock>
+        </Left>
+        <Right>
+          <Time>
+            <ReactTimeAgo date={timestamp} locale="vi" timeStyle="twitter-minute-now" />
+          </Time>
+        </Right>
+      </HeaderRow>
       <Body>
         <Content>{content}</Content>
       </Body>
@@ -38,35 +44,71 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  padding: 8px 0;
 `;
 
 const Body = styled.div`
-  padding: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  padding: 12px 14px;
+  border: 1px solid #e6e6e9;
+  background: #fafafc;
+  border-radius: 10px;
 `;
 
 const Sender = styled.span`
   display: block;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #0f172a;
 `;
 
 const Action = styled.span`
-  color: #545454;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-left: 8px;
 `;
 
 const Time = styled.time`
-  color: gray;
+  color: #9aa0a6;
+  font-size: 0.85rem;
 `;
 
 const Content = styled.p`
   margin: 0;
+  color: #111827;
+  line-height: 1.6;
 `;
 
 const AvatarContainer = styled.div`
+  display: none; /* formerly used - header layout replaced */
+`;
+
+const HeaderRow = styled.div`
   display: flex;
-  gap: 5px;
-  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+`;
+
+const Left = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  /* small inner padding for avatar so it has breathing room */
+  & > div {
+    padding: 4px;
+    border-radius: 50%;
+  }
+`;
+
+const NameBlock = styled.div`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+`;
+
+const Right = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;

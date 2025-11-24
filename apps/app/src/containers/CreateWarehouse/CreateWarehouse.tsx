@@ -91,7 +91,7 @@ export const CreateWarehouse = () => {
           <Header>
             <TextContainer>
               <Title>Tạo kho bãi</Title>
-              <Detail>Vui lòng điền đầy đủ thông tin bên dưới</Detail>
+              {/* detail text removed to keep header clean */}
             </TextContainer>
             <StepperProgression />
             <ButtonContainer>
@@ -112,19 +112,35 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px; /* create breathing room between title, stepper, and actions */
-  padding-top: 6px; /* nudge header content off the top border */
+  gap: var(--space-1); /* create breathing room between title, stepper, and actions */
+  padding-top: 0.375rem; /* nudge header content off the top border */
+
+  @media (max-width: 900px) {
+    /* stack elements on narrower screens */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
 `;
 
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  /* improve spacing for mobile */
+  @media (max-width: 900px) {
+    gap: 8px;
+    align-items: flex-start;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 16px; /* tighter to avoid pushing into stepper */
+  gap: var(--space-1); /* tighter to avoid pushing into stepper */
+
+  @media (max-width: 900px) {
+    justify-content: flex-end;
+  }
 `;
 
 const Title = styled.h1`

@@ -83,11 +83,11 @@ export const RequestWarehouseDetails = () => {
   };
 
   const infoItems = [
-    { label: 'Address', value: getFormattedAddress(warehouse.address) },
-    { label: 'Price', value: `${(warehouse.price * 1000).toLocaleString('vi-VN')} VND / month` },
-    { label: 'Area', value: `${warehouse.area} m²` },
-    { label: 'Floors', value: `${warehouse.floors}` },
-    { label: 'Doors', value: `${warehouse.doors}` },
+    { label: 'Địa chỉ', value: getFormattedAddress(warehouse.address) },
+    { label: 'Giá', value: `${(warehouse.price * 1000).toLocaleString('vi-VN')} VND / tháng` },
+    { label: 'Diện tích', value: `${warehouse.area} mét vuông` },
+    { label: 'Số tầng', value: `${warehouse.floors} tầng` },
+    { label: 'Số cửa', value: `${warehouse.doors} cửa` },
   ];
 
   return (
@@ -95,7 +95,7 @@ export const RequestWarehouseDetails = () => {
       <Wrapper>
         <Header>
           <h1>{warehouse.name || ''}</h1>
-          <Button label="Back" onClick={() => redirect('/request')} />
+          <Button label="Quay lại" onClick={() => redirect('/request')} />
         </Header>
         <InfoGrid>
           {infoItems.map(({ label, value }) => (
@@ -105,7 +105,7 @@ export const RequestWarehouseDetails = () => {
             </InfoItem>
           ))}
           <InfoItem>
-            <InfoLabel>Images</InfoLabel>
+            <InfoLabel>Ảnh</InfoLabel>
             <ImageContainer $hasSrc={Boolean(warehouse.images.length)}>
               {warehouse.images.length ? (
                 warehouse.images.map((image) => (
@@ -114,23 +114,23 @@ export const RequestWarehouseDetails = () => {
                   </ImageLink>
                 ))
               ) : (
-                <Placeholder>No images</Placeholder>
+                <Placeholder>Chưa có hình ảnh</Placeholder>
               )}
             </ImageContainer>
           </InfoItem>
         </InfoGrid>
 
         <DescriptionCard>
-          <SectionTitle>Warehouse Details</SectionTitle>
+          <SectionTitle>Chi tiết kho bãi</SectionTitle>
           {!isEmpty(warehouse.description) ? (
             <Description dangerouslySetInnerHTML={{ __html: warehouse.description ?? '' }} />
           ) : (
-            <Placeholder>No description</Placeholder>
+            <Placeholder>Chưa có mô tả</Placeholder>
           )}
         </DescriptionCard>
 
         <UpdateZone>
-          <UpdateTitle>Review Approval</UpdateTitle>
+          <UpdateTitle>Xác nhận duyệt kho</UpdateTitle>
           <RadioGroupRoot
             value={status}
             onValueChange={(nextValue) => {
@@ -141,20 +141,20 @@ export const RequestWarehouseDetails = () => {
               <RadioGroupItem id="approve" value="1">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="approve">Approve</Label>
+              <Label htmlFor="approve">Đồng ý</Label>
             </RadioOption>
 
             <RadioOption>
               <RadioGroupItem id="reject" value="2">
                 <RadioGroupIndicator />
               </RadioGroupItem>
-              <Label htmlFor="reject">Reject</Label>
+              <Label htmlFor="reject">Từ chối</Label>
             </RadioOption>
           </RadioGroupRoot>
 
           <Textarea
             disabled={status !== '2'}
-            placeholder="Enter rejection reason"
+            placeholder="Nhập lí do từ chối"
             onChange={(event) => {
               setRejectedReason(event.target.value);
             }}
@@ -168,7 +168,7 @@ export const RequestWarehouseDetails = () => {
               handleUpdateWarehouseRequest();
             }}
           >
-            <span>Update</span>
+            <span>Cập nhật</span>
           </ConfirmButton>
         </UpdateZone>
       </Wrapper>
@@ -179,15 +179,15 @@ export const RequestWarehouseDetails = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  margin-top: 16px;
+  gap: 1.75rem;
+  margin-top: 1rem;
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--admin-space-2);
   flex-wrap: wrap;
 
   h1 {
@@ -195,15 +195,15 @@ const Header = styled.div`
   }
 
   button {
-    padding: 8px 16px !important;
+    padding: 0.5rem 1rem !important;
   }
 `;
 
 const InfoGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: clamp(16px, 2vw, 24px);
-  padding: clamp(20px, 3vw, 32px);
+  gap: clamp(0.875rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 3vw, 2rem);
   border-radius: var(--admin-radius-lg);
   background: var(--admin-surface);
   border: 2px solid rgba(14, 165, 233, 0.2);
@@ -213,7 +213,7 @@ const InfoGrid = styled.div`
 const InfoItem = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--admin-space-2);
 `;
 
 const InfoLabel = styled.span`
@@ -226,8 +226,8 @@ const InfoLabel = styled.span`
 
 const InfoValue = styled.span`
   display: block;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 0.75rem 0.875rem;
+  border-radius: 0.75rem;
   background: rgba(241, 245, 249, 0.7);
   border: 1px solid rgba(226, 232, 240, 0.8);
   color: var(--admin-text-primary);
