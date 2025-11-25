@@ -26,7 +26,12 @@ export type CreateWarehouseFormProps = ProviderProps<CreateWarehouseFormValuesTy
 
 // const CreateWarehouseForm = forwardRef<FormikProps<CreateWarehouseFormValuesType>, CreateWarehouseFormProps>(
 //   ({ children, onFormValidChange }: CreateWarehouseFormProps, ref) => {
-export const CreateWarehouseProvider = ({ children, onFormValidChange, innerRef }: CreateWarehouseFormProps) => {
+export const CreateWarehouseProvider = ({
+  children,
+  onFormValidChange,
+  innerRef,
+  onSubmit,
+}: CreateWarehouseFormProps & { onSubmit?: any }) => {
   const CreateWareHouseSchema = yup.object().shape({
     name: yup.string().label('Tên kho bãi').min(2).max(50).required(),
     address: yup.string().label('Địa chỉ').max(200).required(),
@@ -46,7 +51,7 @@ export const CreateWarehouseProvider = ({ children, onFormValidChange, innerRef 
       .min(1),
     doors: yup.number().label('Số cửa').required(),
     floors: yup.number().label('Số tầng').required(),
-    description: yup.string().label('Mô tả').required()
+    description: yup.string().label('Mô tả').required(),
   });
 
   return (
@@ -57,9 +62,7 @@ export const CreateWarehouseProvider = ({ children, onFormValidChange, innerRef 
       innerRef={innerRef}
       validationSchema={CreateWareHouseSchema}
       onFormValidChange={onFormValidChange}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(false);
-      }}
+      onSubmit={onSubmit ?? ((values, { setSubmitting }) => setSubmitting(false))}
     >
       {children}
     </FormProvider>

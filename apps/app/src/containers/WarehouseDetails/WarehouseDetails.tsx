@@ -101,108 +101,110 @@ export const WarehouseDetails = () => {
   useEffect(() => {}, []);
 
   return (
-    <Container>
-      <BodyContainer>
-        {/* Make the title the primary H1 and place it at the top of the detail view */}
-        <Title>{warehouse?.name}</Title>
-        {/* Gallery follows the title so users see the heading first then media */}
-        <ImageContainer>
-          <Carousel images={warehouse.images} />
-        </ImageContainer>
-        <Address>
-          {address}
-          {province ? <ProvinceTag>{province}</ProvinceTag> : null}
-        </Address>
-        {(location || dynamicLocation) && (
-          <MapViewContainer>
-            <MapView height="320px" location={location || dynamicLocation} />
-          </MapViewContainer>
-        )}
-        {!location && !dynamicLocation && (
-          <MapViewContainer>
-            <FallbackBox>
-              <p className="text-sm mb-2">Chưa có tọa độ được lưu cho địa chỉ này.</p>
-              {geocodeQuery ? (
-                <div>
-                  <FallbackActions>
-                    {geoLoading ? (
-                      <HintText>Đang tự động tìm vị trí từ địa chỉ…</HintText>
-                    ) : (
-                      <FallbackButton disabled={geoLoading} onClick={handleTryGeocode}>
-                        Thử lại tìm vị trí
-                      </FallbackButton>
-                    )}
-                    <ManualLink href={buildOsmSearchUrl(geocodeQuery)} rel="noreferrer" target="_blank">
-                      Tra cứu thủ công trên OpenStreetMap
-                    </ManualLink>
-                  </FallbackActions>
-                  {geoError && <ErrorText>{geoError}</ErrorText>}
-                  {!geoLoading && !geoError && (
-                    <HintText>Đã dùng Photon / Nominatim để tìm vị trí. Ward chỉ là thông tin phụ.</HintText>
-                  )}
-                </div>
-              ) : (
-                <HintText>Không có địa chỉ hợp lệ để tìm.</HintText>
-              )}
-            </FallbackBox>
-          </MapViewContainer>
-        )}
-        <Date>Tạo vào lúc: {warehouse?.createdDate ? convertTimestampToDate(warehouse?.createdDate) : ''}</Date>
-        <br />
-        <ButtonContainer>
-          {user?.role === Role.Renter && (
-            <ActionButton disabled={warehouse.rented} onClick={goToRentingForm}>
-              {warehouse.rented ? 'Đã thuê' : 'Thuê'}
-            </ActionButton>
+    <PagePaddingSmall>
+      <Container>
+        <BodyContainer>
+          {/* Make the title the primary H1 and place it at the top of the detail view */}
+          <Title>{warehouse?.name}</Title>
+          {/* Gallery follows the title so users see the heading first then media */}
+          <ImageContainer>
+            <Carousel images={warehouse.images} />
+          </ImageContainer>
+          <Address>
+            {address}
+            {province ? <ProvinceTag>{province}</ProvinceTag> : null}
+          </Address>
+          {(location || dynamicLocation) && (
+            <MapViewContainer>
+              <MapView height="320px" location={location || dynamicLocation} />
+            </MapViewContainer>
           )}
-          {warehouse.rented && <ActionButton onClick={handleViewContract}>Xem hợp đồng</ActionButton>}
-        </ButtonContainer>
-        {/* Mục "Yêu thích" đã được lược bỏ theo yêu cầu */}
-        {/* Slightly more airy spacing for the metrics area */}
-        <MetricsContainer>
-          <Price title={`${formatPrice(warehouse?.price)} VND`}>{formatPrice(warehouse?.price)} VND</Price>
-          <OtherMetrics>
-            <OtherMetricItem>
-              <RulerSquareIcon color="#999" height={32} width={32} />
-              <Text>{warehouse?.area} mét vuông</Text>
-            </OtherMetricItem>
-            <OtherMetricItem>
-              <ViewVerticalIcon color="#999" height={32} width={32} />
-              <Text>{warehouse?.doors ?? 0} cửa</Text>
-            </OtherMetricItem>
-            <OtherMetricItem>
-              <StackIcon color="#999" height={32} width={32} />
-              <Text>{warehouse?.floors ?? 0} tầng</Text>
-            </OtherMetricItem>
-          </OtherMetrics>
-        </MetricsContainer>
-        <SectionLabel>Mô tả kho bãi</SectionLabel>
-        {warehouse.description ? (
-          <DescriptionContainer>
-            <Description dangerouslySetInnerHTML={{ __html: warehouse.description }} />
-          </DescriptionContainer>
-        ) : (
-          <small>
-            <i>Không có mô tả gì ở đây cả</i>
-          </small>
-        )}
-        {/* Đã lược bỏ tính năng chỉ đường trực tiếp để tăng độ ổn định.
+          {!location && !dynamicLocation && (
+            <MapViewContainer>
+              <FallbackBox>
+                <p className="text-sm mb-2">Chưa có tọa độ được lưu cho địa chỉ này.</p>
+                {geocodeQuery ? (
+                  <div>
+                    <FallbackActions>
+                      {geoLoading ? (
+                        <HintText>Đang tự động tìm vị trí từ địa chỉ…</HintText>
+                      ) : (
+                        <FallbackButton disabled={geoLoading} onClick={handleTryGeocode}>
+                          Thử lại tìm vị trí
+                        </FallbackButton>
+                      )}
+                      <ManualLink href={buildOsmSearchUrl(geocodeQuery)} rel="noreferrer" target="_blank">
+                        Tra cứu thủ công trên OpenStreetMap
+                      </ManualLink>
+                    </FallbackActions>
+                    {geoError && <ErrorText>{geoError}</ErrorText>}
+                    {!geoLoading && !geoError && (
+                      <HintText>Đã dùng Photon / Nominatim để tìm vị trí. Ward chỉ là thông tin phụ.</HintText>
+                    )}
+                  </div>
+                ) : (
+                  <HintText>Không có địa chỉ hợp lệ để tìm.</HintText>
+                )}
+              </FallbackBox>
+            </MapViewContainer>
+          )}
+          <Date>Tạo vào lúc: {warehouse?.createdDate ? convertTimestampToDate(warehouse?.createdDate) : ''}</Date>
+          <br />
+          <ButtonContainer>
+            {user?.role === Role.Renter && (
+              <ActionButton disabled={warehouse.rented} onClick={goToRentingForm}>
+                {warehouse.rented ? 'Đã thuê' : 'Thuê'}
+              </ActionButton>
+            )}
+            {warehouse.rented && <ActionButton onClick={handleViewContract}>Xem hợp đồng</ActionButton>}
+          </ButtonContainer>
+          {/* Mục "Yêu thích" đã được lược bỏ theo yêu cầu */}
+          {/* Slightly more airy spacing for the metrics area */}
+          <MetricsContainer>
+            <Price title={`${formatPrice(warehouse?.price)} VND`}>{formatPrice(warehouse?.price)} VND</Price>
+            <OtherMetrics>
+              <OtherMetricItem>
+                <RulerSquareIcon color="#999" height={32} width={32} />
+                <Text>{warehouse?.area} mét vuông</Text>
+              </OtherMetricItem>
+              <OtherMetricItem>
+                <ViewVerticalIcon color="#999" height={32} width={32} />
+                <Text>{warehouse?.doors ?? 0} cửa</Text>
+              </OtherMetricItem>
+              <OtherMetricItem>
+                <StackIcon color="#999" height={32} width={32} />
+                <Text>{warehouse?.floors ?? 0} tầng</Text>
+              </OtherMetricItem>
+            </OtherMetrics>
+          </MetricsContainer>
+          <SectionLabel>Mô tả kho bãi</SectionLabel>
+          {warehouse.description ? (
+            <DescriptionContainer>
+              <Description dangerouslySetInnerHTML={{ __html: warehouse.description }} />
+            </DescriptionContainer>
+          ) : (
+            <small>
+              <i>Không có mô tả gì ở đây cả</i>
+            </small>
+          )}
+          {/* Đã lược bỏ tính năng chỉ đường trực tiếp để tăng độ ổn định.
             Người dùng có thể dùng liên kết trong bản đồ để mở xem chi tiết trên OSM. */}
-        {warehouse.status === WarehouseStatus.Accepted && (
-          <CommentsContainer>
-            <CommentSection data={warehouse.comments} resolveComment={resolveComment} />
-          </CommentsContainer>
-        )}
-      </BodyContainer>
-    </Container>
+          {warehouse.status === WarehouseStatus.Accepted && (
+            <CommentsContainer>
+              <CommentSection data={warehouse.comments} resolveComment={resolveComment} />
+            </CommentsContainer>
+          )}
+        </BodyContainer>
+      </Container>
+    </PagePaddingSmall>
   );
 };
 
 const ImageContainer = styled.div`
   width: 100%;
   /* image gallery lives inside the page content now; remove large auto margins */
-  margin: 12px 0 20px; /* small gap after heading, larger gap after gallery */
-  padding: 8px 10px; /* slightly reduced padding so the inner gallery can use full width */
+  margin: 24px 0 32px; /* increased gap after heading and after gallery */
+  padding: 16px 14px; /* slightly increased padding for better breathing room */
   border-radius: 10px;
   background: #f8fafc; /* soft neutral background for the gallery */
 
@@ -260,8 +262,8 @@ const ImageContainer = styled.div`
 const BodyContainer = styled.div`
   position: relative;
   max-width: 1180px;
-  margin: 20px auto 48px; /* slightly larger top spacing to pull away from header */
-  padding: 8px 18px 36px; /* comfortable outer padding */
+  margin: 32px auto 72px; /* slightly more space above and below content */
+  padding: 12px 20px 48px; /* a bit more inner padding for larger screens */
 `;
 
 const Title = styled.h1`
@@ -373,6 +375,11 @@ const Text = styled.span``;
 
 const Container = styled.div``;
 
+// wrapper used to provide page-level vertical padding (2rem) for warehouse details
+const PagePaddingSmall = styled.div.attrs({ className: 'page-padding' })`
+  padding: 2rem 0;
+`;
+
 const MapViewContainer = styled.div`
   margin-top: 16px;
   margin-bottom: 14px;
@@ -404,7 +411,7 @@ const ActionButton = styled(Button)`
 
 const DescriptionContainer = styled.div`
   margin-top: 18px;
-  margin-bottom: 30px; /* larger breathing room before comments */
+  margin-bottom: 40px; /* slightly more breathing room before comments */
   max-width: 100%;
 `;
 
@@ -466,7 +473,7 @@ const HintText = styled.p`
 `;
 
 const SectionLabel = styled.h4`
-  margin: 18px 0 12px;
+  margin: 28px 0 18px;
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
   color: #0f172a;
   letter-spacing: 0.1px;

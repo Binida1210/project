@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/Common/Button';
@@ -23,16 +24,29 @@ export function Contract() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div>
-        <Button color="secondary" size="sm" onClick={handleBack}>
-          Quay lại
-        </Button>
+    <PagePaddingSmall>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ marginBottom: '1rem' }}>
+          <Button color="secondary" size="sm" onClick={handleBack}>
+            Quay lại
+          </Button>
+        </div>
+        <div
+          id="contract"
+          style={{
+            height: '120dvh',
+            maxHeight: '180vh',
+            width: '100%',
+            border: '1px solid #e2e8f0',
+            borderRadius: 8,
+            overflow: 'hidden',
+          }}
+        ></div>
       </div>
-      <div
-        id="contract"
-        style={{ height: '80dvh', width: '100%', border: '1px solid #e2e8f0', borderRadius: 8, overflow: 'hidden' }}
-      ></div>
-    </div>
+    </PagePaddingSmall>
   );
 }
+
+const PagePaddingSmall = styled.div.attrs({ className: 'page-padding' })`
+  padding: 3rem 6rem;
+`;

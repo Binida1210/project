@@ -3,7 +3,8 @@ import 'react-quill/dist/quill.snow.css';
 import './style.css';
 
 import { Field, Form, useFormikContext } from 'formik';
-import { useEffect } from 'react';
+import { Button } from '@/components/Common/Button';
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { extractLatLngFromText as extractLatLngFromFreeText } from '@/utils/warehouse-address.util';
 
@@ -21,7 +22,17 @@ import { CreateWarehouseFormValuesType } from './CreateWarehouseProvider';
 export const CreateWarehouseForm = () => {
   const { handleSubmit, handleChange, handleBlur, values, setFieldValue } =
     useFormikContext<CreateWarehouseFormValuesType>();
-  useEffect(() => {}, []);
+
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== 'undefined' ? window.innerWidth <= 630 : false,
+  );
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 630);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   return (
     <Container>
@@ -82,26 +93,37 @@ export const CreateWarehouseForm = () => {
                 <FieldError errorFor={'floors'} />
               </FormField>
             </LeftSide>
-            <RightSide>
-              <FormField>
-                <Label>Giá</Label>
-                <StyledSuffixInput
-                  defaultValue={values.price}
-                  name="price"
-                  suffix=".000 VND"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-                <FieldError errorFor={'price'} />
-              </FormField>
-              {/* Map search box đã gỡ bỏ trong bản rút gọn này */}
-            </RightSide>
+            <RightSide>{/* Right side kept intentionally blank for this simplified layout */}</RightSide>
           </TextInfo>
+          {/* move price field below the two-column area so it's stacked and centered */}
           <FormField>
-            <Label>Mô tả</Label>
-            <Field component={RichTextEditor} name="description" />
-            <FieldError errorFor={'description'} />
+            <Label>Giá</Label>
+            <StyledSuffixInput
+              defaultValue={values.price}
+              name="price"
+              suffix=".000 VND"
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
+            <FieldError errorFor={'price'} />
           </FormField>
+          <DescriptionField>
+            <Label>Mô tả</Label>
+            <EditorWrapper>
+              {isMobile ? (
+                <Field as={MobileTextarea} name="description" rows={6} />
+              ) : (
+                <Field component={RichTextEditor} name="description" />
+              )}
+            </EditorWrapper>
+            <FieldError errorFor={'description'} />
+          </DescriptionField>
+
+          <SubmitContainer>
+            <Button size="lg" type="submit">
+              Hoàn thành
+            </Button>
+          </SubmitContainer>
         </Body>
       </Form>
     </Container>
@@ -112,16 +134,13 @@ const Body = styled.div``;
 
 const TextInfo = styled.div`
   display: grid;
-  gap: 28px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr; /* single-column layout — fields stack vertically and centered */
   margin-bottom: 20px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
 `;
-
 const ImageInfo = styled.div`
   margin-bottom: 12px;
 `;
@@ -129,18 +148,14 @@ const ImageInfo = styled.div`
 const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
 `;
 
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
 `;
 
-const Title = styled.h2`
-  display: none;
-`;
+/* page header handled by parent; Title styling removed */
 
 const Container = styled.div`
   padding: 12px 8px;
@@ -148,27 +163,55 @@ const Container = styled.div`
   /* scoped form padding for the create page */
   & .create-warehouse-form {
     padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center all child fields and controls horizontally */
   }
 
   @media (min-width: 769px) {
     padding: 0;
+  }
+
+  /* ensure editors & inputs respect the requested 60dvw width */
+  & .create-warehouse-form input,
+  & .create-warehouse-form textarea,
+  & .create-warehouse-form .ql-container {
+    width: 60dvw;
+    max-width: 100%;
   }
 `;
 
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center; /* center inputs and keep label contained to the same width */
 
   margin-bottom: 8px;
 
   label {
     margin-bottom: 8px;
+    width: 60dvw;
+    max-width: 100%;
+    text-align: left; /* put label to the left above input */
+    display: block;
+    font-size: 1.2rem; /* larger label text (adjusted) */
+    font-weight: 700; /* bold */
+    color: #0f172a;
+  }
+
+  /* keep left alignment on small screens but slightly smaller text */
+  @media (max-width: 480px) {
+    label {
+      font-size: 1rem;
+    }
   }
 `;
 
 const Label = styled.label``;
 
 const inputStyles = css`
+  width: 60dvw;
+  max-width: 100%;
   height: 50px;
   padding: 16px;
   border-radius: 4px;
@@ -180,12 +223,59 @@ const Input = styled.input`
   ${inputStyles}
 `;
 
-const StyledSuffixInput = styled(SuffixInput)``;
+const StyledSuffixInput = styled(SuffixInput)`
+  width: 60dvw;
+  max-width: 100%;
+`;
+
+/* special spacing for the description block */
+const DescriptionField = styled(FormField)`
+  margin: 28px 0;
+`;
+
+/* hide the rich text editor on very small screens */
+const EditorWrapper = styled.div`
+  width: 60dvw;
+  max-width: 100%;
+`;
+
+/* Desktop/Mobile editor switching handled in React (isMobile) */
+
+const MobileTextarea = styled.textarea`
+  display: block;
+  width: min(60dvw, 720px);
+  max-width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  resize: vertical;
+  background: #fff;
+`;
+const SubmitContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem; /* put final button closer to page bottom */
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+`;
 
 // Google Map search input removed
 
 const ImageInputContainer = styled.div``;
 
-const Text = styled.span``;
+const Text = styled.span`
+  display: block;
+  width: 60dvw;
+  max-width: 100%;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+`;
 
 // MapContainer removed

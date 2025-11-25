@@ -1,19 +1,10 @@
 import { FormikProps } from 'formik';
-import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthStore } from '@/auth';
-import {
-  Stepper,
-  StepperBackButton,
-  StepperContentRenderer,
-  StepperItemType,
-  StepperNextButton,
-  StepperProgression,
-} from '@/components/Common/Stepper';
 
 import { api } from '../../axios/axios';
 import {
@@ -23,84 +14,49 @@ import {
 } from '../../components/CreateWarehouseForm';
 
 export const CreateWarehouse = () => {
-  const [stepperCanNext, setStepperCanNext] = useState<boolean>();
-  const currentStepRef = useRef<number>();
   const createWarehouseFormRef = useRef<FormikProps<CreateWarehouseFormValuesType>>(null);
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
-  const stepperItems = useMemo<StepperItemType[]>(
-    () => [
-      {
-        label: 'Nhập thông tin',
-        status: 'active',
-        content: <CreateWarehouseForm />,
-      },
-      // {
-      //   label: 'Điều khoản',
-      //   status: 'default',
-      //   content: <Privacy onAgreedChange={(value) => setStepperCanNext(value)} />,
-      // },
-    ],
-    [],
-  );
+  // simple onSubmit handler to post the form data then navigate
+  const handleSubmit = async (
+    values: CreateWarehouseFormValuesType,
+    { setSubmitting }: { setSubmitting: (b: boolean) => void },
+  ) => {
+    setSubmitting(true);
 
-  const handleNextButtonClick = (curr: number | undefined) => {};
+    if (user) {
+      try {
+        const { ward, ...rest } = values ?? {};
+        const warehouse = {
+          ...rest,
+          ...(typeof ward === 'number' && !Number.isNaN(ward) ? { ward } : {}),
+          createdDate: moment().format(),
+          userId: user.id,
+        };
+
+        await api.post('warehouse/', warehouse);
+        navigate('/list');
+      } catch {
+        // ignore errors for now – simply stop submitting
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <Container>
-      <CreateWarehouseProvider
-        innerRef={createWarehouseFormRef}
-        onFormValidChange={(payload) => {
-          if (currentStepRef.current !== 0) return;
-          if (payload.isValid) setStepperCanNext(true);
-          else setStepperCanNext(false);
-        }}
-      >
-        <Stepper
-          isCanNext={stepperCanNext}
-          items={stepperItems}
-          onComplete={() => {
-            const { current: formikProps } = createWarehouseFormRef;
+      <CreateWarehouseProvider innerRef={createWarehouseFormRef} onSubmit={handleSubmit}>
+        <Header>
+          <TextContainer>
+            <Title>Tạo kho bãi</Title>
+          </TextContainer>
+        </Header>
 
-            if (user) {
-              const { ward, ...rest } = formikProps?.values ?? {};
-              const warehouse = {
-                ...rest,
-                ...(typeof ward === 'number' && !Number.isNaN(ward) ? { ward } : {}),
-                createdDate: moment().format(),
-                userId: user.id,
-              };
-              api.post(`warehouse/`, warehouse).then(() => {
-                navigate('/list');
-              });
-            }
-          }}
-          onStepChange={(s) => {
-            currentStepRef.current = s;
-
-            if (s === 1) {
-              setStepperCanNext(false);
-            } else if (s === 0) {
-              createWarehouseFormRef.current?.validateForm().then((errors) => {
-                setStepperCanNext(isEmpty(errors));
-              });
-            }
-          }}
-        >
-          <Header>
-            <TextContainer>
-              <Title>Tạo kho bãi</Title>
-              {/* detail text removed to keep header clean */}
-            </TextContainer>
-            <StepperProgression />
-            <ButtonContainer>
-              <StepperBackButton color="secondary"></StepperBackButton>
-              <StepperNextButton onClick={handleNextButtonClick}></StepperNextButton>
-            </ButtonContainer>
-          </Header>
-          <StepperContentRenderer />
-        </Stepper>
+        <CreateWarehouseForm />
       </CreateWarehouseProvider>
     </Container>
   );
@@ -110,10 +66,10 @@ const Container = styled.div``;
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* center the title */
   align-items: center;
-  gap: var(--space-1); /* create breathing room between title, stepper, and actions */
-  padding-top: 0.375rem; /* nudge header content off the top border */
+  gap: var(--space-1);
+  padding-top: 0.375rem;
 
   @media (max-width: 900px) {
     /* stack elements on narrower screens */
@@ -127,27 +83,11 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
-  /* improve spacing for mobile */
-  @media (max-width: 900px) {
-    gap: 8px;
-    align-items: flex-start;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: var(--space-1); /* tighter to avoid pushing into stepper */
-
-  @media (max-width: 900px) {
-    justify-content: flex-end;
-  }
 `;
 
 const Title = styled.h1`
-  margin: 0;
+  margin: 2rem 0 1rem 0; /* top margin increased to 2rem per request */
+  width: 100%;
+  text-align: center; /* center the page title */
 `;
-
-const Detail = styled.span`
-  color: #999;
-  margin: 0;
-`;
+/* no extra detail text here; header kept intentionally small */

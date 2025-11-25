@@ -60,22 +60,29 @@ export const Login = () => {
   };
 
   return (
-    <FormContainer>
-      <h2>Login</h2>
-      <Form onSubmit={handleSubmit}>
-        <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+    <PagePadding>
+      <FormContainer>
+        <h2>Login</h2>
+        <Form onSubmit={handleSubmit}>
+          <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        {error && (
-          <Error>
-            <p>{error}</p>
-          </Error>
-        )}
-        <PrimaryButton disabled={isLoading} type="submit">
-          {isLoading ? <Loading size={25} /> : 'Login'}
-        </PrimaryButton>
-      </Form>
-    </FormContainer>
+          {error && (
+            <Error>
+              <p>{error}</p>
+            </Error>
+          )}
+          <PrimaryButton disabled={isLoading} type="submit">
+            {isLoading ? <Loading size={25} /> : 'Login'}
+          </PrimaryButton>
+        </Form>
+      </FormContainer>
+    </PagePadding>
   );
 };
 
@@ -83,6 +90,11 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+// wrapper used as a classed div to provide page-level vertical padding
+const PagePadding = styled.div.attrs({ className: 'page-padding' })`
+  padding: 8rem 0;
 `;
 
 const Form = styled.form`
