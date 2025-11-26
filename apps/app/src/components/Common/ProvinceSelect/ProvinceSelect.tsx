@@ -33,7 +33,7 @@ export const ProvinceSelect = (props: ProvinceSelectProps) => {
         </SelectIcon>
       </SelectTrigger>
       <Select.Portal>
-        <SelectContent>
+        <SelectContent align="center" sideOffset={0}>
           <SelectScrollUpButton>
             <ChevronUpIcon />
           </SelectScrollUpButton>
@@ -86,6 +86,8 @@ const SelectContent = styled(Select.Content, {
   borderRadius: 12,
   border: '1px solid #e5e7eb',
   minWidth: 340,
+  maxWidth: 'min(90vw, 480px)',
+  // allow Radix to position; default align="center" will center the popup
   maxHeight: 420,
   boxShadow: '0 6px 18px rgba(15, 23, 42, 0.06)',
 });

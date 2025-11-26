@@ -15,5 +15,3 @@ export const mq = {
   lg: `(max-width: ${breakpoints.lg})`,
   xl: `(min-width: ${breakpoints.xl})`,
 };
-
-

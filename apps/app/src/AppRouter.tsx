@@ -16,6 +16,7 @@ import {
   CreateWarehouse,
   Help,
   Home,
+  HomeV2,
   Login,
   MyWarehouse,
   RentingForm,
@@ -89,8 +90,8 @@ export const AppRouter = () => {
         <Routes>
           <Route element={<PersistLogin />} path="/*">
             <Route element={<RootWrapper />}>
-              <Route element={<Home />} path="" />
-              <Route element={<Home />} path="home" />
+              <Route element={<HomeV2 />} path="" />
+              <Route element={<HomeV2 />} path="home" />
               <Route element={<About />} path="about" />
               <Route element={<AuthGuard />}>
                 <Route element={<MyWarehouse />} path="list" />
