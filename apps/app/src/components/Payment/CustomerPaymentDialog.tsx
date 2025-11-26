@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { stripePromise } from '@/libs';
@@ -49,8 +49,6 @@ export function CustomerPaymentDialog(props: CustomerPaymentDialogProps) {
     const stripe = await stripePromise;
 
     if (!stripe || !clientSecretRef.current) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -119,3 +117,4 @@ export function CustomerPaymentDialog(props: CustomerPaymentDialogProps) {
     </ConfirmDialog>
   );
 }
+

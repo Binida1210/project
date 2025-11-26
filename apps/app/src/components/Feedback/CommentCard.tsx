@@ -1,4 +1,4 @@
-import TimeAgo from 'javascript-time-ago';
+﻿import TimeAgo from 'javascript-time-ago';
 import vi from 'javascript-time-ago/locale/vi.json';
 import ReactTimeAgo from 'react-time-ago';
 import styled from 'styled-components';
@@ -80,7 +80,7 @@ const Content = styled.p`
 `;
 
 const AvatarContainer = styled.div`
-  display: none; /* formerly used - header layout replaced */
+  display: none; 
 `;
 
 const HeaderRow = styled.div`
@@ -94,7 +94,7 @@ const Left = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
-  /* small inner padding for avatar so it has breathing room */
+  
   & > div {
     padding: 4px;
     border-radius: 50%;
@@ -112,3 +112,4 @@ const Right = styled.div`
   align-items: center;
   justify-content: flex-end;
 `;
+

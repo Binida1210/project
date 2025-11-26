@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { AuthUser } from '@/auth/models/auth';
@@ -26,16 +26,13 @@ const initialState: OmitFunctions<MyWarehouseStore> = {
 
 export const useMyWarehouseStore = create<MyWarehouseStore, [['zustand/immer', MyWarehouseStore]]>(
   immer<MyWarehouseStore>((set) => ({
-    // State
     ...initialState,
 
-    // Actions
     fetchMyWarehouses: async (user) => {
       set({ ownWarehousesLoading: true, rentedWarehousesLoading: true });
       if (user) {
         switch (user.role) {
           case Role.Owner:
-            // owner warehouse
             warehouseService
               .getOwnerWarehouse(user.id)
               .then((data) => {
@@ -43,7 +40,6 @@ export const useMyWarehouseStore = create<MyWarehouseStore, [['zustand/immer', M
               })
               .finally(() => set({ ownWarehousesLoading: false }));
 
-            // owner history
             rentedWarehouseService
               .getOwnerWarehouses(user.id)
               .then((data) => {
@@ -52,7 +48,6 @@ export const useMyWarehouseStore = create<MyWarehouseStore, [['zustand/immer', M
               .finally(() => set({ rentedWarehousesLoading: false }));
             break;
           case Role.Renter:
-            // renter renting warehouse
             rentedWarehouseService
               .getRenterWarehouses(user.id)
               .then((data) => {
@@ -65,7 +60,7 @@ export const useMyWarehouseStore = create<MyWarehouseStore, [['zustand/immer', M
         }
       } else set({ ownWarehousesLoading: false, rentedWarehousesLoading: false });
     },
-    // Reset the state to the initial values
     reset: () => set(initialState),
   })),
 );
+

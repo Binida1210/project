@@ -1,5 +1,4 @@
-// Main home page with warehouse search and listing
-/* eslint-disable simple-import-sort/imports, import/order */
+﻿/* eslint-disable simple-import-sort/imports, import/order */
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircledIcon, MagnifyingGlassIcon, MobileIcon } from '@radix-ui/react-icons';
 import { isEmpty } from 'lodash';
@@ -36,7 +35,6 @@ export const Home = () => {
         warehouseRef.current = filterWarehouses;
         setWarehouses(warehouseRef.current);
 
-        // Build province options dynamically from data
         const provinces = new Set<string>();
         filterWarehouses.forEach((w) => {
           const p = extractProvinceFromAddress(w.address);
@@ -66,7 +64,6 @@ export const Home = () => {
         );
       }
 
-      // sorting
       if (sortBy) {
         const arr = [...filterResult];
         switch (sortBy) {
@@ -90,26 +87,9 @@ export const Home = () => {
     }
   }, [priceFilter, provinceFilter, sortBy]);
 
-  // TODO: If we call api to search, this code should be removed
-  // const onFilter = (value: [number, number] | string, type: 'ward' | 'price') => {
-  //   setWarehouses(
-  //     mockWareHouses.filter((it) => {
-  //       let flag = false;
 
-  //       if (type === 'ward') {
-  //         flag =
-  //           value === WardValue.ALL ? true : it.ward?.toLowerCase().includes((value as string).toLowerCase()) ?? false;
-  //       }
 
-  //       if (type === 'price') {
-  //         const searchValue = value as [number, number];
-  //         flag = it.price >= searchValue[0] && it.price <= searchValue[1];
-  //       }
 
-  //       return flag;
-  //     }),
-  //   );
-  // };
 
   return (
     <>
@@ -208,12 +188,11 @@ export const Home = () => {
   );
 };
 
-// Border radius scale for this page
 const RADIUS = 12; // containers/cards
 const RADIUS_SM = 8; // small badges/icons
 
 const Main = styled.div`
-  /* Fluid container with constrained max width */
+  
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
@@ -238,23 +217,23 @@ const HeroTitle = styled.h1`
   margin: 0;
   font-size: 32px;
   font-weight: 800;
-  color: #1e1b2e; /* slightly deeper for contrast */
+  color: #1e1b2e; 
   letter-spacing: -0.02em;
 `;
 
 const HeroSubtitle = styled.p`
   margin: 0;
-  color: #374151; /* darker slate for better readability */
+  color: #374151; 
 `;
 
 const SearchBar = styled.div`
   display: grid;
-  grid-template-columns: 320px 1fr; /* merge middle input + action button */
+  grid-template-columns: 320px 1fr; 
   gap: var(--space-1);
   align-items: center;
 
   @media (max-width: ${breakpoints.mdWide}) {
-    /* stack filters & actions on small screens */
+    
     grid-template-columns: repeat(2, minmax(220px, 1fr));
     gap: 10px;
     align-items: stretch;
@@ -264,16 +243,15 @@ const SearchBar = styled.div`
 const ActionsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--space-1); /* unified horizontal spacing between input and button */
+  gap: var(--space-1); 
 
-  /* under mdWide we want the price control + action to be on their own line
-     so allow wrapping and stack vertically for stable layout */
+  
   @media (max-width: ${breakpoints.mdWide}) {
     flex-direction: column;
     gap: 8px;
     align-items: stretch;
 
-    /* keep the action button aligned to the right when there's room */
+    
     & > button {
       align-self: flex-end;
     }
@@ -283,35 +261,34 @@ const ActionsRow = styled.div`
 const MetaActionsRow = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--space-1); /* same spacing */
-  justify-content: flex-end; /* push sort + clear to the right */
+  gap: var(--space-1); 
+  justify-content: flex-end; 
 
-  /* hide sort + clear at <=930px to simplify mobile layout */
+  
   @media (max-width: 930px) {
     display: none;
   }
 `;
 
 const ActionButton = styled(Button)`
-  /* Make 'Khám phá' wider to visually match the other prominent actions */
-  min-width: 12.5rem; /* 200px */
+  
+  min-width: 12.5rem; 
   width: auto;
   flex-shrink: 0;
 
   @media (max-width: ${breakpoints.mdWide}) {
-    /* when stacked on small screens allow it to be full width but keep padding */
+    
     width: 100%;
     min-width: unset;
   }
 
-  /* override padding specifically for the 'Khám phá' visual treatment */
+  
   padding: 0 !important;
 `;
 
-// Meta information row under the filters: results count, sort and clear
 const MetaBar = styled.div`
   display: grid;
-  grid-template-columns: 320px 1fr; /* mirror new SearchBar layout */
+  grid-template-columns: 320px 1fr; 
   gap: 16px;
   align-items: center;
   margin: 6px 0 8px 0;
@@ -339,7 +316,7 @@ const SortCol = styled.div`
     font-size: 13px;
   }
 
-  /* hide SortCol under mdWide (900px) for more stable mid/mobile layouts */
+  
   @media (max-width: ${breakpoints.mdWide}) {
     display: none;
   }
@@ -356,7 +333,7 @@ const SelectEl = styled.select`
   font-weight: 500;
 `;
 
-/* Reuse ActionButton styling for the clear button */
+
 const ClearButton = styled(ActionButton)``;
 
 const Highlights = styled.div`
@@ -364,7 +341,7 @@ const Highlights = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.875rem;
 
-  /* hide highlight cards on small screens <= 930px per request */
+  
   @media (max-width: 930px) {
     display: none;
   }
@@ -397,7 +374,7 @@ const IconBadge = styled.span`
   width: 2.25rem;
   height: 2.25rem;
   border-radius: ${RADIUS_SM}px;
-  background: #e2e8f0; /* neutral gray */
+  background: #e2e8f0; 
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -426,21 +403,16 @@ const SectionHeader = styled.div`
 const GridContainer = styled.div`
   width: 100%;
   display: grid;
-  /* Explicit responsive columns for predictable layout
-      < 640px: 1
-      >=640px: 2
-      >=768px: 3
-      >=1024px: 4
-    */
-  /* default: two columns on narrow screens to avoid single-column look */
+  
+  
   grid-template-columns: repeat(2, minmax(220px, 1fr));
-  /* make rows equal height so cards within a row align nicely */
+  
   grid-auto-rows: 1fr;
   column-gap: clamp(12px, 1.8vw, 20px);
   row-gap: 20px;
 
   @supports not (width: 85dvw) {
-    /* Fallback tweak if dynamic viewport units unsupported */
+    
     column-gap: 16px;
   }
 
@@ -453,9 +425,10 @@ const GridContainer = styled.div`
   }
 
   @media (min-width: 1260px) {
-    /* slightly wider cards on large desktop */
+    
     grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
-  /* keep 2 columns even on small phones (requested). If you want 1 column at very small screens,
-     we can add a small breakpoint here (e.g. max-width: 360px) */
+  
 `;
+
+

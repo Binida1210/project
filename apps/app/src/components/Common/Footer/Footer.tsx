@@ -1,4 +1,4 @@
-import { violetDark } from '@radix-ui/colors';
+﻿import { violetDark } from '@radix-ui/colors';
 import {
   ClockIcon,
   EnvelopeClosedIcon,
@@ -39,7 +39,6 @@ const FooterSection = styled.div`
   gap: 15px;
 `;
 
-// Special footer boxes (Service / Support) that should be hidden on small screens
 const FooterBox = styled(FooterSection)`
   @media (max-width: 768px) {
     display: none;
@@ -77,7 +76,7 @@ const ContactInfo = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  /* On narrow screens show contact info in two columns (two items per row) */
+  
   @media (max-width: 768px) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -142,7 +141,6 @@ const BrandName = styled.span`
   font-weight: 600;
 `;
 
-// Main footer component for the application
 export const Footer: React.FC = () => {
   return (
     <FooterContainer>
@@ -211,3 +209,5 @@ export const Footer: React.FC = () => {
     </FooterContainer>
   );
 };
+
+

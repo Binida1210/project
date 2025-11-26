@@ -1,4 +1,4 @@
-import { red } from '@radix-ui/colors';
+﻿import { red } from '@radix-ui/colors';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
@@ -44,7 +44,6 @@ type ActionDialog =
       options: DialogProps;
     };
 
-// Component: provides card actions and dialogs for warehouse items
 export const MyWarehouseViewCard = ({
   type = MyWarehouseViewCardType.RenterRentingHistory,
   ...props
@@ -58,7 +57,6 @@ export const MyWarehouseViewCard = ({
   const [dialogOpen, setDialogOpen] = useState(true);
   const [actionDialog, setActionDialog] = useState<ActionDialog>();
 
-  // Return the right set of props and actions for the requested card type
   const getViewCardOptions = (): WarehouseViewCardProps => {
     switch (type) {
       case MyWarehouseViewCardType.RenterRentingHistory:
@@ -106,7 +104,6 @@ export const MyWarehouseViewCard = ({
 
   const defaultActions = [viewDetailAction];
 
-  // Actions shown for history/request type cards
   const getHistoryTypeActions = useCallback((): MenuCardActions[] => {
     switch (warehouse.rentedInfo?.status) {
       default:
@@ -114,7 +111,6 @@ export const MyWarehouseViewCard = ({
     }
   }, [warehouse.rentedInfo?.status]);
 
-  // Actions for owner when viewing owned warehouses
   const getOwningTypeActions = useCallback((): MenuCardActions[] => {
     const confirmCancelActions: MenuCardActions = {
       title: 'Chấp thuận yêu cầu hủy',
@@ -151,7 +147,6 @@ export const MyWarehouseViewCard = ({
     }
   }, [warehouse.rentedInfo?.status]);
 
-  // Actions for renter when viewing renting state
   const getRentingTypeActions = useCallback((): MenuCardActions[] => {
     const requestCancelActions: MenuCardActions = {
       title: 'Yêu cầu hủy',
@@ -203,7 +198,6 @@ export const MyWarehouseViewCard = ({
     }
   }, [warehouse.rentedInfo?.status]);
 
-  // Start payment flow for confirmation fee
   const handleConfirmAction = () => {
     const { rentedInfo, userId: ownerId } = warehouse;
     if (rentedInfo) {
@@ -236,7 +230,6 @@ export const MyWarehouseViewCard = ({
     }
   };
 
-  // Open dialog to request an extension
   const handleExtendAction = () => {
     setActionDialog({
       type: 'dialog',
@@ -251,13 +244,11 @@ export const MyWarehouseViewCard = ({
     setDialogOpen(true);
   };
 
-  // Called after a successful payment to finalize confirmation
   const handleConfirmPaymentSuccess = () => {
     if (warehouse.rentedInfo)
       rentedWarehouseService.confirmWarehouse(warehouse.rentedInfo.id).then(() => fetchMyWarehouses(user));
   };
 
-  // Render a dialog depending on the selected actionDialog type
   const renderDialog = () => {
     if (actionDialog) {
       switch (actionDialog.type) {
@@ -294,3 +285,4 @@ export const MyWarehouseViewCard = ({
     </>
   );
 };
+

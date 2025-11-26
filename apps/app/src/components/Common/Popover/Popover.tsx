@@ -1,4 +1,4 @@
-import * as RadixPopover from '@radix-ui/react-popover';
+﻿import * as RadixPopover from '@radix-ui/react-popover';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
@@ -32,9 +32,10 @@ export function Popover({
       <RadixPopover.Portal>
         <NoOutlineContent {...props} onInteractOutside={handleInteractOutside}>
           {content}
-          {/* <RadixPopover.Arrow fill="white" height={12} width={15} /> */}
+          {}
         </NoOutlineContent>
       </RadixPopover.Portal>
     </Root>
   );
 }
+

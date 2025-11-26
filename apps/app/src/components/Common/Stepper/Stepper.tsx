@@ -1,4 +1,4 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
+﻿import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import { produce } from 'immer';
 import { findLastIndex } from 'lodash';
 import { ReactNode, useEffect, useMemo } from 'react';
@@ -12,7 +12,6 @@ export type StepperProps = {
   children?: ReactNode;
   isCanNext?: boolean;
   defaultCanNextOnNewStep?: boolean;
-  // TODO: implement this props
   isDisable?: boolean;
   onCanNextChange?: (canNext: boolean) => void;
   onStepChange?: (step: number) => void;
@@ -28,8 +27,6 @@ const getStepperItemsState = (items: StepperItemType[]) => {
   return { currentItem, currentIndex, isLastStep, isFirstStep };
 };
 
-// TODO: I think this component need a controllable `items` for further use
-// You may need this to implement that: https://github.com/radix-ui/primitives/tree/main/packages/react/use-controllable-state
 export const Stepper = ({
   items: propItems,
   children,
@@ -144,3 +141,4 @@ export const Stepper = ({
     </StepperProvider>
   );
 };
+

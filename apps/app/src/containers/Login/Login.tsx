@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,14 +18,12 @@ export const Login = () => {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // available email check func
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // check email form
     if (!isValidEmail(email)) {
       setError('Email không hợp lệ.');
       return;
@@ -92,7 +90,6 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
-// wrapper used as a classed div to provide page-level vertical padding
 const PagePadding = styled.div.attrs({ className: 'page-padding' })`
   padding: 8rem 0;
 `;
@@ -113,7 +110,7 @@ const Input = styled.input`
 
 const PrimaryButton = styled(BaseButton)`
   width: 140px;
-  /* inherits standardized height, radius, font styling */
+  
 `;
 
 const Error = styled.div`
@@ -126,3 +123,5 @@ const Error = styled.div`
     margin: 0;
   }
 `;
+
+

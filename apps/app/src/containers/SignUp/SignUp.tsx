@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 import {
   CardElement as StripeCardElement,
   Elements as StripeElements,
@@ -186,19 +186,7 @@ export const SignUpForm = () => {
               <PrimaryButton disabled={loading} type="submit">
                 {loading ? <Spinner innerSize={20} margin={0} outerSize={25} /> : 'Đăng ký'}
               </PrimaryButton>
-              {/* <Button
-              type="button"
-              onClick={() => {
-                setSubmitting(true);
-                new Promise((resolve) => {
-                  setTimeout(resolve, 10000);
-                })
-                  .then(() => navigate('/login'))
-                  .finally(() => setSubmitting(false));
-              }}
-            >
-              Đi
-            </Button> */}
+              {}
               <FieldError errorFor="all" />
             </Form>
           </FormContainer>
@@ -214,7 +202,6 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
-// wrapper used to provide page-level vertical padding for register page
 const PagePaddingSmall = styled.div.attrs({ className: 'page-padding' })`
   padding: 2rem 0;
 `;
@@ -272,3 +259,5 @@ const ElementContainer = styled.div`
     outline: 2px solid black;
   }
 `;
+
+

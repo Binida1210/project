@@ -1,10 +1,10 @@
-import { blueA, violetDark, red as radixRed } from '@radix-ui/colors';
+﻿import { blueA, red as radixRed, violetDark } from '@radix-ui/colors';
 import { HomeIcon, SquareIcon, TimerIcon } from '@radix-ui/react-icons';
 import { isEmpty } from 'lodash';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { breakpoints } from '@/constants/breakpoints';
 
+import { breakpoints } from '@/constants/breakpoints';
 import { WareHouseModel, WarehouseStatus } from '@/models/warehouse.model';
 import { convertTimestampToDate } from '@/utils/convert-timestamp-to-date.util';
 import { formatPrice } from '@/utils/format-price.util';
@@ -29,6 +29,9 @@ export type WarehouseViewCardProps = {
   onDoubleClick?: (id: number) => void;
 } & MenuCardOptionsProps;
 
+// Base visual card used across multiple listing contexts (home, my-list, owner views).
+// It renders main warehouse metadata and conditionally enables pieces such as
+// price, renting progress, warehouse status and action menu via props.
 export const WarehouseViewCardBase = ({
   warehouse,
   showRentedProgression = false,
@@ -44,17 +47,17 @@ export const WarehouseViewCardBase = ({
   const { id, name, price, area, createdDate, images, rentedInfo } = warehouse;
   const address = resolveAddress(warehouse.address);
 
-  // Show options menu when available
+  // Render the action menu when actions are supplied by the parent.
   const renderCardOptions = () => {
     if (actions) return <MenuCardOptions actions={actions} />;
   };
 
-  // Forward single-click events
+  // Forward click and double-click events to callers; allows a parent to
+  // react to selections (eg. opening detail / selecting in a list).
   const handleCardClick = () => {
     onClick?.(id);
   };
 
-  // Forward double-click events
   const handleCardDoubleClick = () => {
     onDoubleClick?.(id);
   };
@@ -164,7 +167,7 @@ const CardContainer = styled.div`
   transition: transform 0.14s ease;
   isolation: isolate;
   font-family: ${FONT_FAMILY};
-  /* reduce default card height so cards are less bulky on lists */
+
   min-height: 300px;
 
   &:hover {
@@ -172,7 +175,6 @@ const CardContainer = styled.div`
   }
 
   @media (max-width: ${breakpoints.md}) {
-    /* on small screens let card grow/shrink naturally but remain compact */
     min-height: 260px;
   }
 `;
@@ -221,7 +223,6 @@ const RentedInfoSide = styled.div`
 `;
 
 const RentedInfoSection = styled.div`
-  /* ensure rented info labels & values are single-line truncated */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -236,10 +237,10 @@ const CardName = styled.span`
   text-overflow: ellipsis;
   max-width: 100%;
   margin: 8px 0 0;
-  /* make sure title is visually limited to a single line across browsers */
+
   white-space: nowrap;
   display: -webkit-box;
-  /* Title should stay compact — single line with ellipsis to keep layout tidy */
+
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   line-height: 1.2;
@@ -263,7 +264,7 @@ const AddressText = styled.p`
   max-width: 100%;
   margin: 0;
   line-height: 1.4;
-  /* single-line truncation for address to match request */
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -277,7 +278,6 @@ const CardAddressIcon = styled.div`
 const CardImage = styled.img`
   width: 100%;
 
-  /* slightly taller image to keep visual balance while reducing overall card height */
   aspect-ratio: 3 / 2;
   width: 100%;
   height: auto;
@@ -294,7 +294,6 @@ const CardImage = styled.img`
     padding: 0.125rem;
   }
 
-  /* keep image height bounded so tall images don't blow out card height */
   max-height: 180px;
 `;
 
@@ -335,7 +334,7 @@ const PriceText = styled.span`
 
 const RejectedReason = styled.div`
   font-size: 14px;
-  /* keep rejected reason concise in the card */
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -345,7 +344,7 @@ const RejectedReason = styled.div`
 
 const AcceptedNote = styled.div`
   font-size: 14px;
-  color: #0f9d58; /* green-ish to match accepted label */
+  color: #0f9d58;
   font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,8 +11,6 @@ import { RentedWarehouseStatus } from '@/models/rented-warehouse.model';
 import { WareHouseModel, WarehouseStatus } from '@/models/warehouse.model';
 import { useMyWarehouseStore } from '@/store/my-warehouse.store';
 
-// Using plain-CSS list temporarily so responsive style is easier to tweak
-// experiment: different layout - masonry variant (plain CSS) for visual comparison
 import { MyWarehouseCardListGrid as MyWarehouseCardList } from './MyWarehouseCardListGrid';
 
 const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
@@ -26,14 +24,18 @@ const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
   [RentedWarehouseStatus.None]: 8,
 };
 
+// MyWarehouse page shows the user's warehouses or renting history.
+// It fetches the current user's warehouses on mount and resets state on unmount.
 export const MyWarehouse = () => {
   const { user } = useAuthStore();
   const { fetchMyWarehouses, reset, ownWarehousesLoading, rentedWarehouses, ownWarehouse, rentedWarehousesLoading } =
     useMyWarehouseStore();
 
   useEffect(() => {
+    // load the user's warehouses once when the page mounts
     fetchMyWarehouses(user);
 
+    // cleanup: reset local store slice when leaving the page
     return () => {
       reset();
     };
@@ -59,6 +61,9 @@ export const MyWarehouse = () => {
     );
   };
 
+  // Render different list views depending on current user's role
+  // - Renters see a simple renting history list
+  // - Owners see a tabbed view: their accepted warehouses, renting history, and request status
   const renderMyList = () => {
     if (user?.role === Role.Renter)
       return (
@@ -113,8 +118,9 @@ export const MyWarehouse = () => {
 
   return (
     <MyWarehouseRoot>
-      {user?.role === Role.Owner && (
-        <CreateWareHouse>
+      <ContentWrap>
+        {user?.role === Role.Owner && (
+          <CreateWareHouse>
           <Link to="/create">
             <button
               style={{
@@ -134,28 +140,25 @@ export const MyWarehouse = () => {
           </Link>
         </CreateWareHouse>
       )}
-      {renderMyList()}
+        {renderMyList()}
+      </ContentWrap>
     </MyWarehouseRoot>
   );
 };
 
 const MyWarehouseRoot = styled.div`
-  /* keep the tabs area bounded and responsive so it never forces horizontal scroll */
   --tabs-width: 1280px;
   max-width: 100%;
 `;
 
 const MyWarehouseTabs = styled(Tabs)`
-  /* use a responsive width: cap to the fixed design width but allow shrinking */
   width: min(var(--tabs-width), 96%);
   margin: 0 auto;
 `;
 
 const CreateWareHouse = styled.div`
-  /* place button inside the same bounded content width as tabs and align to the right
-     so it doesn't visually overlap the tabs area or cause horizontal scroll */
   width: min(var(--tabs-width), 96%);
-  margin: 2rem auto 1.5rem; /* top: 2rem, bottom: 1.5rem — keeps spacing above and below the button */
+  margin: 2rem auto 1.5rem;
   display: flex;
   justify-content: flex-end;
 `;
@@ -163,4 +166,10 @@ const CreateWareHouse = styled.div`
 const NothingContainer = styled.div`
   color: gray;
   text-align: center;
+`;
+
+const ContentWrap = styled.div`
+  width: min(var(--tabs-width), 96%);
+  margin: 0 auto;
+  padding: 2rem; /* padding 2rem on all sides */
 `;

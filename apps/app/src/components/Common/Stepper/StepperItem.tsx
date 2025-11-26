@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 import styled from 'styled-components';
 import { violetDark } from '@radix-ui/colors';
 
@@ -10,7 +10,7 @@ export const StepperItem = (item: StepperItemType) => {
       <Item>
         <Line></Line>
         {item.status === 'active' ? <ActiveState /> : item.status === 'finish' ? <FinishState /> : <DefaultState />}
-        {/* <Line></Line> */}
+        {}
       </Item>
       <Text>{item.label}</Text>
     </Container>
@@ -72,3 +72,4 @@ const Text = styled.span`
   font-size: 12px;
   color: gray;
 `;
+

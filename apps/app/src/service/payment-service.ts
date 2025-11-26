@@ -1,4 +1,4 @@
-import { Stripe } from '@stripe/stripe-js';
+﻿import { Stripe } from '@stripe/stripe-js';
 
 import { stripePromise } from '@/libs';
 
@@ -16,8 +16,6 @@ export class PaymentService {
 
   async confirmPayment(clientSecret: string): Promise<ConfirmPaymentResult> {
     if (!this.stripe || !clientSecret) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       throw new Error('stripe or client secret is invalid');
     }
 
@@ -51,3 +49,4 @@ export class PaymentService {
 }
 
 export default new PaymentService();
+

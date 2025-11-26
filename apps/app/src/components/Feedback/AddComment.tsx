@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+﻿import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -43,22 +43,22 @@ export const AddComment = ({ onCommentSent }: AddCommentProp) => {
 };
 
 const Container = styled.div`
-  /* Adjustable sizing tokens for comment input/button */
-  --comment-control-height: 52px; /* matches single-line textarea; tweak as needed */
-  --comment-button-font-size: 15px; /* slightly larger label */
+  
+  --comment-control-height: 52px; 
+  --comment-button-font-size: 15px; 
 
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 12px;
   padding: 8px 6px;
   align-items: center;
-  /* ensure avatar column centers the avatar visually */
+  
   & > div {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  background: transparent; /* share parent container background */
+  background: transparent; 
   border: none;
   border-radius: 8px;
   margin-bottom: 2rem;
@@ -66,9 +66,9 @@ const Container = styled.div`
 
 const Textarea = styled(TextAreaAutoSize)`
   border-radius: 8px;
-  /* vertically center single-line input content by basing vertical padding on control height */
+  
   padding: calc((var(--comment-control-height) - 1em) / 2) 12px;
-  line-height: 1em; /* help compute vertical centering */
+  line-height: 1em; 
   display: block;
   width: 100%;
   resize: none;
@@ -77,7 +77,6 @@ const Textarea = styled(TextAreaAutoSize)`
   background: #fafafa;
 `;
 
-// Match action buttons sizing across details/comments sections
 const SendButton = styled(Button)`
   min-width: 120px;
   height: var(--comment-control-height);
@@ -85,7 +84,9 @@ const SendButton = styled(Button)`
 
   @media (max-width: 520px) {
     min-width: 90px;
-    grid-column: 1 / -1; /* put the button below the textarea on very small screens */
+    grid-column: 1 / -1; 
     justify-self: end;
   }
 `;
+
+

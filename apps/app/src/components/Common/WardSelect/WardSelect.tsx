@@ -1,4 +1,4 @@
-import { blackA, mauve, violet } from '@radix-ui/colors';
+﻿import { blackA, mauve, violet } from '@radix-ui/colors';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import * as Select from '@radix-ui/react-select';
 import { styled } from '@stitches/react';
@@ -139,7 +139,6 @@ const StyledItem = styled(Select.Item, {
   },
 });
 
-// Removed unused SelectLabel and SelectSeparator for cleaner bundle
 
 const StyledItemIndicator = styled(Select.ItemIndicator, {
   position: 'absolute',
@@ -163,3 +162,4 @@ const scrollButtonStyles = {
 const SelectScrollUpButton = styled(Select.ScrollUpButton, scrollButtonStyles);
 
 const SelectScrollDownButton = styled(Select.ScrollDownButton, scrollButtonStyles);
+

@@ -1,5 +1,4 @@
-// Shared breakpoint tokens for consistent responsive rules across the app
-export const breakpoints = {
+﻿export const breakpoints = {
   xs: '480px', // phones
   sm: '640px', // small phones
   md: '768px', // tablets
@@ -17,6 +16,4 @@ export const mq = {
   xl: `(min-width: ${breakpoints.xl})`,
 };
 
-// Example usage in styled-components:
-// import { mq } from '@/constants/breakpoints';
-// const Box = styled.div` @media ${mq.md} { ... } `;
+

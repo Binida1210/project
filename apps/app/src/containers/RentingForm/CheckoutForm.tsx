@@ -1,4 +1,4 @@
-import { LinkAuthenticationElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+﻿import { LinkAuthenticationElement, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
@@ -48,8 +48,6 @@ export function CheckoutForm(props: CheckoutFormProp) {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -64,7 +62,6 @@ export function CheckoutForm(props: CheckoutFormProp) {
       redirect: 'if_required',
     });
 
-    // debug: handle Stripe response
 
     switch (error?.type) {
       case undefined:
@@ -127,3 +124,4 @@ export function CheckoutForm(props: CheckoutFormProp) {
     </>
   );
 }
+

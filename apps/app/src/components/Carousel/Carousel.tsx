@@ -1,4 +1,4 @@
-import ImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
+﻿import ImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
 import styled from 'styled-components';
 
 import { CarouselImageModel } from '@/models/carousel-image.model';
@@ -28,14 +28,14 @@ export const Carousel = (props: CarouselProps) => {
 
 const CarouselRoot = styled.div`
   width: 100%;
-  /* Let the carousel scale naturally while keeping a pleasant aspect ratio */
+  
   height: auto;
   aspect-ratio: 16 / 9;
   max-height: clamp(240px, 40vh, 560px);
   overflow: hidden;
   background-color: #8080806a;
 
-  /* Image gallery when not fullscreen: use full width/height and ensure the img fills with cover */
+  
   .image-gallery-content:not(.fullscreen) .image-gallery-image {
     height: 100%;
     padding-top: 0;
@@ -44,7 +44,7 @@ const CarouselRoot = styled.div`
     justify-content: center;
   }
 
-  /* Make the actual <img> inside the gallery cover the box and scale responsively */
+  
   .image-gallery-content:not(.fullscreen) .image-gallery-image img {
     width: 100%;
     height: 100%;
@@ -61,3 +61,4 @@ const CarouselRoot = styled.div`
     object-position: center;
   }
 `;
+

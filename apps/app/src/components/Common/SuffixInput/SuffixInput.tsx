@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+﻿import styled from 'styled-components';
 
 export type SuffixInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   suffix?: string;
@@ -19,9 +19,9 @@ export function SuffixInput({ suffix, className, ...props }: SuffixInputProps) {
 
 const SuffixInputRoot = styled.div`
   width: 100%;
-  height: 3.125rem; /* ~50px */
+  height: 3.125rem; 
   display: flex;
-  border-radius: 0.375rem; /* 6px */
+  border-radius: 0.375rem; 
   outline: 1px solid gray;
   padding: 0.85rem 0 0.85rem 0.75rem;
   box-sizing: border-box;
@@ -34,8 +34,8 @@ const Input = styled.input`
   border: 0;
   width: 100%;
   box-sizing: border-box;
-  flex: 1 1 auto; /* allow input to grow/shrink within the container */
-  min-width: 0; /* allow it to shrink under flex */
+  flex: 1 1 auto; 
+  min-width: 0; 
   padding: 0;
 
   &:focus-visible,
@@ -45,7 +45,7 @@ const Input = styled.input`
 `;
 
 const Suffix = styled.div`
-  flex: 0 0 auto; /* keep suffix at its natural size, prevent it from wrapping */
+  flex: 0 0 auto; 
   text-align: center;
   color: rgb(128, 128, 128, 0.65);
   padding: 0 5px;
@@ -60,3 +60,4 @@ const Suffix = styled.div`
     font-size: 0.95rem;
   }
 `;
+

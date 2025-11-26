@@ -1,6 +1,5 @@
-import { AddressLocation, AddressModel } from '@/models/warehouse.model';
+﻿import { AddressLocation, AddressModel } from '@/models/warehouse.model';
 
-// Simple in-memory cache to avoid repeated lookups during a session
 const geoCache = new Map<string, AddressLocation>();
 
 export function resolveAddress(address: string | undefined): string | undefined {
@@ -19,15 +18,12 @@ export function resolveLocation(address: string | undefined): AddressLocation | 
   try {
     return (JSON.parse(address) as AddressModel).position;
   } catch {
-    // Fallback: try to parse trailing coordinates from a free-form string (e.g., "... 16.06276, 108.24204")
     const coord = extractLatLngFromText(address);
     if (coord) return coord;
     return;
   }
 }
 
-// Extract the LAST lat/lng pair from a free-form string.
-// Matches patterns like: "16.047079, 108.20623" or "16.047079 108.20623"
 export function extractLatLngFromText(text: string): AddressLocation | undefined {
   const regex = /(-?\d{1,2}\.\d+)\s*,?\s+(-?\d{1,3}\.\d+)/g; // captures lat, lng
   let match: RegExpExecArray | null = null;
@@ -42,23 +38,20 @@ export function extractLatLngFromText(text: string): AddressLocation | undefined
   return undefined;
 }
 
-// Build a human query from address JSON or plain string (ignoring ward for the map)
 export function buildGeocodeQuery(address: string | undefined): string | undefined {
   const text = resolveAddress(address);
   if (!text) return undefined;
   return text.trim();
 }
 
-// Geocode an address string using Photon first, then Nominatim as a fallback
 export async function geocodeAddress(addressText: string): Promise<AddressLocation | undefined> {
   const query = addressText.trim();
   if (!query) return undefined;
   if (geoCache.has(query)) return geoCache.get(query);
 
-  // 1) Photon (Komoot) — generous usage policy
   try {
     const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&lang=vi`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
     if (res.ok) {
       const json = (await res.json()) as { features?: Array<{ geometry?: { coordinates?: number[] } }> };
       const coord = json?.features?.[0]?.geometry?.coordinates; // [lng, lat]
@@ -69,13 +62,12 @@ export async function geocodeAddress(addressText: string): Promise<AddressLocati
       }
     }
   } catch {
-    // ignore and fallback
+    void 0;
   }
 
-  // 2) Nominatim as backup
   try {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
     if (res.ok) {
       const arr = (await res.json()) as Array<{ lat?: string; lon?: string }>;
       if (arr && arr.length) {
@@ -90,7 +82,7 @@ export async function geocodeAddress(addressText: string): Promise<AddressLocati
       }
     }
   } catch {
-    // ignore
+    void 0;
   }
 
   return undefined;
@@ -99,8 +91,6 @@ export async function geocodeAddress(addressText: string): Promise<AddressLocati
 export function buildOsmSearchUrl(query: string): string {
   return `https://www.openstreetmap.org/search?query=${encodeURIComponent(query)}`;
 }
-
-// -------------------- Province extraction helpers --------------------
 
 export function removeDiacritics(input: string): string {
   return input
@@ -120,15 +110,12 @@ export function capitalizeWordsNoDiacritics(input: string): string {
 }
 
 export function stripDigits(input: string): string {
-  return input.replace(/[0-9]+/g, '').replace(/\s{2,}/g, ' ').trim();
+  return input
+    .replace(/[0-9]+/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
 }
 
-// Extract province/city from an address string
-// Rule:
-// - If the address contains a segment equal to "Việt Nam"/"VIET NAM"/"vietnam" (diacritics/case-insensitive),
-//   take the segment immediately before that as the province.
-// - Otherwise, take the last comma-separated segment.
-// - Return capitalized without diacritics.
 export function extractProvinceFromAddress(address: string | undefined): string | undefined {
   const full = resolveAddress(address);
   if (!full) return undefined;

@@ -1,4 +1,4 @@
-import { blue, green, red } from '@radix-ui/colors';
+﻿import { blue, green, red } from '@radix-ui/colors';
 import styled from 'styled-components';
 
 import { RentedWarehouseLabel } from '@/models/rented-warehouse.model';
@@ -29,6 +29,12 @@ export function WarehouseStatusLabel({ status }: WarehouseStatusLabelProps) {
 
 const Status = styled(Label)`
   position: absolute;
-  top: -12px;
+  
+  top: -20px;
   right: 20px;
+  @media (max-width: 720px) {
+    
+    top: -16px;
+  }
 `;
+

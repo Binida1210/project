@@ -1,4 +1,4 @@
-import { useStripe } from '@stripe/react-stripe-js';
+﻿import { useStripe } from '@stripe/react-stripe-js';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -36,8 +36,6 @@ export function CustomerCheckoutForm(props: CustomerCheckoutFormProp) {
 
   const handleSubmit = async () => {
     if (!stripe) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -45,7 +43,6 @@ export function CustomerCheckoutForm(props: CustomerCheckoutFormProp) {
 
     const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret);
 
-    // debug: handle Stripe response
 
     switch (error?.type) {
       case undefined:
@@ -99,3 +96,4 @@ export function CustomerCheckoutForm(props: CustomerCheckoutFormProp) {
     </>
   );
 }
+

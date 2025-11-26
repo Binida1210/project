@@ -1,18 +1,16 @@
-/* Desktop-focused styling for the price range slider */
 .range-slider {
   height: 10px;
 }
 
 .range-slider .range-slider__range,
 .range-slider .range-slider__thumb {
-  background: #7c3aed; /* flat violet for a calmer look */
+  background: #7c3aed;
 }
 
 .range-slider .range-slider__thumb {
   width: 20px;
   height: 20px;
   border: 2px solid #ffffff;
-  /* remove internal slider shadow for flat UI */
 }
 
 .range-slider .range-slider__range {
@@ -22,5 +20,4 @@
 .range-slider .range-slider__track {
   background: #ede9fe;
   border-radius: 6px;
-  /* keep inset outline but remove heavy glow */
 }

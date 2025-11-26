@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 import { indigo } from '@radix-ui/colors';
 import { Link2Icon } from '@radix-ui/react-icons';
 import { Formik, useFormikContext } from 'formik';
@@ -39,8 +39,6 @@ export type ExtendState = CreateExtendRentingModel & {
   openContract?: () => void;
 };
 
-// Dialog content for the "extend renting" action.
-// Responsible for preparing and validating extend duration and showing a preview of the contract.
 export function ExtendActionDialogContent({ warehouse }: ExtendActionDialogContentProps) {
   return (
     <Formik
@@ -71,7 +69,6 @@ const ExtendActionDialogForm = ({ warehouse }: ExtendActionDialogContentProps) =
   const [extendState, setExtendState] = useState<ExtendState>();
 
   useEffect(() => {
-    // Build initial extend state when owner and renter are loaded
     const initiateExtendState = (): ExtendState | undefined => {
       if (warehouse.rentedInfo && owner && renter) {
         const { hash, key } = generateContractHash({
@@ -119,7 +116,6 @@ const ExtendActionDialogForm = ({ warehouse }: ExtendActionDialogContentProps) =
     );
   }, [values, warehouse]);
 
-  // Generate the contract PDF (base64) and provide a function to open it
   const generateContract = async () => {
     if (extendState && owner && renter) {
       const { hash, newEndDate, startDate } = extendState;
@@ -278,3 +274,4 @@ const ViewContractLink = styled(BaseButton)`
     background: ${indigo.indigo6};
   }
 `;
+

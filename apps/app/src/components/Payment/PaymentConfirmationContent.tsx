@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+﻿import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { convertDateToLocaleDateFormat } from '@/utils/datetime-format.util';
@@ -62,7 +62,7 @@ const Header = styled.h2`
 `;
 
 const Body = styled.div`
-  color: #1f2937; /* mauve-like dark */
+  color: #1f2937; 
   font-size: 0.98rem;
   line-height: 1.45;
   display: flex;
@@ -109,3 +109,4 @@ const ActionsSlot = styled.div`
     }
   }
 `;
+

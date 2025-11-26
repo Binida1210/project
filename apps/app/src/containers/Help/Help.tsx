@@ -1,5 +1,4 @@
-// Help page with FAQ and support information
-/* eslint-disable */
+﻿/* eslint-disable */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -316,3 +315,4 @@ const ContactHint = styled.span`
   font-size: 13px;
   color: #64748b;
 `;
+

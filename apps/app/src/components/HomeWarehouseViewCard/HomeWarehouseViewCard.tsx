@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+﻿import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 import { WareHouseModel } from '../../models/warehouse.model';
@@ -10,11 +10,9 @@ type HomeWarehouseViewCardProps = {
   onClick?: (id: number) => void;
 };
 
-// Small card used on the home page — shows price and a simple action
 export const HomeWarehouseViewCard = ({ warehouse, onClick }: HomeWarehouseViewCardProps) => {
   const navigate = useNavigate();
 
-  // Actions available on home listing cards
   const getHomeActions = useCallback((): CardActions[] => {
     const viewDetailAction: CardActions = {
       title: 'Xem kho bãi',
@@ -24,7 +22,6 @@ export const HomeWarehouseViewCard = ({ warehouse, onClick }: HomeWarehouseViewC
     return [viewDetailAction];
   }, [warehouse]);
 
-  // Prepare props for the underlying WarehouseViewCardBase
   const getViewCardOptions = (): WarehouseViewCardProps => {
     return {
       showPrice: true,
@@ -41,3 +38,4 @@ export const HomeWarehouseViewCard = ({ warehouse, onClick }: HomeWarehouseViewC
     ></WarehouseViewCardBase>
   );
 };
+

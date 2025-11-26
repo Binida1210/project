@@ -1,11 +1,10 @@
-import { useFormikContext } from 'formik';
+﻿import { useFormikContext } from 'formik';
 import styled from 'styled-components';
 
 import { WardLabel } from '@/constants/ward-label.constant';
 import { RentingState } from '@/containers/RentingForm/RentingFormContent';
 import { WardValue } from '@/enums/ward-value.enum';
 import { WareHouseModel } from '@/models/warehouse.model';
-// date formatting: using toLocaleDateString directly for compact display
 import { resolveAddress } from '@/utils/warehouse-address.util';
 
 import { formatPrice } from '../../utils/format-price.util';
@@ -35,8 +34,8 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
               {resolveAddress(warehouse.address) ?? (warehouse.ward === WardValue.ALL ? '' : WardLabel[warehouse.ward])}
             </Address>
             <WarehouseBody className="irent-renting-confirmation__warehouse-body">
-              {/* Pairing fields so grid reads: (area ↔ price), (doors ↔ deposit), (floors ↔ remaining), (due date full row) */}
-              {/* row 1: area | price */}
+              {}
+              {}
               <WarehouseItem>
                 <WarehouseBodyLabel>Diện tích</WarehouseBodyLabel>
                 <WarehouseBodyData>{warehouse.area} m²</WarehouseBodyData>
@@ -46,7 +45,7 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
                 <WarehouseBodyData>{formatPrice(totalPrice)} VND</WarehouseBodyData>
               </WarehouseItem>
 
-              {/* row 2: doors | deposit */}
+              {}
               <WarehouseItem>
                 <WarehouseBodyLabel>Cửa</WarehouseBodyLabel>
                 <WarehouseBodyData>{warehouse.doors ?? 0}</WarehouseBodyData>
@@ -56,7 +55,7 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
                 <WarehouseBodyData>{formatPrice(deposit)} VND</WarehouseBodyData>
               </WarehouseItem>
 
-              {/* row 3: floors | remaining */}
+              {}
               <WarehouseItem>
                 <WarehouseBodyLabel>Tầng</WarehouseBodyLabel>
                 <WarehouseBodyData>{warehouse.floors ?? 0}</WarehouseBodyData>
@@ -66,7 +65,7 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
                 <WarehouseBodyData>{formatPrice(remain)} VND</WarehouseBodyData>
               </WarehouseItem>
 
-              {/* row 4: full width = due date */}
+              {}
               <WarehouseItem full>
                 <WarehouseBodyLabel>Hạn thanh toán</WarehouseBodyLabel>
                 <WarehouseBodyData>{new Date(rentingState.startDate).toLocaleDateString('vi-VN')}</WarehouseBodyData>
@@ -97,13 +96,13 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
 
 const Container = styled.div`
   width: 100%;
-  margin-top: 3rem; /* add requested top spacing for .irent-renting-confirmation */
+  margin-top: 3rem; 
 `;
 
 const Title = styled.h1`
-  font-size: 2.25rem; /* bigger page title */
+  font-size: 2.25rem; 
   margin: 0 0 1.25rem 0;
-  text-align: center; /* center page title */
+  text-align: center; 
   font-weight: 800;
 `;
 
@@ -118,7 +117,7 @@ const WarehouseContainer = styled.div`
   padding: 1.25rem;
   background-color: #f7f7f7;
   display: flex;
-  flex-direction: column; /* stacked mobile-first */
+  flex-direction: column; 
   gap: 1rem;
   width: 60dvw;
   max-width: 96%;
@@ -161,7 +160,7 @@ const Subtitle = styled.h4`
 
 const ProductName = styled.h1`
   margin: 0 0 0.5rem 0;
-  font-size: 1.5rem; /* prominent inside card */
+  font-size: 1.5rem; 
   font-weight: 800;
   color: #0f1724;
 `;
@@ -178,12 +177,12 @@ const WarehouseBody = styled.div`
   grid-template-columns: 1fr;
   gap: 0.5rem 1rem;
 
-  /* when used inside the renting confirmation page we want slightly larger horizontal gap */
+  
   &.irent-renting-confirmation__warehouse-body {
     gap: 0.5rem 2rem;
   }
 
-  /* Two-column grid on larger screens so each item can be a single element that sits left/right */
+  
   @media (min-width: 48rem) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -196,7 +195,7 @@ const WarehouseItem = styled.div<{ full?: boolean }>`
   padding: 0.5rem 0;
   gap: 1rem;
 
-  /* allow some items to span both columns (eg. due-date row) */
+  
   ${({ full }) => (full ? 'grid-column: 1 / -1;' : '')}
 `;
 
@@ -206,17 +205,17 @@ const WarehouseBodyLabel = styled.label`
   border-bottom: 1px solid transparent;
   color: #6b6b6b;
   font-size: 0.9rem;
-  white-space: nowrap; /* avoid wrapping labels */
+  white-space: nowrap; 
 `;
 
 const WarehouseBodyData = styled.span`
   display: block;
   padding: 0.5rem 0;
   font-size: 1rem;
-  white-space: nowrap; /* keep value on one line */
+  white-space: nowrap; 
   overflow: hidden;
-  text-overflow: ellipsis; /* if still too long, show ellipsis */
-  text-align: right; /* align right inside the item */
+  text-overflow: ellipsis; 
+  text-align: right; 
 `;
 
 const RenterInfoContainer = styled.div`
@@ -231,3 +230,5 @@ const RenterInfoContainer = styled.div`
 const RenterInfoContainerLeft = styled.div``;
 
 const RenterInfoContainerRight = styled.div``;
+
+

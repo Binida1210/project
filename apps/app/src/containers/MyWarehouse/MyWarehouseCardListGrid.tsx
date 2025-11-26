@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+﻿import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Loading } from '@/components/Fallback';
@@ -12,7 +12,6 @@ export type MyWarehouseCardListProps = {
   fallback?: ReactNode;
 };
 
-// Stable grid layout: explicit responsive columns and consistent row sizing
 export function MyWarehouseCardListGrid({ type, warehouses, fallback, loading }: MyWarehouseCardListProps) {
   const renderList = () => {
     if (warehouses && warehouses.length > 0) {
@@ -60,24 +59,20 @@ const HeaderRow = styled.div`
 const Grid = styled.div`
   display: grid;
   gap: 18px;
-  grid-auto-rows: 1fr; /* equal height per row */
+  grid-auto-rows: 1fr;
 
-  /* default: two columns to avoid single-column cramped look */
   grid-template-columns: repeat(2, minmax(220px, 1fr));
 
-  /* very small phones -> 1 column */
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 12px;
   }
 
-  /* tablet -> 3 columns */
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
     gap: 20px;
   }
 
-  /* desktop -> 4 columns */
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, minmax(220px, 1fr));
     gap: 22px;

@@ -1,4 +1,4 @@
-/* eslint-disable simple-import-sort/imports, import/order */
+﻿/* eslint-disable simple-import-sort/imports, import/order */
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapContainer as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet';
@@ -12,7 +12,6 @@ type MapViewProps = {
   zoom?: number;
 };
 
-// Provide a stable CDN-based default icon so we don't rely on build-time asset copy
 const defaultIcon = L.icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -79,3 +78,4 @@ const EmptyState = styled.div`
   border: 1px dashed #cbd5e1;
   border-radius: 12px;
 `;
+

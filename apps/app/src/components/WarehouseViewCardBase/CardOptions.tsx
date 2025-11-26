@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+﻿import styled from 'styled-components';
 
 import { Option, Popover } from '../Common/Popover';
 
@@ -41,15 +41,7 @@ export const CardOptions = ({ actions, open, onClickThreeDots, handleOpenChange 
       side="right"
       sideOffset={10}
     >
-      {/* <OptionButton
-        onClick={(e) => {
-          e.stopPropagation();
-          onClickThreeDots?.(e);
-        }}
-        onDoubleClick={(e) => e.stopPropagation()}
-      >
-        <DotsVerticalIcon />
-      </OptionButton> */}
+      {}
       <ClickArea></ClickArea>
     </Popover>
   );
@@ -82,3 +74,4 @@ const OptionButton = styled.div`
     background-color: #80808061;
   }
 `;
+

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+﻿import { ReactNode } from 'react';
 
 import { Button, ButtonProps } from '../Button/Button';
 import { useStepperContext } from './context';
@@ -35,7 +35,6 @@ export const StepperNextButton = ({
 
   return (
     <Button
-      // reduce width slightly so it doesn't crowd the stepper line
       css={{ minWidth: 120 }}
       disabled={mergedDisabled}
       onClick={handleNextClick}
@@ -68,3 +67,4 @@ export const StepperBackButton = ({
     </Button>
   );
 };
+

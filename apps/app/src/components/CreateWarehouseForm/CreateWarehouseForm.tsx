@@ -1,4 +1,4 @@
-/* eslint-disable simple-import-sort/imports, import/order */
+﻿/* eslint-disable simple-import-sort/imports, import/order */
 import 'react-quill/dist/quill.snow.css';
 import './style.css';
 
@@ -9,20 +9,20 @@ import styled, { css } from 'styled-components';
 import { extractLatLngFromText as extractLatLngFromFreeText } from '@/utils/warehouse-address.util';
 
 import { UploadImageButton } from '@/containers/UploadImageButton/UploadImageButton';
-// import { getWardFromMapWard } from '@/utils/get-ward-from-map.util';
 
 import { FieldError } from '../Common/Form';
 import { RichTextEditor } from '../Common/RichTextEditor';
 import { SuffixInput } from '../Common/SuffixInput';
-// Removed ward selection in favor of province extracted from address
-// Removed Google Map search dependencies
 import { CreateWarehouseFormValuesType } from './CreateWarehouseProvider';
 
-// Component: form used by create-warehouse flow, contains fields and image uploader
 export const CreateWarehouseForm = () => {
+  // Using Formik context: parent provider manages validation/submit state.
+  // We read handlers & values from Formik so this component focuses on rendering fields only.
   const { handleSubmit, handleChange, handleBlur, values, setFieldValue } =
     useFormikContext<CreateWarehouseFormValuesType>();
 
+  // Track small-screen state to switch the rich editor to a lightweight textarea
+  // (react-quill can be heavy / cramped on tiny screens). This keeps the UX responsive.
   const [isMobile, setIsMobile] = useState<boolean>(() =>
     typeof window !== 'undefined' ? window.innerWidth <= 630 : false,
   );
@@ -41,6 +41,7 @@ export const CreateWarehouseForm = () => {
           <ImageInfo>
             <Text>Ảnh</Text>
             <ImageInputContainer>
+              {/* UploadImageButton returns an array of images; bind it directly to Formik */}
               <UploadImageButton onImageUploaded={(images) => setFieldValue('images', images)} />
             </ImageInputContainer>
             <FieldError errorFor={'images'} />
@@ -60,9 +61,10 @@ export const CreateWarehouseForm = () => {
                   placeholder="Nhập địa chỉ (có thể kèm toạ độ: lat, lng)"
                   onBlur={handleBlur}
                   onChange={(e) => {
+                    // Keep the free-form mapSearch field and also extract coordinates
+                    // when a user pastes 'lat, lng' so we store a structured payload in 'address'.
                     handleChange(e);
                     const raw = e.target.value || '';
-                    // Build an address payload that includes coordinates if present
                     const coords = extractLatLngFromFreeText(raw);
                     const payload = coords ? JSON.stringify({ address: raw, position: coords }) : raw; // keep plain string if no coords
                     setFieldValue('address', payload);
@@ -70,7 +72,7 @@ export const CreateWarehouseForm = () => {
                 />
                 <FieldError errorFor={'address'} />
               </FormField>
-              {/* Field 'Quận' removed: province is derived from address when needed */}
+
               <FormField>
                 <Label>Diện tích</Label>
                 <StyledSuffixInput
@@ -93,9 +95,9 @@ export const CreateWarehouseForm = () => {
                 <FieldError errorFor={'floors'} />
               </FormField>
             </LeftSide>
-            <RightSide>{/* Right side kept intentionally blank for this simplified layout */}</RightSide>
+            <RightSide></RightSide>
           </TextInfo>
-          {/* move price field below the two-column area so it's stacked and centered */}
+
           <FormField>
             <Label>Giá</Label>
             <StyledSuffixInput
@@ -110,6 +112,7 @@ export const CreateWarehouseForm = () => {
           <DescriptionField>
             <Label>Mô tả</Label>
             <EditorWrapper>
+              {/* RichTextEditor on desktop, simple textarea fallback on mobile to keep editing lightweight */}
               {isMobile ? (
                 <Field as={MobileTextarea} name="description" rows={6} />
               ) : (
@@ -134,7 +137,7 @@ const Body = styled.div``;
 
 const TextInfo = styled.div`
   display: grid;
-  grid-template-columns: 1fr; /* single-column layout — fields stack vertically and centered */
+  grid-template-columns: 1fr;
   margin-bottom: 20px;
 
   @media (max-width: 900px) {
@@ -155,24 +158,20 @@ const RightSide = styled.div`
   flex-direction: column;
 `;
 
-/* page header handled by parent; Title styling removed */
-
 const Container = styled.div`
   padding: 12px 8px;
 
-  /* scoped form padding for the create page */
   & .create-warehouse-form {
     padding-top: 3rem;
     display: flex;
     flex-direction: column;
-    align-items: center; /* center all child fields and controls horizontally */
+    align-items: center;
   }
 
   @media (min-width: 769px) {
     padding: 0;
   }
 
-  /* ensure editors & inputs respect the requested 60dvw width */
   & .create-warehouse-form input,
   & .create-warehouse-form textarea,
   & .create-warehouse-form .ql-container {
@@ -184,7 +183,7 @@ const Container = styled.div`
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; /* center inputs and keep label contained to the same width */
+  align-items: center;
 
   margin-bottom: 8px;
 
@@ -192,14 +191,13 @@ const FormField = styled.div`
     margin-bottom: 8px;
     width: 60dvw;
     max-width: 100%;
-    text-align: left; /* put label to the left above input */
+    text-align: left;
     display: block;
-    font-size: 1.2rem; /* larger label text (adjusted) */
-    font-weight: 700; /* bold */
+    font-size: 1.2rem;
+    font-weight: 700;
     color: #0f172a;
   }
 
-  /* keep left alignment on small screens but slightly smaller text */
   @media (max-width: 480px) {
     label {
       font-size: 1rem;
@@ -228,18 +226,14 @@ const StyledSuffixInput = styled(SuffixInput)`
   max-width: 100%;
 `;
 
-/* special spacing for the description block */
 const DescriptionField = styled(FormField)`
   margin: 28px 0;
 `;
 
-/* hide the rich text editor on very small screens */
 const EditorWrapper = styled.div`
   width: 60dvw;
   max-width: 100%;
 `;
-
-/* Desktop/Mobile editor switching handled in React (isMobile) */
 
 const MobileTextarea = styled.textarea`
   display: block;
@@ -257,14 +251,12 @@ const SubmitContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
-  margin-bottom: 3rem; /* put final button closer to page bottom */
+  margin-bottom: 3rem;
 
   @media (max-width: 900px) {
     justify-content: center;
   }
 `;
-
-// Google Map search input removed
 
 const ImageInputContainer = styled.div``;
 
@@ -277,5 +269,3 @@ const Text = styled.span`
   font-weight: 700;
   margin-bottom: 8px;
 `;
-
-// MapContainer removed

@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { CreateContract, useContract } from '@/hooks';
 
+// Small contract dev view used for testing PDF generation & viewer.
+// The `useContract` hook exposes helpers to create and display contract PDFs.
 export function Contract() {
   const { viewContract, createContract, testOptions } = useContract();
   const [contract, setContract] = useState<CreateContract>();
   const [pdfContent, setPdfContent] = useState<string>();
 
+  // When we obtain base64 PDF content, instruct the embedded viewer to load it.
   useEffect(() => {
     if (pdfContent) viewContract({ containerId: 'contract', base64: pdfContent });
   }, [pdfContent]);

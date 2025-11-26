@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+﻿import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 import { Loading } from '@/components/Fallback';
@@ -36,7 +36,7 @@ export function MyWarehouseCardList({ type, warehouses, fallback, loading }: MyW
 }
 
 const MyWarehouseCardListRoot = styled.div`
-  /* make the list container fluid while keeping the previous max width for larger screens */
+  
   width: 100%;
   max-width: 1236px;
   margin: 0 auto;
@@ -46,17 +46,13 @@ const GridContainer = styled.div`
   width: 100%;
   margin-top: 12px;
   display: grid;
-  /* explicit columns at breakpoints for stable responsive behavior
-      < 640px: 1 column
-      >=640px: 2 columns
-      >=768px: 3 columns
-      >=1024px: 4 columns */
+  
   grid-template-columns: repeat(2, minmax(220px, 1fr));
-  /* make each row take equal height so cards align across each row */
+  
   grid-auto-rows: 1fr;
   gap: 12px;
 
-  /* small and narrow screens will use 2 columns by default (requested) */
+  
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -66,3 +62,4 @@ const GridContainer = styled.div`
     grid-template-columns: repeat(4, minmax(220px, 1fr));
   }
 `;
+

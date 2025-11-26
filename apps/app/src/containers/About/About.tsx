@@ -1,4 +1,4 @@
-import { violetDark } from '@radix-ui/colors';
+﻿import { violetDark } from '@radix-ui/colors';
 import { CheckCircledIcon, MagnifyingGlassIcon, MobileIcon, ReaderIcon } from '@radix-ui/react-icons';
 import React from 'react';
 import styled from 'styled-components';
@@ -138,9 +138,7 @@ const FeatureDescription = styled.p`
   font-weight: 500;
 `;
 
-// Removed CTA section styles as we no longer show it on the About page
 
-// About page component with company information and features
 export const About: React.FC = () => {
   return (
     <AboutContainer>
@@ -224,7 +222,9 @@ export const About: React.FC = () => {
         </Content>
       </Section>
 
-      {/* CTA section removed per request */}
+      {}
     </AboutContainer>
   );
 };
+
+

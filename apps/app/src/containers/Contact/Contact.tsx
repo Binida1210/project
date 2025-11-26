@@ -1,5 +1,4 @@
-/* eslint-disable */
-// Contact page component with form and information panels
+﻿/* eslint-disable */
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -430,3 +429,4 @@ const Hint = styled.p`
 const SubmitButton = styled(BaseButton)`
   width: 160px;
 `;
+

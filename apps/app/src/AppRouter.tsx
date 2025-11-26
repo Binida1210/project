@@ -1,5 +1,4 @@
-// Main application router with layout and navigation setup
-import { noop } from 'lodash';
+﻿import { noop } from 'lodash';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
@@ -49,7 +48,6 @@ const BackgroundWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  /* allow the app to shrink on small screens while keeping a comfortable max width */
   width: 100%;
   max-width: 1260px;
   margin: 0 auto 32px;
@@ -58,13 +56,14 @@ const Wrapper = styled.div`
   box-sizing: border-box;
 
   @media (max-width: 720px) {
-    /* reduce padding on small devices */
     padding: 12px;
     margin-bottom: 16px;
     border-radius: 6px;
   }
 `;
 
+// RootWrapper handles the app chrome (header/footer) and a centered content wrapper.
+// Placing the Outlet inside ensures a consistent app frame for most routes.
 const RootWrapper = () => {
   return (
     <AppLayout>
@@ -79,10 +78,11 @@ const RootWrapper = () => {
   );
 };
 
+// Top-level router config: applies persistence, guards and data resolvers.
+// - PersistLogin sets up auth state before protected routes are evaluated.
+// - Resolvers (WarehouseResolver, RentingWarehouseResolver) load model data for nested routes.
 export const AppRouter = () => {
   return (
-    // TODO: RequireAuthResolver for auth user data,
-    // not using AuthStore for getting user anymore (user in store can be undefined)
     <>
       <GlobalStyle />
       <BrowserRouter>
@@ -122,7 +122,6 @@ export const AppRouter = () => {
           </Route>
           <Route path="dev/*">
             <Route element={<UploadImageButton onImageUploaded={noop} />} path="upload" />
-            {/* map-search-box route removed */}
             <Route
               element={
                 <MapView
@@ -135,7 +134,7 @@ export const AppRouter = () => {
               path="map-view"
             ></Route>
             <Route element={<Contract />} path="contract"></Route>
-            {/* direction route removed */}
+
             <Route element={<Comment />} path="comment"></Route>
             <Route
               element={

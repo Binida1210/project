@@ -1,9 +1,9 @@
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Elements } from '@stripe/react-stripe-js';
+﻿import { Elements } from '@stripe/react-stripe-js';
 import { Appearance, PaymentIntent, StripeElementsOptions } from '@stripe/stripe-js';
 import { useFormikContext } from 'formik';
 import { isEmpty, mapValues } from 'lodash';
 import moment from 'moment';
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,6 +19,7 @@ import {
   StepperProgression,
 } from '@/components/Common/Stepper';
 import { ContractConfirmation } from '@/components/ContractConfirmation';
+import { PaymentConfirmationContent } from '@/components/Payment/PaymentConfirmationContent';
 import { RenterInformationFormValuesType, RentingInformationForm } from '@/components/RenterInformation';
 import { RentingConfirmation } from '@/components/RentingConfirmation';
 import { stripePromise } from '@/libs';
@@ -29,7 +30,6 @@ import { generateContractHash } from '@/utils/encrypt';
 import { getAllRentingInfoDates } from '@/utils/rented-warehouse.util';
 
 import { CustomerCheckoutForm } from './CustomerCheckoutForm';
-import { PaymentConfirmationContent } from '@/components/Payment/PaymentConfirmationContent';
 
 export type RentingState = {
   price: number;
@@ -160,7 +160,6 @@ export function RentingFormContent() {
         hash,
       };
 
-      // send rented warehouse payload to server
 
       api.post('rentedWarehouse', rentedWarehouse).then(() => {
         navigate('/home');
@@ -195,7 +194,9 @@ export function RentingFormContent() {
 
   return (
     <div className="irent-renting-form">
-      <Stepper
+      {/* Wrap the whole renting content area to give some vertical breathing room */}
+      <ContentWrap>
+        <Stepper
         defaultCanNextOnNewStep={false}
         isCanNext={isStepperCanNext}
         items={stepperItems}
@@ -219,7 +220,7 @@ export function RentingFormContent() {
             </div>
           </TextContainer>
 
-          {/* actions moved below the content so 'btn ở cuối cùng' (button at the end) */}
+          {}
         </Header>
         <StepperContentRenderer />
         <ActionsWrap>
@@ -228,7 +229,8 @@ export function RentingFormContent() {
             <StepperNextButton className="irent-renting-btn irent-renting-btn--next" />
           </ButtonContainer>
         </ActionsWrap>
-      </Stepper>
+        </Stepper>
+      </ContentWrap>
       <PaymentDialog open={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}>
         {dialogContentRef.current}
       </PaymentDialog>
@@ -236,49 +238,47 @@ export function RentingFormContent() {
   );
 }
 
-/* Mobile-first header wrapper for renting form.
-   Use class names so the old styles are ignored and there's no accidental inheritance.
-*/
+
 const Header = styled.div`
-  /* Mobile-first: always stacked layout and full-width elements */
+  
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
 
-  /* keep small vertical padding for the header wrapper */
+  
   &.irent-renting-header {
     padding: 8px 0;
   }
 
-  /* let content grow naturally inside its container */
+  
   width: 100%;
 `;
 
 const TextContainer = styled.div`
-  /* container for title + progression - mobile-first stacked */
+  
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  align-items: center; /* center title and progression */
+  align-items: center; 
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-  flex-direction: column; /* STACK ALWAYS - mobile-first applied globally */
+  flex-direction: column; 
 
-  /* allow the action area to shrink and be flexible inside larger containers */
+  
   align-self: stretch;
 `;
 
 const Title = styled.h1`
   margin: 0;
-  font-size: clamp(1.25rem, 2.6vw, 2rem); /* responsive H1 sizing */
+  font-size: clamp(1.25rem, 2.6vw, 2rem); 
   line-height: 1.08;
   font-weight: 800;
-  text-align: center; /* center h1 */
+  text-align: center; 
 `;
 
 const PaymentDialog = styled(Dialog)`
@@ -286,7 +286,13 @@ const PaymentDialog = styled(Dialog)`
 `;
 
 const ActionsWrap = styled.div`
-  width: 60dvw; /* user's requested width */
+  width: 60dvw; 
   max-width: 96%;
-  margin: 1rem auto 0 auto; /* center and add small top spacing */
+  margin: 1rem auto 0 auto; 
 `;
+
+const ContentWrap = styled.div`
+  padding: 2rem 0; /* give top and bottom padding of 2rem for renting content */
+`;
+
+

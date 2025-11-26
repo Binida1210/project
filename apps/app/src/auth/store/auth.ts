@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 
 import { AuthUser } from '../models/auth';
 
@@ -17,7 +17,6 @@ export type AuthStoreType = {
   logout: () => void;
 };
 
-// TODO: Make it do not persist, use useRefreshToken for initiate value
 export const useAuthStore = create<AuthStoreType>((set) => ({
   setAccessToken: (token: string) => set({ accessToken: token }),
   setUser: (user) => set({ user }),
@@ -33,3 +32,4 @@ export const useAuthStore = create<AuthStoreType>((set) => ({
   },
   logout: () => set({ accessToken: undefined, user: undefined, isAuthenticated: false }),
 }));
+

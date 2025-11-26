@@ -1,4 +1,4 @@
-import 'react-range-slider-input/dist/style.css';
+﻿import 'react-range-slider-input/dist/style.css';
 import './style.css';
 
 import { violetDark } from '@radix-ui/colors';
@@ -24,7 +24,6 @@ export const PriceRangeSlider = (props: PriceRangeSliderProps) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // initialize or cleanup if needed later
   }, []);
 
   return (
@@ -73,7 +72,7 @@ export const PriceRangeSlider = (props: PriceRangeSliderProps) => {
               </Button>
             </ButtonContainer>
           </Container>
-          {/* Arrow color matches panel background for a clean look */}
+          {}
           <DropdownMenu.Arrow style={{ fill: '#ffffff' }} />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
@@ -87,7 +86,7 @@ const Container = styled.div`
   padding: 18px 16px 22px;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
   border: 1px solid #e5e7eb;
-  border-radius: 12px; /* aligned with page radius */
+  border-radius: 12px; 
 `;
 
 const Title = styled.div`
@@ -126,9 +125,9 @@ const Label = styled.label`
   align-items: center;
   border: 1px solid #e5e7eb;
   width: 100%;
-  border-radius: 12px; /* aligned */
+  border-radius: 12px; 
   padding: 0 12px;
-  height: 38px; /* align with Select trigger & button */
+  height: 38px; 
   gap: 8px;
   font-size: 13px;
   background: #ffffff;
@@ -157,3 +156,5 @@ const ButtonContainer = styled.div`
   margin-top: 28px;
   text-align: right;
 `;
+
+

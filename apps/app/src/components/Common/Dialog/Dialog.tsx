@@ -1,4 +1,4 @@
-/* eslint-disable */
+﻿/* eslint-disable */
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { DialogProps as RadixDialogProps } from '@radix-ui/react-dialog';
 import { Cross1Icon } from '@radix-ui/react-icons';
@@ -71,7 +71,6 @@ export const useDialogContext = () => {
   return context;
 };
 
-// TODO: refactor this for not using ref to open dialog
 export const Dialog = forwardRef<DialogRef, DialogProps>(
   (
     {
@@ -115,10 +114,8 @@ export const Dialog = forwardRef<DialogRef, DialogProps>(
 
     const closeReturn = useRef<any>(undefined);
     const onDialogCloseRef = useCallbackRef(onDialogClose);
-    // TODO: remove this this for not using ref to set content
     const [content, setContent] = useState<ReactNode>();
 
-    // TODO: remove this this for not using ref to set content
     useImperativeHandle(ref, () => ({
       open(content) {
         setDialogOpen(true);
@@ -276,3 +273,4 @@ export const CloseButton = styled.button`
     outline-offset: 2px;
   }
 `;
+

@@ -1,4 +1,4 @@
-/* eslint-disable simple-import-sort/imports, import/order */
+﻿/* eslint-disable simple-import-sort/imports, import/order */
 import { useCallback, useEffect, useState } from 'react';
 
 import { RulerSquareIcon, StackIcon, ViewVerticalIcon } from '@radix-ui/react-icons';
@@ -27,24 +27,14 @@ import {
 import { useWarehouseResolver } from '../../resolver/WarehouseResolver';
 import { convertTimestampToDate } from '../../utils/convert-timestamp-to-date.util';
 
-// const mockWarehouseDetails: WareHouseModel = {
-//   id: 1,
-//   name: 'Thien Thai Ho',
-//   ward: WardValue.HAI_CHAU,
-//   address: '73 Ha Huy Tap, Thanh Khe, Khue My',
-//   price: 45,
-//   area: 100,
-//   createdDate: 1,
-//   doorQuantity: 3,
-//   floors: 3,
-// };
-
 export const WarehouseDetails = () => {
   const { warehouse, id } = useWarehouseResolver();
   const { user } = useAuthStore(({ user }) => ({
     user,
   }));
 
+  // The stored 'address' can be either a plain string or a JSON payload with coordinates.
+  // resolveAddress/resolveLocation normalize that into displayable address and coords.
   const address = resolveAddress(warehouse.address);
   const location = resolveLocation(warehouse.address);
   const province = extractProvinceFromAddress(warehouse.address);
@@ -52,6 +42,8 @@ export const WarehouseDetails = () => {
   const [geoLoading, setGeoLoading] = useState(false);
   const [geoError, setGeoError] = useState<string | null>(null);
   const geocodeQuery = buildGeocodeQuery(warehouse.address);
+  // Fallback geocode: if warehouse has no saved coordinates, try Photon/Nominatim
+  // and cache the result in local state so the map can render a fallback location.
   const handleTryGeocode = useCallback(async () => {
     if (!geocodeQuery) return;
     setGeoError(null);
@@ -70,13 +62,11 @@ export const WarehouseDetails = () => {
     }
   }, [geocodeQuery]);
 
-  // Tự động thử geocode khi chưa có tọa độ lưu và có địa chỉ hợp lệ
   useEffect(() => {
     if (!location && geocodeQuery && !dynamicLocation && !geoLoading) {
       void handleTryGeocode();
     }
   }, [location, geocodeQuery, dynamicLocation, geoLoading, handleTryGeocode]);
-  // Google-based search/directions removed; destination-only map retained
 
   const navigate = useNavigate();
 
@@ -104,9 +94,8 @@ export const WarehouseDetails = () => {
     <PagePaddingSmall>
       <Container>
         <BodyContainer>
-          {/* Make the title the primary H1 and place it at the top of the detail view */}
           <Title>{warehouse?.name}</Title>
-          {/* Gallery follows the title so users see the heading first then media */}
+
           <ImageContainer>
             <Carousel images={warehouse.images} />
           </ImageContainer>
@@ -158,8 +147,7 @@ export const WarehouseDetails = () => {
             )}
             {warehouse.rented && <ActionButton onClick={handleViewContract}>Xem hợp đồng</ActionButton>}
           </ButtonContainer>
-          {/* Mục "Yêu thích" đã được lược bỏ theo yêu cầu */}
-          {/* Slightly more airy spacing for the metrics area */}
+
           <MetricsContainer>
             <Price title={`${formatPrice(warehouse?.price)} VND`}>{formatPrice(warehouse?.price)} VND</Price>
             <OtherMetrics>
@@ -187,8 +175,8 @@ export const WarehouseDetails = () => {
               <i>Không có mô tả gì ở đây cả</i>
             </small>
           )}
-          {/* Đã lược bỏ tính năng chỉ đường trực tiếp để tăng độ ổn định.
-            Người dùng có thể dùng liên kết trong bản đồ để mở xem chi tiết trên OSM. */}
+
+          {/* Only show comments when the listing is approved — keeps moderation rules simple */}
           {warehouse.status === WarehouseStatus.Accepted && (
             <CommentsContainer>
               <CommentSection data={warehouse.comments} resolveComment={resolveComment} />
@@ -202,13 +190,12 @@ export const WarehouseDetails = () => {
 
 const ImageContainer = styled.div`
   width: 100%;
-  /* image gallery lives inside the page content now; remove large auto margins */
-  margin: 24px 0 32px; /* increased gap after heading and after gallery */
-  padding: 16px 14px; /* slightly increased padding for better breathing room */
-  border-radius: 10px;
-  background: #f8fafc; /* soft neutral background for the gallery */
 
-  /* Ensure the carousel container adapts within this wrapper and keeps a responsive aspect ratio */
+  margin: 24px 0 32px;
+  padding: 16px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+
   & > div {
     width: 100%;
     height: auto;
@@ -216,23 +203,19 @@ const ImageContainer = styled.div`
     overflow: hidden;
   }
 
-  /* Large screens: keep the gallery centered and give images a larger fixed height so
-     they present more prominently. Thumbnails align left and remain visible. */
   @media (min-width: 769px) {
     padding: 18px 22px;
 
     & > div {
-      max-height: 420px; /* prevent overly tall galleries */
+      max-height: 420px;
     }
 
-    /* react-image-gallery / carousel inner image element */
     .image-gallery-content:not(.fullscreen) .image-gallery-image {
       height: 420px !important;
       object-fit: cover;
       border-radius: 8px;
     }
 
-    /* move thumbnails into a horizontal strip aligned to start and allow horizontal scrolling */
     .image-gallery-thumbnails {
       margin-top: 12px;
       display: flex;
@@ -251,7 +234,6 @@ const ImageContainer = styled.div`
     }
   }
 
-  /* small thumbnail container alignment */
   .image-gallery-thumbnails {
     margin-top: 12px;
     display: flex;
@@ -262,12 +244,12 @@ const ImageContainer = styled.div`
 const BodyContainer = styled.div`
   position: relative;
   max-width: 1180px;
-  margin: 32px auto 72px; /* slightly more space above and below content */
-  padding: 12px 20px 48px; /* a bit more inner padding for larger screens */
+  margin: 32px auto 72px;
+  padding: 12px 20px 48px;
 `;
 
 const Title = styled.h1`
-  margin: 8px 0 6px; /* slight top spacing, sits above the carousel */
+  margin: 8px 0 6px;
   font-size: clamp(1.25rem, 2.6vw, 1.8rem);
   line-height: 1.1;
   color: #0f172a;
@@ -277,14 +259,13 @@ const Address = styled.h4``;
 const ProvinceTag = styled.small`
   color: #64748b;
   font-weight: normal;
-  /* large screens: show a preceding separator dot inline */
+
   &::before {
     content: ' · ';
     display: inline;
     margin-left: 6px;
   }
 
-  /* at small / tablet breakpoint (<= 768px) we place province on its own line and remove the dot */
   @media (max-width: 768px) {
     display: block;
     margin-top: 6px;
@@ -294,18 +275,12 @@ const ProvinceTag = styled.small`
   }
 `;
 
-/* Removed unused MapViewContainer styled component */
-
 const Date = styled.span`
   color: #6b7280;
   font-size: 0.95rem;
   display: inline-block;
   margin-top: 6px;
 `;
-
-/* Removed unused DirectionText styled component */
-
-/* IconActions/Yêu thích đã xóa */
 
 const MetricsContainer = styled.div`
   display: flex;
@@ -318,7 +293,6 @@ const MetricsContainer = styled.div`
   gap: 14px;
 
   @media (max-width: 860px) {
-    /* stack vertically on narrower screens */
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
@@ -333,12 +307,12 @@ const CommentsContainer = styled.div`
 
 const Price = styled.span`
   font-weight: 800;
-  /* single-line price, responsive sizing */
+
   font-size: clamp(1rem, 3.2vw, 1.75rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 8px; /* extra spacing after price as requested */
+  margin-bottom: 8px;
 `;
 
 const OtherMetrics = styled.div`
@@ -375,7 +349,6 @@ const Text = styled.span``;
 
 const Container = styled.div``;
 
-// wrapper used to provide page-level vertical padding (2rem) for warehouse details
 const PagePaddingSmall = styled.div.attrs({ className: 'page-padding' })`
   padding: 2rem 0;
 `;
@@ -384,7 +357,7 @@ const MapViewContainer = styled.div`
   margin-top: 16px;
   margin-bottom: 14px;
   width: 100%;
-  /* Ensure consistent radius wrapper */
+
   & > div {
     width: 100%;
   }
@@ -399,7 +372,6 @@ const ButtonContainer = styled.div`
   cursor: pointer;
 `;
 
-// Unify action button size with comment section button
 const ActionButton = styled(Button)`
   height: 38px;
   border-radius: 12px;
@@ -407,11 +379,9 @@ const ActionButton = styled(Button)`
   padding: 0 16px;
 `;
 
-/* Google-based directions/search UI removed */
-
 const DescriptionContainer = styled.div`
   margin-top: 18px;
-  margin-bottom: 40px; /* slightly more breathing room before comments */
+  margin-bottom: 40px;
   max-width: 100%;
 `;
 

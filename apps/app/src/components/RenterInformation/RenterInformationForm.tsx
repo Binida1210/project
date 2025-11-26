@@ -1,4 +1,4 @@
-import { Form, useFormikContext } from 'formik';
+﻿import { Form, useFormikContext } from 'formik';
 import moment from 'moment';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -73,7 +73,7 @@ const Container = styled.div``;
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* mobile-first spacing */
+  gap: 1.5rem; 
 
   .irent-renter-info__price {
     padding-top: 3rem;
@@ -134,3 +134,4 @@ const PriceContainer = styled.h3`
   margin: 0;
   padding: 0.25rem 0;
 `;
+

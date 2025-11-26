@@ -1,4 +1,4 @@
-import { privateApi } from '../../axios/axios';
+﻿import { privateApi } from '../../axios/axios';
 import { AuthenticateResponse } from '../models';
 import { useAuthStore } from '../store';
 
@@ -20,6 +20,5 @@ export const useRefreshToken = () => {
   return refresh;
 };
 
-// access token
 
-// refresh token
+

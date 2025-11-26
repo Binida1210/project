@@ -1,4 +1,4 @@
-import { blackA, red, redA, violetDark } from '@radix-ui/colors';
+﻿import { blackA, red, redA, violetDark } from '@radix-ui/colors';
 import * as stitches from '@stitches/react';
 
 export type ButtonProps = stitches.ComponentProps<typeof StyledButton>;
@@ -9,7 +9,7 @@ export const Button = ({ color = 'primary', ...rest }: ButtonProps) => {
 
 const StyledButton = stitches.styled('button', {
   all: 'unset',
-  /* make default button a little less wide so it fits better in tight header spaces */
+  
   minWidth: 120,
   display: 'inline-flex',
   alignItems: 'center',
@@ -61,8 +61,7 @@ const StyledButton = stitches.styled('button', {
       },
     },
     size: {
-      /* compact small variant — reduced minWidth and horizontal padding to avoid overflow when
-         two small buttons are shown side-by-side (eg. Đăng ký + Đăng nhập in header menus) */
+      
       sm: { height: 32, minWidth: 84, fontSize: 13, padding: '0 10px', borderRadius: 10 },
       md: {},
       lg: { height: 44, minWidth: 170, fontSize: 15, padding: '0 22px' },
@@ -71,3 +70,4 @@ const StyledButton = stitches.styled('button', {
   },
   defaultVariants: { size: 'md' },
 });
+
