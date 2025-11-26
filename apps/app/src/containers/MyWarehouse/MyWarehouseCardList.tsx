@@ -20,11 +20,11 @@ export function MyWarehouseCardList({ type, warehouses, fallback, loading }: MyW
           <p>{warehouses.length} kho bãi</p>
           <GridContainer>
             {warehouses.map((it) => (
-              <MyWarehouseViewCard
-                key={type === MyWarehouseViewCardType.Owning ? it.id : it.rentedInfo?.id}
-                type={type}
-                warehouse={it}
-              ></MyWarehouseViewCard>
+              <CardCell key={type === MyWarehouseViewCardType.Owning ? it.id : it.rentedInfo?.id}>
+                <CardInner>
+                  <MyWarehouseViewCard type={type} warehouse={it}></MyWarehouseViewCard>
+                </CardInner>
+              </CardCell>
             ))}
           </GridContainer>
         </MyWarehouseCardListRoot>
@@ -46,6 +46,7 @@ const GridContainer = styled.div`
   width: 100%;
   margin-top: 12px;
   display: grid;
+  justify-items: center;
   
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   
@@ -60,6 +61,26 @@ const GridContainer = styled.div`
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, minmax(220px, 1fr));
+  }
+`;
+
+const CardCell = styled.div`
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  justify-content: center;
+`;
+
+const CardInner = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 100%;
+
+  @media (max-width: 479px) {
+    max-width: 80dvw;
+    max-width: 80vw;
   }
 `;
 

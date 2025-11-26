@@ -248,6 +248,10 @@ const Header = styled.div`
   }
 
   width: 100%;
+
+  .irent-renting-progression-wrapper {
+    width: 80dvw;
+  }
 `;
 
 const TextContainer = styled.div`

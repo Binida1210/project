@@ -112,45 +112,47 @@ export const WarehouseViewCardBase = ({
             </>
           )}
 
-          {showRentedInfo && rentedInfo && (
-            <>
-              <Separator />
-              <RentedInfoArea>
-                <RentedInfoSide>
-                  <RentedInfoSection>Tổng giá thuê:</RentedInfoSection>
-                  <RentedInfoSection>Thời gian thuê:</RentedInfoSection>
-                  <RentedInfoSection>Giá cọc:</RentedInfoSection>
-                  <RentedInfoSection>Giá xác nhận thuê:</RentedInfoSection>
-                </RentedInfoSide>
-                <Separator orientation="vertical" />
-                <RentedInfoSide>
-                  <RentedInfoSection>{formatPrice(rentedInfo.total)} VND</RentedInfoSection>
-                  <RentedInfoSection>{getDuration(rentedInfo.startDate, rentedInfo.endDate)} tháng</RentedInfoSection>
-                  <RentedInfoSection>{formatPrice(rentedInfo.deposit)} VND</RentedInfoSection>
-                  <RentedInfoSection>{formatPrice(rentedInfo.confirm)} VND</RentedInfoSection>
-                </RentedInfoSide>
-              </RentedInfoArea>
-            </>
-          )}
-          {showRentedProgression && (
-            <RentedWarehouseProgress rentedInfo={warehouse.rentedInfo}></RentedWarehouseProgress>
-          )}
-          {showPrice && (
-            <PriceText color="#008cff" title={`${formatPrice(price)} VND`}>
-              {formatPrice(price)} VND
-            </PriceText>
-          )}
-          <CardDate>
-            <TimerIcon />
-            {convertTimestampToDate(createdDate)}
-          </CardDate>
+          <LowerInfo>
+            {showRentedInfo && rentedInfo && (
+              <>
+                <Separator />
+                <RentedInfoArea>
+                  <RentedInfoSide>
+                    <RentedInfoSection>Tổng giá thuê:</RentedInfoSection>
+                    <RentedInfoSection>Thời gian thuê:</RentedInfoSection>
+                    <RentedInfoSection>Giá cọc:</RentedInfoSection>
+                    <RentedInfoSection>Giá xác nhận thuê:</RentedInfoSection>
+                  </RentedInfoSide>
+                  <Separator orientation="vertical" />
+                  <RentedInfoSide>
+                    <RentedInfoSection>{formatPrice(rentedInfo.total)} VND</RentedInfoSection>
+                    <RentedInfoSection>{getDuration(rentedInfo.startDate, rentedInfo.endDate)} tháng</RentedInfoSection>
+                    <RentedInfoSection>{formatPrice(rentedInfo.deposit)} VND</RentedInfoSection>
+                    <RentedInfoSection>{formatPrice(rentedInfo.confirm)} VND</RentedInfoSection>
+                  </RentedInfoSide>
+                </RentedInfoArea>
+              </>
+            )}
+            {showRentedProgression && (
+              <RentedWarehouseProgress rentedInfo={warehouse.rentedInfo}></RentedWarehouseProgress>
+            )}
+            {showPrice && (
+              <PriceText color="#008cff" title={`${formatPrice(price)} VND`}>
+                {formatPrice(price)} VND
+              </PriceText>
+            )}
+            <CardDate>
+              <TimerIcon />
+              {convertTimestampToDate(createdDate)}
+            </CardDate>
+          </LowerInfo>
         </TextContainer>
       </ContentArea>
     </CardContainer>
   );
 };
 
-const FONT_FAMILY = `Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+const FONT_FAMILY = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
 const CardContainer = styled.div`
   width: 100%;
@@ -330,6 +332,13 @@ const PriceText = styled.span`
   }
   line-height: 1.05;
   text-align: right;
+`;
+
+const LowerInfo = styled.div`
+  display: block;
+  @media (max-width: ${breakpoints.mdWide}) {
+    display: none;
+  }
 `;
 
 const RejectedReason = styled.div`

@@ -11,7 +11,7 @@ import { RentedWarehouseStatus } from '@/models/rented-warehouse.model';
 import { WareHouseModel, WarehouseStatus } from '@/models/warehouse.model';
 import { useMyWarehouseStore } from '@/store/my-warehouse.store';
 
-import { MyWarehouseCardListGrid as MyWarehouseCardList } from './MyWarehouseCardListGrid';
+import { MyWarehouseCardListV3 as MyWarehouseCardList } from './MyWarehouseCardListV3';
 
 const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
   [RentedWarehouseStatus.Waiting]: 1,
@@ -24,16 +24,16 @@ const rentingStatusWeight: Record<RentedWarehouseStatus, number> = {
   [RentedWarehouseStatus.None]: 8,
 };
 
-// MyWarehouseV2: improved responsive layout for the user's warehouses/list view.
-export const MyWarehouseV2 = () => {
+// MyWarehouseV3: responsive rewrite of MyWarehouse page
+export const MyWarehouseV3 = () => {
   const { user } = useAuthStore();
   const { fetchMyWarehouses, reset, ownWarehousesLoading, rentedWarehouses, ownWarehouse, rentedWarehousesLoading } =
     useMyWarehouseStore();
 
-  useEffect(() => {
-    fetchMyWarehouses(user);
-    return () => reset();
-  }, []);
+    useEffect(() => {
+      fetchMyWarehouses(user);
+      return () => reset();
+    }, [fetchMyWarehouses, reset, user]);
 
   const sortByRentingStatus = (a: WareHouseModel, b: WareHouseModel) => {
     if (!a.rentedInfo && !b.rentedInfo) return 0;
@@ -114,7 +114,7 @@ export const MyWarehouseV2 = () => {
         {user?.role === Role.Owner && (
           <CreateWrap>
             <Link to="/create">
-              <Button $variant="primary">Tạo kho bãi</Button>
+                <Button color="primary">Tạo kho bãi</Button>
             </Link>
           </CreateWrap>
         )}
@@ -140,6 +140,12 @@ const TopRow = styled.div`
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 12px;
+
+  /* on small screens we want a stacked header so title is above the create button */
+  @media (max-width: 520px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 const TitleWrap = styled.div`
@@ -160,10 +166,11 @@ const Count = styled.span`
 
 const CreateWrap = styled.div`
   margin-left: auto;
-  @media (max-width: 720px) {
+  @media (max-width: 520px) {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-left: 0;
   }
 `;
 
@@ -186,4 +193,4 @@ const NothingContainer = styled.div`
   padding: 2rem 0;
 `;
 
-export default MyWarehouseV2;
+export default MyWarehouseV3;

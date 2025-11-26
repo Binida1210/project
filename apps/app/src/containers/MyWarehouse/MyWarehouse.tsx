@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useAuthStore } from '@/auth';
-import { Button } from '@/components/Common/Button';
 import { Tabs } from '@/components/Common/Tabs';
 import { MyWarehouseViewCardType } from '@/components/MyWarehouseViewCard';
 import { Role } from '@/enums/role.enum';
@@ -39,7 +38,7 @@ export const MyWarehouse = () => {
     return () => {
       reset();
     };
-  }, []);
+  }, [fetchMyWarehouses, reset, user]);
 
   const sortByRentingStatus = (a: WareHouseModel, b: WareHouseModel) => {
     if (!a.rentedInfo && !b.rentedInfo) {

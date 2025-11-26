@@ -1,5 +1,5 @@
 ﻿export const breakpoints = {
-  xs: '480px', // phones
+  xs: '500px', // phones
   sm: '640px', // small phones
   md: '768px', // tablets
   mdWide: '900px', // mid-size tablets / small laptops (fixes 800-1100 range)

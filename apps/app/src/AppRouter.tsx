@@ -15,11 +15,9 @@ import {
   Contract,
   CreateWarehouse,
   Help,
-  Home,
   HomeV2,
-  MyWarehouseV2,
+  MyWarehouseV3,
   Login,
-  MyWarehouse,
   RentingForm,
   SignUp,
   UploadImageButton,
@@ -95,7 +93,7 @@ export const AppRouter = () => {
               <Route element={<HomeV2 />} path="home" />
               <Route element={<About />} path="about" />
               <Route element={<AuthGuard />}>
-                <Route element={<MyWarehouseV2 />} path="list" />
+                <Route element={<MyWarehouseV3 />} path="list" />
               </Route>
               <Route element={<WarehouseResolver />} path="warehouse/:id/*">
                 <Route element={<WarehouseGuard />}>
