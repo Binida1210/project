@@ -4,6 +4,7 @@ export * from './Contract';
 export * from './CreateWarehouse';
 export * from './Help';
 export * from './Home';
+export * from './MyWarehouse/MyWarehouseV2';
 export * from './Login';
 export * from './MyWarehouse';
 export * from './RentingForm';

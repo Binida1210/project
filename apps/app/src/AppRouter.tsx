@@ -17,6 +17,7 @@ import {
   Help,
   Home,
   HomeV2,
+  MyWarehouseV2,
   Login,
   MyWarehouse,
   RentingForm,
@@ -94,7 +95,7 @@ export const AppRouter = () => {
               <Route element={<HomeV2 />} path="home" />
               <Route element={<About />} path="about" />
               <Route element={<AuthGuard />}>
-                <Route element={<MyWarehouse />} path="list" />
+                <Route element={<MyWarehouseV2 />} path="list" />
               </Route>
               <Route element={<WarehouseResolver />} path="warehouse/:id/*">
                 <Route element={<WarehouseGuard />}>
