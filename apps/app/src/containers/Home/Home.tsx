@@ -2,5 +2,3 @@
 export { HomeV2 as Home } from './HomeV2';
 
 export default HomeV2;
-
-
