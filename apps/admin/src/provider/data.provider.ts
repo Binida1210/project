@@ -6,7 +6,7 @@ const httpClient = fetchUtils.fetchJson;
 
 // TODO: For development, replace this url, this code is messy, I don't like it but no times to refactor
 // export const apiUrl = 'https://irent-presentation.as.r.appspot.com/api';
-export const apiUrl = 'https://localhost:7250/api';
+export const apiUrl = 'https://irent-a2dd762d83e2.herokuapp.com/api/';
 export const dataProvider: DataProvider = {
   getList: (resource, params) => {
     // const query = {

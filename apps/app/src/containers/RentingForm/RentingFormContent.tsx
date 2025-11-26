@@ -160,7 +160,6 @@ export function RentingFormContent() {
         hash,
       };
 
-
       api.post('rentedWarehouse', rentedWarehouse).then(() => {
         navigate('/home');
       });
@@ -197,38 +196,38 @@ export function RentingFormContent() {
       {/* Wrap the whole renting content area to give some vertical breathing room */}
       <ContentWrap>
         <Stepper
-        defaultCanNextOnNewStep={false}
-        isCanNext={isStepperCanNext}
-        items={stepperItems}
-        onCanNextChange={setStepperCanNext}
-        onComplete={() => handleOnPayment()}
-        onStepChange={(step) => {
-          if (step === 0) {
-            validateForm().then((errors) => {
-              setStepperCanNext(isEmpty(errors));
-            });
-          } else if (step === 2) {
-            setStepperCanNext(true);
-          }
-        }}
-      >
-        <Header className="irent-renting-header">
-          <TextContainer className="irent-renting-header__text">
-            <Title className="irent-renting-title">Thuê {warehouse.name}</Title>
-            <div className="irent-renting-progression-wrapper">
-              <StepperProgression />
-            </div>
-          </TextContainer>
+          defaultCanNextOnNewStep={false}
+          isCanNext={isStepperCanNext}
+          items={stepperItems}
+          onCanNextChange={setStepperCanNext}
+          onComplete={() => handleOnPayment()}
+          onStepChange={(step) => {
+            if (step === 0) {
+              validateForm().then((errors) => {
+                setStepperCanNext(isEmpty(errors));
+              });
+            } else if (step === 2) {
+              setStepperCanNext(true);
+            }
+          }}
+        >
+          <Header className="irent-renting-header">
+            <TextContainer className="irent-renting-header__text">
+              <Title className="irent-renting-title">Thuê {warehouse.name}</Title>
+              <div className="irent-renting-progression-wrapper">
+                <StepperProgression />
+              </div>
+            </TextContainer>
 
-          {}
-        </Header>
-        <StepperContentRenderer />
-        <ActionsWrap>
-          <ButtonContainer className="irent-renting-actions">
-            <StepperBackButton className="irent-renting-btn irent-renting-btn--back" color="secondary" />
-            <StepperNextButton className="irent-renting-btn irent-renting-btn--next" />
-          </ButtonContainer>
-        </ActionsWrap>
+            {}
+          </Header>
+          <StepperContentRenderer />
+          <ActionsWrap>
+            <ButtonContainer className="irent-renting-actions">
+              <StepperBackButton className="irent-renting-btn irent-renting-btn--back" color="secondary" />
+              <StepperNextButton className="irent-renting-btn irent-renting-btn--next" />
+            </ButtonContainer>
+          </ActionsWrap>
         </Stepper>
       </ContentWrap>
       <PaymentDialog open={paymentDialogOpen} onOpenChange={setPaymentDialogOpen}>
@@ -238,47 +237,41 @@ export function RentingFormContent() {
   );
 }
 
-
 const Header = styled.div`
-  
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 12px;
 
-  
   &.irent-renting-header {
     padding: 8px 0;
   }
 
-  
   width: 100%;
 `;
 
 const TextContainer = styled.div`
-  
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  align-items: center; 
+  align-items: center;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-  flex-direction: column; 
+  flex-direction: column;
 
-  
   align-self: stretch;
 `;
 
 const Title = styled.h1`
   margin: 0;
-  font-size: clamp(1.25rem, 2.6vw, 2rem); 
+  font-size: clamp(1.25rem, 2.6vw, 2rem);
   line-height: 1.08;
   font-weight: 800;
-  text-align: center; 
+  text-align: center;
 `;
 
 const PaymentDialog = styled(Dialog)`
@@ -286,13 +279,11 @@ const PaymentDialog = styled(Dialog)`
 `;
 
 const ActionsWrap = styled.div`
-  width: 60dvw; 
+  width: 60dvw;
   max-width: 96%;
-  margin: 1rem auto 0 auto; 
+  margin: 1rem auto 0 auto;
 `;
 
 const ContentWrap = styled.div`
   padding: 2rem 0; /* give top and bottom padding of 2rem for renting content */
 `;
-
-

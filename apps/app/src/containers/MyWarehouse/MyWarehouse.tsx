@@ -121,25 +121,25 @@ export const MyWarehouse = () => {
       <ContentWrap>
         {user?.role === Role.Owner && (
           <CreateWareHouse>
-          <Link to="/create">
-            <button
-              style={{
-                marginTop: '2rem',
-                padding: '1rem 1.5rem',
-                backgroundColor: 'rgb(124, 102, 220)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgb(110, 86, 207)')}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(124, 102, 220)')}
-            >
-              Tạo kho bãi
-            </button>
-          </Link>
-        </CreateWareHouse>
-      )}
+            <Link to="/create">
+              <button
+                style={{
+                  marginTop: '2rem',
+                  padding: '1rem 1.5rem',
+                  backgroundColor: 'rgb(124, 102, 220)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgb(110, 86, 207)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'rgb(124, 102, 220)')}
+              >
+                Tạo kho bãi
+              </button>
+            </Link>
+          </CreateWareHouse>
+        )}
         {renderMyList()}
       </ContentWrap>
     </MyWarehouseRoot>
