@@ -170,5 +170,5 @@ const NothingContainer = styled.div`
 const ContentWrap = styled.div`
   width: min(var(--tabs-width), 96%);
   margin: 0 auto;
-  padding: 2rem; /* padding 2rem on all sides */
+  padding: 2rem;
 `;

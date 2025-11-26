@@ -230,7 +230,6 @@ const HeroSubtitle = styled.p`
   font-size: clamp(0.95rem, 1.5vw, 1.125rem);
 `;
 
-/* tighter responsive search layout */
 const SearchBarV2 = styled.div`
   display: grid;
   grid-template-columns: minmax(160px, 360px) 1fr;
@@ -333,7 +332,6 @@ const HighlightsV2 = styled.div`
   }
 `;
 
-/* reuse the existing highlight item/badge styles */
 const HighlightItem = styled.div`
   background: #ffffff;
   border: 1px solid #e5e7eb;

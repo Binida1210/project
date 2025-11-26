@@ -136,10 +136,18 @@ export const WarehouseViewCardBase = ({
             {showRentedProgression && (
               <RentedWarehouseProgress rentedInfo={warehouse.rentedInfo}></RentedWarehouseProgress>
             )}
+
+            {warehouse.rentedInfo && (showRentedProgression || showRentedInfo || showRentingStatus) && (
+              <MobileProgress>
+                <RentedWarehouseProgress rentedInfo={warehouse.rentedInfo}></RentedWarehouseProgress>
+              </MobileProgress>
+            )}
             {showPrice && (
-              <PriceText color="#008cff" title={`${formatPrice(price)} VND`}>
-                {formatPrice(price)} VND
-              </PriceText>
+              <HideOnMediumDesktop>
+                <PriceText color="#008cff" title={`${formatPrice(price)} VND`}>
+                  {formatPrice(price)} VND
+                </PriceText>
+              </HideOnMediumDesktop>
             )}
             <CardDate>
               <TimerIcon />
@@ -195,6 +203,10 @@ const TextContainer = styled.div`
     padding: 0.75rem 0.75rem 0.75rem;
     --container-padding-top: 0.875rem;
   }
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.5rem 0.5rem;
+    --container-padding-top: 0.75rem;
+  }
   position: relative;
   display: flex;
   flex-direction: column;
@@ -210,12 +222,19 @@ const CardArea = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const RentedInfoArea = styled.div`
   font-size: 14px;
   display: flex;
   justify-content: space-between;
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;
 
 const RentedInfoSide = styled.div`
@@ -233,6 +252,9 @@ const RentedInfoSection = styled.div`
 const CardName = styled.span`
   font-size: 1.125rem;
   @media (min-width: 769px) and (max-width: ${breakpoints.lg}) {
+    font-size: 1rem;
+  }
+  @media (max-width: 480px) {
     font-size: 1rem;
   }
   overflow: hidden;
@@ -260,16 +282,45 @@ const CardAddress = styled.span`
   font-size: clamp(0.85rem, 1.2vw, 0.95rem);
   font-weight: 500;
   margin-top: 4px;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const AddressText = styled.p`
   max-width: 100%;
+  min-width: 0;
   margin: 0;
   line-height: 1.4;
 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: 480px) {
+    max-width: 250px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+
+  min-width: 0;
+
+  @media (max-width: 480px) {
+    max-width: 250px;
+  }
 `;
 
 const CardAddressIcon = styled.div`
@@ -314,6 +365,14 @@ const CardDate = styled.span`
   @media (max-width: ${breakpoints.md}) {
     top: calc(var(--container-padding-top) + 2px);
   }
+
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    left: 12px;
+  }
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;
 
 const PriceText = styled.span`
@@ -330,6 +389,10 @@ const PriceText = styled.span`
     font-size: clamp(1rem, 2.2vw, 1.25rem);
     margin-top: 1rem;
   }
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
   line-height: 1.05;
   text-align: right;
 `;
@@ -338,6 +401,9 @@ const LowerInfo = styled.div`
   display: block;
   @media (max-width: ${breakpoints.mdWide}) {
     display: none;
+  }
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: block;
   }
 `;
 
@@ -349,6 +415,9 @@ const RejectedReason = styled.div`
   white-space: nowrap;
   color: ${radixRed.red9};
   font-weight: 700;
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;
 
 const AcceptedNote = styled.div`
@@ -358,6 +427,9 @@ const AcceptedNote = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;
 
 const PendingNote = styled.div`
@@ -367,4 +439,25 @@ const PendingNote = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
+`;
+
+const MobileProgress = styled.div`
+  display: none;
+  @media (max-width: ${breakpoints.mdWide}) {
+    display: block;
+    margin-top: 8px;
+    width: 100%;
+  }
+  > * {
+    margin: 0;
+  }
+`;
+
+const HideOnMediumDesktop = styled.div`
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;

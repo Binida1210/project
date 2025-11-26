@@ -30,10 +30,10 @@ export const MyWarehouseV3 = () => {
   const { fetchMyWarehouses, reset, ownWarehousesLoading, rentedWarehouses, ownWarehouse, rentedWarehousesLoading } =
     useMyWarehouseStore();
 
-    useEffect(() => {
-      fetchMyWarehouses(user);
-      return () => reset();
-    }, [fetchMyWarehouses, reset, user]);
+  useEffect(() => {
+    fetchMyWarehouses(user);
+    return () => reset();
+  }, [fetchMyWarehouses, reset, user]);
 
   const sortByRentingStatus = (a: WareHouseModel, b: WareHouseModel) => {
     if (!a.rentedInfo && !b.rentedInfo) return 0;
@@ -114,7 +114,7 @@ export const MyWarehouseV3 = () => {
         {user?.role === Role.Owner && (
           <CreateWrap>
             <Link to="/create">
-                <Button color="primary">Tạo kho bãi</Button>
+              <Button color="primary">Tạo kho bãi</Button>
             </Link>
           </CreateWrap>
         )}
@@ -130,6 +130,10 @@ export const MyWarehouseV3 = () => {
 const Root = styled.div`
   width: 100%;
   padding: 12px;
+
+  @media (max-width: 480px) {
+    padding: 0px;
+  }
 `;
 
 const TopRow = styled.div`
@@ -141,10 +145,11 @@ const TopRow = styled.div`
   flex-wrap: wrap;
   margin-bottom: 12px;
 
-  /* on small screens we want a stacked header so title is above the create button */
-  @media (max-width: 520px) {
+  @media (max-width: 480px) {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -166,7 +171,7 @@ const Count = styled.span`
 
 const CreateWrap = styled.div`
   margin-left: auto;
-  @media (max-width: 520px) {
+  @media (max-width: 480px) {
     width: 100%;
     display: flex;
     justify-content: flex-end;

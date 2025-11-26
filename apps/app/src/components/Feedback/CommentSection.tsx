@@ -49,6 +49,10 @@ const CommentRoot = styled.div`
   border-radius: 12px;
   padding: 12px;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  @media (max-width: 480px) {
+    padding: 10px;
+    border-radius: 10px;
+  }
 `;
 
 const List = styled.div`
@@ -58,4 +62,8 @@ const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  @media (max-width: 480px) {
+    gap: 8px;
+    padding: 8px 4px 0 4px;
+  }
 `;

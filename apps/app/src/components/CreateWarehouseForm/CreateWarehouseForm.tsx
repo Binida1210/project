@@ -41,7 +41,6 @@ export const CreateWarehouseForm = () => {
           <ImageInfo>
             <Text>Ảnh</Text>
             <ImageInputContainer>
-              {/* UploadImageButton returns an array of images; bind it directly to Formik */}
               <UploadImageButton onImageUploaded={(images) => setFieldValue('images', images)} />
             </ImageInputContainer>
             <FieldError errorFor={'images'} />
@@ -112,7 +111,6 @@ export const CreateWarehouseForm = () => {
           <DescriptionField>
             <Label>Mô tả</Label>
             <EditorWrapper>
-              {/* RichTextEditor on desktop, simple textarea fallback on mobile to keep editing lightweight */}
               {isMobile ? (
                 <Field as={MobileTextarea} name="description" rows={6} />
               ) : (

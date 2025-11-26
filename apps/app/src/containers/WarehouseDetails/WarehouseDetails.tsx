@@ -176,7 +176,6 @@ export const WarehouseDetails = () => {
             </small>
           )}
 
-          {/* Only show comments when the listing is approved — keeps moderation rules simple */}
           {warehouse.status === WarehouseStatus.Accepted && (
             <CommentsContainer>
               <CommentSection data={warehouse.comments} resolveComment={resolveComment} />
@@ -303,6 +302,10 @@ const CommentsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 480px) {
+    justify-content: stretch;
+    align-items: stretch;
+  }
 `;
 
 const Price = styled.span`
@@ -370,6 +373,11 @@ const ButtonContainer = styled.div`
   margin-top: 24px;
   text-align: right;
   cursor: pointer;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
 `;
 
 const ActionButton = styled(Button)`
@@ -377,6 +385,11 @@ const ActionButton = styled(Button)`
   border-radius: 12px;
   min-width: 140px;
   padding: 0 16px;
+  @media (max-width: 480px) {
+    min-width: unset;
+    height: 42px;
+    font-size: 14px;
+  }
 `;
 
 const DescriptionContainer = styled.div`

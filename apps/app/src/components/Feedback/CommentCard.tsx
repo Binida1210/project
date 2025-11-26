@@ -46,6 +46,14 @@ const Container = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 8px 0;
+  @media (max-width: 480px) {
+    padding: 6px 0;
+  }
+  @media (max-width: 450px) {
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-start;
+  }
 `;
 
 const Body = styled.div`
@@ -53,6 +61,13 @@ const Body = styled.div`
   border: 1px solid #e6e6e9;
   background: #fafafc;
   border-radius: 10px;
+  @media (max-width: 480px) {
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+  @media (max-width: 450px) {
+    flex: 1;
+  }
 `;
 
 const Sender = styled.span`
@@ -60,6 +75,9 @@ const Sender = styled.span`
   font-weight: 700;
   font-size: 0.98rem;
   color: #0f172a;
+  @media (max-width: 480px) {
+    font-size: 0.92rem;
+  }
 `;
 
 const Action = styled.span`
@@ -77,10 +95,14 @@ const Content = styled.p`
   margin: 0;
   color: #111827;
   line-height: 1.6;
+  @media (max-width: 480px) {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 `;
 
 const AvatarContainer = styled.div`
-  display: none; 
+  display: none;
 `;
 
 const HeaderRow = styled.div`
@@ -88,16 +110,27 @@ const HeaderRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  @media (max-width: 450px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Left = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
-  
+
   & > div {
     padding: 4px;
     border-radius: 50%;
+  }
+  @media (max-width: 450px) {
+    gap: 6px;
+    & > div {
+      padding: 0;
+    }
   }
 `;
 
@@ -105,11 +138,16 @@ const NameBlock = styled.div`
   display: flex;
   gap: 6px;
   align-items: center;
+  @media (max-width: 450px) {
+    display: none;
+  }
 `;
 
 const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  @media (max-width: 450px) {
+    display: none;
+  }
 `;
-

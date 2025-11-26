@@ -193,7 +193,6 @@ export function RentingFormContent() {
 
   return (
     <div className="irent-renting-form">
-      {/* Wrap the whole renting content area to give some vertical breathing room */}
       <ContentWrap>
         <Stepper
           defaultCanNextOnNewStep={false}
@@ -289,5 +288,5 @@ const ActionsWrap = styled.div`
 `;
 
 const ContentWrap = styled.div`
-  padding: 2rem 0; /* give top and bottom padding of 2rem for renting content */
+  padding: 2rem 0;
 `;

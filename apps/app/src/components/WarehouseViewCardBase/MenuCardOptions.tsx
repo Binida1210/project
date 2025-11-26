@@ -29,4 +29,7 @@ const ClickArea = styled.div`
   position: absolute;
   cursor: pointer;
   z-index: 2;
+  @media (min-width: 1000px) and (max-width: 1250px) {
+    display: none;
+  }
 `;

@@ -24,7 +24,7 @@ export function MyWarehouseCardListV3({ type, warehouses, fallback, loading }: M
       return (
         <GridRoot>
           <HeaderRow>
-            <p>{warehouses.length} kho bãi</p>
+            <p style={{ paddingBottom: '1rem' }}>{warehouses.length} kho bãi</p>
           </HeaderRow>
 
           <Grid>
@@ -51,6 +51,10 @@ const GridRoot = styled.div`
   max-width: 1260px;
   margin: 0 auto;
   padding: 12px 0 28px;
+
+  @media (max-width: 480px) {
+    padding: 8px 0 16px;
+  }
 `;
 
 const HeaderRow = styled.div`
@@ -70,23 +74,23 @@ const Grid = styled.div`
   gap: 16px;
   grid-auto-rows: 1fr;
 
-  /* mobile first - single column */
   grid-template-columns: 1fr;
-  justify-items: center; /* center children by default */
+  justify-items: center;
 
-  /* small tablets and up */
+  @media (max-width: 479px) {
+    gap: 12px;
+  }
+
   @media (min-width: 480px) {
     grid-template-columns: repeat(2, minmax(200px, 1fr));
     justify-items: stretch;
   }
 
-  /* medium screens */
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
     gap: 20px;
   }
 
-  /* desktop */
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, minmax(220px, 1fr));
     gap: 22px;
@@ -96,6 +100,9 @@ const Grid = styled.div`
 const CardCell = styled.div`
   display: flex;
   width: 100%;
+  @media (max-width: 479px) {
+    justify-content: center;
+  }
 `;
 
 const CardInner = styled.div`
@@ -103,13 +110,13 @@ const CardInner = styled.div`
   width: 100%;
   align-items: stretch;
   justify-content: center;
-  /* default: allow card to fill cell width */
   max-width: 100%;
 
-  /* on extra small screens, limit the card to 80dvw and center it */
   @media (max-width: 479px) {
-    max-width: 80dvw;
+    width: 100%;
     max-width: 80vw;
+    margin: 0 auto;
+    padding: 0 6px;
   }
 `;
 

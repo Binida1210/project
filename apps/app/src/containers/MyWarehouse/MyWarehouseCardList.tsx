@@ -36,7 +36,6 @@ export function MyWarehouseCardList({ type, warehouses, fallback, loading }: MyW
 }
 
 const MyWarehouseCardListRoot = styled.div`
-  
   width: 100%;
   max-width: 1236px;
   margin: 0 auto;
@@ -47,13 +46,11 @@ const GridContainer = styled.div`
   margin-top: 12px;
   display: grid;
   justify-items: center;
-  
+
   grid-template-columns: repeat(2, minmax(220px, 1fr));
-  
+
   grid-auto-rows: 1fr;
   gap: 12px;
-
-  
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(220px, 1fr));
@@ -83,4 +80,3 @@ const CardInner = styled.div`
     max-width: 80vw;
   }
 `;
-

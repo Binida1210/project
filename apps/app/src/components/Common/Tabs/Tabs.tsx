@@ -111,4 +111,8 @@ const TabsContent = styled(Content)`
     border-radius: 8px;
     width: 6px;
   }
+
+  @media (max-width: 480px) {
+    padding: 0 8px;
+  }
 `;

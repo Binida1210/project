@@ -27,7 +27,7 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
   return (
     <Container className="irent-renting-confirmation">
       <Body>
-        <WarehouseContainer>
+        <WarehouseContainer className="irent-renting-confirmation__warehouse-container">
           <WarehouseContainerInfo>
             <ProductName>{warehouse.name}</ProductName>
             <Address>
@@ -81,13 +81,9 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
             ></StyledCarousel>
           </WarehouseContainerImage>
         </WarehouseContainer>
-        <RenterInfoContainer>
-          <RenterInfoContainerLeft>
-            <Subtitle>Địa chỉ thanh toán</Subtitle>
-          </RenterInfoContainerLeft>
-          <RenterInfoContainerRight>
-            <Subtitle>Phương thức thanh toán</Subtitle>
-          </RenterInfoContainerRight>
+        <RenterInfoContainer className="irent-renting-confirmation__renter-info-container">
+          <RenterInfoContainerLeft></RenterInfoContainerLeft>
+          <RenterInfoContainerRight></RenterInfoContainerRight>
         </RenterInfoContainer>
       </Body>
     </Container>
@@ -96,13 +92,13 @@ export const RentingConfirmation = (props: RentingConfirmationProps) => {
 
 const Container = styled.div`
   width: 100%;
-  margin-top: 3rem; 
+  margin-top: 3rem;
 `;
 
 const Title = styled.h1`
-  font-size: 2.25rem; 
+  font-size: 2.25rem;
   margin: 0 0 1.25rem 0;
-  text-align: center; 
+  text-align: center;
   font-weight: 800;
 `;
 
@@ -115,11 +111,9 @@ const Body = styled.div`
 const WarehouseContainer = styled.div`
   border-radius: 0.5rem;
   padding: 1.25rem;
-  background-color: #f7f7f7;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 1rem;
-  width: 60dvw;
   max-width: 96%;
   margin: 0 auto;
 `;
@@ -160,7 +154,7 @@ const Subtitle = styled.h4`
 
 const ProductName = styled.h1`
   margin: 0 0 0.5rem 0;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: 800;
   color: #0f1724;
 `;
@@ -177,12 +171,10 @@ const WarehouseBody = styled.div`
   grid-template-columns: 1fr;
   gap: 0.5rem 1rem;
 
-  
   &.irent-renting-confirmation__warehouse-body {
     gap: 0.5rem 2rem;
   }
 
-  
   @media (min-width: 48rem) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -195,7 +187,6 @@ const WarehouseItem = styled.div<{ full?: boolean }>`
   padding: 0.5rem 0;
   gap: 1rem;
 
-  
   ${({ full }) => (full ? 'grid-column: 1 / -1;' : '')}
 `;
 
@@ -205,24 +196,23 @@ const WarehouseBodyLabel = styled.label`
   border-bottom: 1px solid transparent;
   color: #6b6b6b;
   font-size: 0.9rem;
-  white-space: nowrap; 
+  white-space: nowrap;
 `;
 
 const WarehouseBodyData = styled.span`
   display: block;
   padding: 0.5rem 0;
   font-size: 1rem;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
-  text-align: right; 
+  text-overflow: ellipsis;
+  text-align: right;
 `;
 
 const RenterInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  width: 60dvw;
   max-width: 96%;
   margin: 0 auto;
 `;
@@ -230,5 +220,3 @@ const RenterInfoContainer = styled.div`
 const RenterInfoContainerLeft = styled.div``;
 
 const RenterInfoContainerRight = styled.div``;
-
-
